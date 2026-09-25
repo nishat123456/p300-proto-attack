@@ -1,6 +1,6 @@
 # Project rules for coding agents
 
-Project: prototype-guided adversarial attacks on P300 spellers, plus a genuine-vs-induced ERP defense. Read `../PLAN.md` (sprint section at top) and `PREREG.md` before coding.
+Project: prototype-guided adversarial attacks on P300 spellers, plus a genuine-vs-induced ERP defense. Read `PLAN.md` (sprint section at top; copy of ../PLAN.md) and `PREREG.md` before coding.
 
 ## Environment
 - Python venv: `.venv/bin/python` (run everything with it). Tests: `.venv/bin/python -m pytest -q`.
