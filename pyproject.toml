@@ -1,0 +1,18 @@
+[project]
+name = "p3a"
+version = "0.1.0"
+description = "Prototype-guided attacks on P300 spellers, and a genuine-vs-induced ERP defense"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy", "scipy", "torch", "h5py", "pyyaml", "pandas", "scikit-learn", "statsmodels", "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
