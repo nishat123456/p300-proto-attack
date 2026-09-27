@@ -32,6 +32,13 @@ require_kaggle() {
   fi
 }
 
+job_ref() {
+  local job="$1"
+  local metadata="kaggle/jobs/$job/kernel-metadata.json"
+  [[ -f "$metadata" ]] || { echo "missing $metadata" >&2; exit 1; }
+  "$PYTHON" -c 'import json, sys; print(json.load(open(sys.argv[1]))["id"])' "$metadata"
+}
+
 cmd_bundle() {
   require_kaggle
   "$PYTHON" scripts/make_code_bundle.py
@@ -61,7 +68,7 @@ cmd_status() {
   local job="${1:-}"
   [[ -n "$job" ]] || usage
   require_kaggle
-  kaggle kernels status "mustaqimnishat/p3a-${job}"
+  kaggle kernels status "$(job_ref "$job")"
 }
 
 cmd_output() {
@@ -69,7 +76,7 @@ cmd_output() {
   [[ -n "$job" ]] || usage
   require_kaggle
   mkdir -p "kaggle/out/$job"
-  kaggle kernels output "mustaqimnishat/p3a-${job}" -p "kaggle/out/$job"
+  kaggle kernels output "$(job_ref "$job")" -p "kaggle/out/$job"
 }
 
 case "${1:-}" in
