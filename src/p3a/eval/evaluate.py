@@ -72,6 +72,7 @@ __all__ = [
     "evaluate_attacks",
     "load_attack_targets",
     "run_evaluation",
+    "select_method_specs",
 ]
 
 NONE = "none"
@@ -118,6 +119,24 @@ def default_method_specs() -> list[MethodSpec]:
 
 
 DEFAULT_METHOD_SPECS = tuple(default_method_specs())
+
+
+def select_method_specs(methods=None) -> list[MethodSpec]:
+    """The default spec list, optionally restricted to a set of method names.
+
+    ``methods`` is a collection of method names (for example ``{"pgd",
+    "proto_nearest"}``) or None for every method. Restricting the list lets a
+    Kaggle shard evaluate a subset of methods without changing the default,
+    which still covers the full registered job.
+    """
+    if methods is None:
+        return list(DEFAULT_METHOD_SPECS)
+    wanted = {str(m) for m in methods}
+    known = {spec.name for spec in DEFAULT_METHOD_SPECS}
+    unknown = sorted(wanted - known)
+    if unknown:
+        raise ValueError(f"unknown method name(s): {unknown}; expected {sorted(known)}")
+    return [spec for spec in DEFAULT_METHOD_SPECS if spec.name in wanted]
 
 
 # --------------------------------------------------------------------------

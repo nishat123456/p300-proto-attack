@@ -5,10 +5,12 @@
 #   push JOB      push kaggle/jobs/JOB to Kaggle on a T4
 #   status JOB    show the kernel status
 #   output JOB    download the kernel output to kaggle/out/JOB/
+#   shard I N JOB write kaggle/jobs/JOB/shard.json for shard I of N, then push JOB
 #   dry-run       build and validate the bundle locally, no Kaggle calls
 #
 # Set KAGGLE_PROFILE to mustaqimnishat1 through mustaqimnishat4 to use an
 # isolated access token. Leave it unset for the primary mustaqimnishat account.
+# `shard` writes only a selection record (no credentials) next to the job.
 #
 # The code bundle is never uploaded by `dry-run`; only `bundle` talks to Kaggle.
 set -euo pipefail
@@ -33,7 +35,7 @@ if [[ -n "${KAGGLE_PROFILE:-}" ]]; then
 fi
 
 usage() {
-  sed -n '2,12p' "${BASH_SOURCE[0]}"
+  sed -n '2,14p' "${BASH_SOURCE[0]}"
   exit 2
 }
 
@@ -91,11 +93,25 @@ cmd_output() {
   kaggle kernels output "$(job_ref "$job")" -p "kaggle/out/$job"
 }
 
+cmd_shard() {
+  local index="${1:-}" count="${2:-}" job="${3:-}"
+  [[ -n "$index" && -n "$count" && -n "$job" ]] || usage
+  local job_dir="kaggle/jobs/$job"
+  [[ -f "$job_dir/kernel-metadata.json" ]] || {
+    echo "missing $job_dir/kernel-metadata.json" >&2; exit 1; }
+  # Selection only; no credentials are read or written.
+  printf '{\n  "shard_index": %s,\n  "shard_count": %s\n}\n' \
+    "$index" "$count" > "$job_dir/shard.json"
+  echo "wrote $job_dir/shard.json (shard $index of $count)"
+  cmd_push "$job"
+}
+
 case "${1:-}" in
   bundle) shift; cmd_bundle "$@" ;;
   dry-run) shift; cmd_dry_run "$@" ;;
   push) shift; cmd_push "$@" ;;
   status) shift; cmd_status "$@" ;;
   output) shift; cmd_output "$@" ;;
+  shard) shift; cmd_shard "$@" ;;
   *) usage ;;
 esac

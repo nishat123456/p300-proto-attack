@@ -27,6 +27,7 @@ from p3a.eval.evaluate import (  # noqa: E402
     MethodSpec,
     evaluate_attacks,
     load_attack_targets,
+    select_method_specs,
 )
 from p3a.utils.repro import environment, set_seed  # noqa: E402
 
@@ -94,6 +95,9 @@ def parse_args(argv=None):
     p.add_argument("--limit-trials", dest="limit_trials", type=int, default=None,
                    help="cap the number of test trials (smoke/debug)")
     p.add_argument("--splits-dir", default=None)
+    p.add_argument("--methods", nargs="+", default=None,
+                   help=("restrict evaluation to these method names, for sharding; "
+                         "default runs every registered method"))
     p.add_argument("--force", action="store_true",
                    help="recompute combinations whose artifacts already exist")
     p.add_argument("--dry-run", action="store_true",
@@ -135,7 +139,10 @@ def main(argv=None) -> dict:
 
     results = {}
     for subject in _subjects(args):
-        specs = smoke_specs() if args.smoke else list(DEFAULT_METHOD_SPECS)
+        if args.smoke:
+            specs = smoke_specs()
+        else:
+            specs = select_method_specs(args.methods)
         result = _run_subject(args, subject, specs)
         results[subject] = {
             "n_test_trials": result.n_trials,
