@@ -75,6 +75,10 @@ def git_record(cwd: str | Path | None = None) -> dict:
 
     root = repo_root(cwd=cwd)
     commit = _git("rev-parse", "HEAD", cwd=cwd)
+    if not commit and cwd is not None:
+        bundle_commit = Path(cwd).resolve() / "GIT_COMMIT.txt"
+        if bundle_commit.is_file():
+            commit = bundle_commit.read_text().strip()
     def paths(*args):
         return set(_git(*args, "-z", cwd=root or cwd).split("\0")) - {""}
     changed = paths("diff", "HEAD", "--name-only")

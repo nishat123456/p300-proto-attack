@@ -91,6 +91,14 @@ def test_git_record_outside_repo_is_safe(tmp_path):
     assert rec["git_dirty"] is False
 
 
+def test_git_record_uses_bundle_commit_outside_repo(tmp_path):
+    commit = "52e967e44f2269bb302b55d511e11694605ddca9"
+    (tmp_path / "GIT_COMMIT.txt").write_text(commit + "\n")
+    rec = git_record(tmp_path)
+    assert rec["git_commit"] == commit
+    assert rec["git_dirty"] is False
+
+
 def test_write_config_creates_json(tmp_path):
     path = write_config(tmp_path / "out", "run.json", {"seed": 3, "model": "eegnet"})
     assert json.loads(path.read_text()) == {"seed": 3, "model": "eegnet"}
