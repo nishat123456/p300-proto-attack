@@ -263,14 +263,19 @@ class SignalGPN(nn.Module):
 
     def forward(self, eeg: torch.Tensor, onsets: torch.Tensor, groups: torch.Tensor,
                 target_idx: torch.Tensor, eps, proto_feat: torch.Tensor | None = None,
-                use_prototype: bool | None = None) -> torch.Tensor:
+                use_prototype: bool | None = None,
+                eps_mult: torch.Tensor | None = None) -> torch.Tensor:
         _validate_generator_inputs(eeg, onsets, groups, target_idx)
         batch, n_channels, length = eeg.shape
         if n_channels != self.conditioner.n_channels:
             raise ValueError("eeg channel count does not match the generator")
         proto_flag = self.use_prototype if use_prototype is None else bool(use_prototype)
+        # The epsilon *multiplier* conditions the network; the raw epsilon only
+        # sets the rescale budget. Callers that do not pass a multiplier keep the
+        # original behavior of conditioning on the raw epsilon.
+        cond_eps = eps if eps_mult is None else eps_mult
         z = self.conditioner(_one_hot(target_idx, self.conditioner.n_symbols),
-                             proto_feat, eps, proto_flag)
+                             proto_feat, cond_eps, proto_flag)
 
         pooled_len = math.ceil(length / self.down)
         pad = pooled_len * self.down - length
@@ -362,14 +367,19 @@ class CausalGPN(nn.Module):
 
     def forward(self, eeg: torch.Tensor, onsets: torch.Tensor, groups: torch.Tensor,
                 target_idx: torch.Tensor, eps, proto_feat: torch.Tensor | None = None,
-                use_prototype: bool | None = None) -> torch.Tensor:
+                use_prototype: bool | None = None,
+                eps_mult: torch.Tensor | None = None) -> torch.Tensor:
         _validate_generator_inputs(eeg, onsets, groups, target_idx)
         if eeg.shape[1] != self.conditioner.n_channels:
             raise ValueError("eeg channel count does not match the generator")
         length = eeg.shape[-1]
         proto_flag = self.use_prototype if use_prototype is None else bool(use_prototype)
+        # The epsilon *multiplier* conditions the network; the raw epsilon only
+        # sets the rescale budget. Callers that do not pass a multiplier keep the
+        # original behavior of conditioning on the raw epsilon.
+        cond_eps = eps if eps_mult is None else eps_mult
         z = self.conditioner(_one_hot(target_idx, self.conditioner.n_symbols),
-                             proto_feat, eps, proto_flag)
+                             proto_feat, cond_eps, proto_flag)
         template = self._template(z)
         delta = self.place_template(template, onsets, groups, target_idx, length)
         return linf_rescale(delta, eps)
