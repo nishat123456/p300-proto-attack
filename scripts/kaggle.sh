@@ -7,6 +7,9 @@
 #   output JOB    download the kernel output to kaggle/out/JOB/
 #   dry-run       build and validate the bundle locally, no Kaggle calls
 #
+# Set KAGGLE_PROFILE to mustaqimnishat1 through mustaqimnishat4 to use an
+# isolated access token. Leave it unset for the primary mustaqimnishat account.
+#
 # The code bundle is never uploaded by `dry-run`; only `bundle` talks to Kaggle.
 set -euo pipefail
 
@@ -19,6 +22,15 @@ if [[ ! -x "$PYTHON" ]]; then
 fi
 DATASET_REF="mustaqimnishat/p300-proto-attack-code"
 MSG="${MSG:-update $(date -u +%Y-%m-%dT%H:%M:%SZ)}"
+
+if [[ -n "${KAGGLE_PROFILE:-}" ]]; then
+  PROFILE_TOKEN="$HOME/.kaggle/profiles/$KAGGLE_PROFILE/access_token"
+  [[ -s "$PROFILE_TOKEN" ]] || {
+    echo "missing Kaggle token profile: $PROFILE_TOKEN" >&2
+    exit 1
+  }
+  export KAGGLE_API_TOKEN="$PROFILE_TOKEN"
+fi
 
 usage() {
   sed -n '2,12p' "${BASH_SOURCE[0]}"

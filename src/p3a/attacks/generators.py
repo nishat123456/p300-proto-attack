@@ -32,6 +32,7 @@ __all__ = [
     "CausalGPN",
     "target_flash_mask",
     "linf_rescale",
+    "place_template_at_onsets",
 ]
 
 # The causal template is 800 ms at 240 Hz, matching the epoch window.
@@ -73,6 +74,43 @@ def linf_rescale(delta: torch.Tensor, eps) -> torch.Tensor:
     peak = delta.flatten(1).abs().amax(dim=1).clamp_min(1e-12)
     scale = eps / peak
     return delta * scale[:, None, None]
+
+
+def place_template_at_onsets(template: torch.Tensor, onsets: torch.Tensor,
+                             groups: torch.Tensor, target_idx: torch.Tensor,
+                             length: int) -> torch.Tensor:
+    """Place one template [B, C, W] at every flash containing the attacker target.
+
+    This is the shared causal placement semantics: the (template_len) window
+    starting at each selected flash onset is added into the trial, overlaps add,
+    and contributions past sample `length` are dropped. Only boolean membership
+    (`groups`) selects flashes, so the result is identical for any source EEG
+    with the same schedule, target and template.
+    """
+    batch, n_channels, template_len = template.shape
+    if onsets.ndim != 2 or onsets.shape[1] != groups.shape[1]:
+        raise ValueError("onsets and groups must align on (B, F)")
+    if onsets.shape[0] != batch:
+        raise ValueError("template batch must match onsets")
+    if groups.ndim != 3 or groups.shape[0] != batch:
+        raise ValueError("groups must be [B, F, K] aligned with the template")
+    mask = target_flash_mask(groups, target_idx)  # [B, F]
+    delta = template.new_zeros(batch, n_channels, length)
+    offsets = torch.arange(template_len, device=template.device)
+    for f in range(onsets.shape[1]):
+        selected = mask[:, f]
+        if not bool(selected.any()):
+            continue
+        index = onsets[:, f][:, None] + offsets[None, :]  # [B, template_len]
+        valid = index < length
+        index = index.clamp(max=length - 1)
+        contrib = template * selected.to(template.dtype)[:, None, None]
+        contrib = contrib * valid.to(template.dtype)[:, None, :]
+        delta = delta.scatter_add(
+            2, index[:, None, :].expand(batch, n_channels, template_len).contiguous(),
+            contrib,
+        )
+    return delta
 
 
 def _one_hot(target_idx: torch.Tensor, n_symbols: int) -> torch.Tensor:
@@ -343,27 +381,13 @@ class CausalGPN(nn.Module):
     def place_template(self, template: torch.Tensor, onsets: torch.Tensor,
                        groups: torch.Tensor, target_idx: torch.Tensor,
                        length: int) -> torch.Tensor:
-        """Scatter the template at each target flash onset, overlaps adding."""
-        batch, n_channels, template_len = template.shape
-        if onsets.shape[0] != batch or onsets.shape[1] != groups.shape[1]:
-            raise ValueError("onsets and groups must align on (B, F)")
-        mask = target_flash_mask(groups, target_idx)  # [B, F]
-        delta = template.new_zeros(batch, n_channels, length)
-        offsets = torch.arange(template_len, device=template.device)
-        for f in range(onsets.shape[1]):
-            selected = mask[:, f]
-            if not bool(selected.any()):
-                continue
-            index = onsets[:, f][:, None] + offsets[None, :]  # [B, template_len]
-            valid = index < length
-            index = index.clamp(max=length - 1)
-            contrib = template * selected.to(template.dtype)[:, None, None]
-            contrib = contrib * valid.to(template.dtype)[:, None, :]
-            delta = delta.scatter_add(
-                2, index[:, None, :].expand(batch, n_channels, template_len).contiguous(),
-                contrib,
-            )
-        return delta
+        """Scatter the template at each target flash onset, overlaps adding.
+
+        Thin wrapper over the module level `place_template_at_onsets` so the
+        generator and the Tiny Noise baseline share exactly one placement
+        implementation.
+        """
+        return place_template_at_onsets(template, onsets, groups, target_idx, length)
 
     def forward(self, eeg: torch.Tensor, onsets: torch.Tensor, groups: torch.Tensor,
                 target_idx: torch.Tensor, eps, proto_feat: torch.Tensor | None = None,
