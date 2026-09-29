@@ -133,6 +133,12 @@ def _sets(chunk: AttackInputs, fs: float) -> tuple[FeatureSet, FeatureSet]:
     return induced, genuine
 
 
+def extract_authenticity_sets(chunk: AttackInputs,
+                              fs: float = 60.0) -> tuple[FeatureSet, FeatureSet]:
+    """Extract induced and deduplicated genuine features for serialization."""
+    return _sets(chunk, fs)
+
+
 def _concat(parts: list[FeatureSet], deduplicate: bool = False) -> FeatureSet:
     values = np.concatenate([p.values for p in parts], axis=0)
     trial_index = np.concatenate([p.trial_index for p in parts])
