@@ -55,3 +55,31 @@ no lower than 70 percent at the nominal 10 percent operating point. A stronger
 Q1-candidate signal requires observed FAR no greater than 5 percent and median
 TPR no lower than 80 percent on held-out attack families at the nominal 5
 percent point. Failure of the viability gate stops defense expansion.
+
+### 2026-09-29: external defense-validation protocol
+
+This amendment was written after all Comp III results were unblinded but before
+any attack or defense outcome was computed on BNCI 2014-008 or BNCI 2015-003.
+Comp III is development data from this point forward. BNCI 2014-008 is the first
+external validation dataset; within each of its eight subjects, the first 70
+percent of character trials in recording order are training, the next 15
+percent are validation, and the final 15 percent are test. BNCI 2015-003 is the
+locked confirmation dataset: its official train recording is available for
+source-subject training and target-user clean calibration, and its official
+test recording is used only after the detector and thresholds are frozen.
+
+The defense is fit on source subjects, then adapted to a held-out target subject
+using clean calibration data only. Attack labels, attack scores, and victim
+outputs from the target subject are unavailable during adaptation. Thresholds
+are fixed by the target user's clean calibration scores at nominal FAR values
+of 1, 5, and 10 percent. Primary reporting uses observed held-out FAR and TPR,
+with subject and character as the units of inference.
+
+The Q2 gate requires observed FAR no greater than 10 percent for every external
+dataset, median held-out-family TPR of at least 70 percent, and improvement over
+the registered distance and spectral baselines. The Q1-candidate gate requires
+all three datasets, observed FAR no greater than 5 percent for every dataset,
+median held-out-family TPR of at least 80 percent with no subject below 70
+percent, plus a defense-aware adaptive attack and clean spelling-cost analysis.
+If the frozen detector fails the Q2 gate on BNCI 2014-008, BNCI 2015-003 test
+outcomes will not be used for tuning.
