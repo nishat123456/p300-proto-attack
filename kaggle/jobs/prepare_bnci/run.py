@@ -44,6 +44,38 @@ code = WORK / "code"
 shutil.copytree(find_code(), code, dirs_exist_ok=True)
 ensure_variable_trial_loader(code)
 subprocess.run([sys.executable, "-m", "pip", "install", "-e", str(code)], check=True)
+# Audit trigger formats before enforcing the loader's protocol assumptions.
+import json
+import urllib.request
+import numpy as np
+import scipy.io as sio
+
+audit = {}
+raw = Path("/kaggle/temp/p3a_bnci/bnci2015_003")
+raw.mkdir(parents=True, exist_ok=True)
+for number in range(1, 11):
+    subject = f"s{number}"
+    path = raw / f"{subject}.mat"
+    urllib.request.urlretrieve(
+        f"https://bnci-horizon-2020.eu/database/data-sets/003-2015/{subject}.mat", path
+    )
+    recording = sio.loadmat(path, squeeze_me=True, struct_as_record=False)[subject]
+    audit[subject] = {}
+    for split in ("train", "test"):
+        matrix = np.asarray(getattr(recording, split))
+        stim = matrix[9].astype(int)
+        onsets = np.flatnonzero((stim != 0) & np.r_[True, stim[:-1] == 0])
+        codes, counts = np.unique(stim[onsets], return_counts=True)
+        audit[subject][split] = {
+            "n_onsets": int(len(onsets)), "codes": codes.tolist(),
+            "counts": counts.tolist(),
+            "target_events": int(np.sum(matrix[10, onsets] == 1)),
+            "largest_onset_gaps": sorted(np.diff(onsets).tolist())[-12:],
+        }
+(WORK / "out").mkdir(exist_ok=True)
+(WORK / "out" / "trigger_audit.json").write_text(json.dumps(audit, indent=2))
+print(json.dumps(audit), flush=True)
+
 subprocess.run([
     sys.executable, str(code / "scripts" / "prepare_bnci.py"),
     "--data-root", "/kaggle/temp/p3a_bnci",
