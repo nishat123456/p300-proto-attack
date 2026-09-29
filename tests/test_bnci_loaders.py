@@ -104,3 +104,19 @@ def test_003_loader_preserves_official_split_and_singleton_flashes(tmp_path):
     assert all(np.all(trial.flash_groups.sum(axis=1) == 1) for trial in train + test)
     assert train[0].trial_id == "bnci2015_003:s1:train:000"
     assert test[0].trial_id == "bnci2015_003:s1:test:000"
+
+
+def test_003_row_column_protocol(tmp_path):
+    matrix = _matrix_003(0, n_trials=1)
+    matrix[9:] = 0
+    codes = np.tile(np.arange(1, 13), 15)
+    for i, code in enumerate(codes):
+        pos = 50 + i * 2
+        matrix[9, pos] = code
+        matrix[10, pos] = int(code in (3, 8))
+    sio.savemat(tmp_path / "s3.mat", {"s3": {"train": matrix, "test": matrix}})
+    trial = load_003(tmp_path, "s3", "train")[0]
+    assert trial.n_flashes == 180
+    assert trial.target_symbol == "I"
+    assert trial.target_flash_mask().sum() == 30
+    assert np.all(trial.flash_groups.sum(axis=1) == 6)

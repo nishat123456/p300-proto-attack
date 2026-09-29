@@ -1,11 +1,8 @@
 """BNCI 2015-003 visual P300 speller recordings.
 
-Verified against the official ``s1.mat`` and dataset description on 2026-09-29:
-the first row is time at 256 Hz, rows 1 through 8 are EEG, row 9 contains
-single-symbol stimulus codes 1 through 36, and row 10 is the target flag. Each
-recorded character presents all 36 symbols 15 times, giving 540 flashes per
-character. Recording lengths vary by subject and split. The older description's
-row/column wording does not match the released trigger values.
+Official recordings use either singleton codes 1-36 or column codes 1-6 and
+row codes 7-12. Both use 15 repetitions. This matches the Kaggle trigger audit
+and MOABB's BNCI2015-003 loader (bnci/bnci_2015.py, _load_data_003_2015).
 """
 from __future__ import annotations
 
@@ -14,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import scipy.io as sio
 
-from ..layout import Layout
+from ..layout import Layout, rc_code_to_group
 from ..trial import Trial
 from .comp3 import flash_onsets, find_file
 
@@ -55,36 +52,51 @@ def load_subject(root: str | Path, subject: str | int, split: str) -> list[Trial
     stim = matrix[9].astype(np.int64)
     target = matrix[10].astype(np.int64)
     all_onsets = flash_onsets(stim != 0)
-    if not len(all_onsets) or len(all_onsets) % N_FLASHES:
+    observed = np.unique(stim[all_onsets])
+    if np.array_equal(observed, np.arange(1, 37)):
+        n_codes, n_target_codes = 36, 1
+    elif np.array_equal(observed, np.arange(1, 13)):
+        n_codes, n_target_codes = 12, 2
+    else:
+        raise ValueError(f"unsupported stimulus code set: {observed}")
+    n_flashes = n_codes * N_REPETITIONS
+    if not len(all_onsets) or len(all_onsets) % n_flashes:
         raise ValueError(
-            f"flash count must be a positive multiple of {N_FLASHES}, "
+            f"flash count must be a positive multiple of {n_flashes}, "
             f"got {len(all_onsets)}"
         )
-    n_trials = len(all_onsets) // N_FLASHES
+    n_trials = len(all_onsets) // n_flashes
 
     trials = []
     padding = int(round(0.2 * FS))
     tail = int(round(0.8 * FS))
     for index in range(n_trials):
-        onset_abs = all_onsets[index * N_FLASHES:(index + 1) * N_FLASHES]
+        onset_abs = all_onsets[index * n_flashes:(index + 1) * n_flashes]
         codes = stim[onset_abs].astype(np.int64)
         flags = target[onset_abs].astype(np.int64)
         values, counts = np.unique(codes, return_counts=True)
-        if not np.array_equal(values, np.arange(1, 37)) or \
+        if not np.array_equal(values, np.arange(1, n_codes + 1)) or \
                 not np.all(counts == N_REPETITIONS):
             raise ValueError(f"trial {index}: stimulus counts are not 15 per symbol")
         target_codes = np.unique(codes[flags == 1])
-        if len(target_codes) != 1 or int(np.sum(flags)) != N_REPETITIONS:
-            raise ValueError(f"trial {index}: expected one target code repeated 15 times")
+        if len(target_codes) != n_target_codes or int(np.sum(flags)) != N_REPETITIONS * n_target_codes:
+            raise ValueError(f"trial {index}: unexpected target-code count")
+        groups = np.stack([
+            singleton_code_to_group(int(code)) if n_codes == 36
+            else rc_code_to_group(LAYOUT, int(code)) for code in codes
+        ])
+        candidates = np.flatnonzero(groups[flags == 1].all(axis=0))
+        if len(candidates) != 1:
+            raise ValueError(f"trial {index}: target groups do not identify one symbol")
         start = max(int(onset_abs[0]) - padding, 0)
         stop = min(int(onset_abs[-1]) + tail, eeg.shape[1])
         trials.append(Trial(
             eeg=np.ascontiguousarray(eeg[:, start:stop], dtype=np.float32),
             fs=FS,
             onsets=onset_abs - start,
-            flash_groups=np.stack([singleton_code_to_group(int(code)) for code in codes]),
+            flash_groups=groups,
             flash_codes=codes,
-            target_symbol=LAYOUT.symbols[int(target_codes[0]) - 1],
+            target_symbol=LAYOUT.symbols[int(candidates[0])],
             layout=LAYOUT,
             subject_id=subject_id,
             dataset="bnci2015_003",
