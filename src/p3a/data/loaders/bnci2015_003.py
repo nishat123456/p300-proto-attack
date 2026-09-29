@@ -3,9 +3,9 @@
 Verified against the official ``s1.mat`` and dataset description on 2026-09-29:
 the first row is time at 256 Hz, rows 1 through 8 are EEG, row 9 contains
 single-symbol stimulus codes 1 through 36, and row 10 is the target flag. Each
-of five characters per official train or test recording presents all 36 symbols
-15 times, giving 540 flashes per character. The older description's row/column
-wording does not match the released trigger values.
+recorded character presents all 36 symbols 15 times, giving 540 flashes per
+character. Recording lengths vary by subject and split. The older description's
+row/column wording does not match the released trigger values.
 """
 from __future__ import annotations
 
@@ -19,7 +19,6 @@ from ..trial import Trial
 from .comp3 import flash_onsets, find_file
 
 FS = 256.0
-N_TRIALS = 5
 N_REPETITIONS = 15
 N_FLASHES = 36 * N_REPETITIONS
 CHANNEL_NAMES = ["Fz", "Cz", "P3", "Pz", "P4", "PO7", "Oz", "PO8"]
@@ -36,7 +35,7 @@ def singleton_code_to_group(code: int) -> np.ndarray:
 
 
 def load_subject(root: str | Path, subject: str | int, split: str) -> list[Trial]:
-    """Load the five characters in the official train or test recording."""
+    """Load every character in the official train or test recording."""
     split = str(split).lower()
     if split not in {"train", "test"}:
         raise ValueError("split must be train or test")
@@ -56,13 +55,17 @@ def load_subject(root: str | Path, subject: str | int, split: str) -> list[Trial
     stim = matrix[9].astype(np.int64)
     target = matrix[10].astype(np.int64)
     all_onsets = flash_onsets(stim != 0)
-    if len(all_onsets) != N_TRIALS * N_FLASHES:
-        raise ValueError(f"expected {N_TRIALS * N_FLASHES} flashes, got {len(all_onsets)}")
+    if not len(all_onsets) or len(all_onsets) % N_FLASHES:
+        raise ValueError(
+            f"flash count must be a positive multiple of {N_FLASHES}, "
+            f"got {len(all_onsets)}"
+        )
+    n_trials = len(all_onsets) // N_FLASHES
 
     trials = []
     padding = int(round(0.2 * FS))
     tail = int(round(0.8 * FS))
-    for index in range(N_TRIALS):
+    for index in range(n_trials):
         onset_abs = all_onsets[index * N_FLASHES:(index + 1) * N_FLASHES]
         codes = stim[onset_abs].astype(np.int64)
         flags = target[onset_abs].astype(np.int64)

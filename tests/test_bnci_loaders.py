@@ -44,8 +44,8 @@ def _write_008(root: Path):
     }})
 
 
-def _matrix_003(target_offset: int = 0):
-    n_trials, flashes, spacing, gap, lead = 5, 540, 2, 40, 50
+def _matrix_003(target_offset: int = 0, n_trials: int = 5):
+    flashes, spacing, gap, lead = 540, 2, 40, 50
     n_samples = lead + n_trials * (flashes * spacing + gap) + 300
     matrix = np.zeros((11, n_samples), dtype=np.float64)
     matrix[0] = np.arange(n_samples) / 256.0
@@ -66,7 +66,7 @@ def _matrix_003(target_offset: int = 0):
 def _write_003(root: Path):
     sio.savemat(root / "s1.mat", {"s1": {
         "train": _matrix_003(0),
-        "test": _matrix_003(10),
+        "test": _matrix_003(10, n_trials=2),
     }})
 
 
@@ -95,9 +95,10 @@ def test_003_loader_preserves_official_split_and_singleton_flashes(tmp_path):
     _write_003(tmp_path)
     train = load_003(tmp_path, 1, "train")
     test = load_003(tmp_path, "s1", "test")
-    assert len(train) == len(test) == 5
+    assert len(train) == 5
+    assert len(test) == 2
     assert [trial.target_symbol for trial in train] == list("ABCDE")
-    assert [trial.target_symbol for trial in test] == list("KLMNO")
+    assert [trial.target_symbol for trial in test] == list("KL")
     assert all(trial.n_flashes == 540 for trial in train + test)
     assert all(trial.target_flash_mask().sum() == 15 for trial in train + test)
     assert all(np.all(trial.flash_groups.sum(axis=1) == 1) for trial in train + test)
