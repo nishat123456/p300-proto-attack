@@ -255,12 +255,18 @@ def cross_subject_authenticity(source_pool: list[AttackInputs],
     the target normalization and operating thresholds. No target attacks or
     target evaluation samples enter fitting or calibration.
     """
-    if n_folds < 2:
-        raise ValueError("n_folds must be at least 2")
-    if not source_pool or not target_eval_chunks:
-        raise ValueError("source_pool and target_eval_chunks must be non-empty")
+    return cross_subject_feature_sets(
+        [_sets(chunk, fs) for chunk in source_pool],
+        {label: _sets(chunk, fs) for label, chunk in target_eval_chunks.items()},
+        fprs=fprs, n_folds=n_folds, seed=seed, c=c,
+    )
 
-    source_pairs = [_sets(chunk, fs) for chunk in source_pool]
+
+def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
+                               n_folds=DEFAULT_FOLDS, seed=0, c=0.1):
+    """Evaluate exported features with the same clean-only fitting protocol."""
+    if n_folds < 2 or not source_pairs or not target_sets:
+        raise ValueError("need source and target sets and at least two folds")
     source_induced = _concat([pair[0] for pair in source_pairs])
     source_genuine = _concat([pair[1] for pair in source_pairs], deduplicate=True)
     if not len(source_induced.values) or not len(source_genuine.values):
@@ -283,13 +289,10 @@ def cross_subject_authenticity(source_pool: list[AttackInputs],
         C=c, class_weight="balanced", max_iter=2000, random_state=seed,
     ).fit(source_x, source_y)
 
-    target_sets = {
-        label: _sets(chunk, fs) for label, chunk in target_eval_chunks.items()
-    }
     target_genuine = _concat(
         [pair[1] for pair in target_sets.values()], deduplicate=True
     )
-    records: dict[str, list[dict]] = {label: [] for label in target_eval_chunks}
+    records: dict[str, list[dict]] = {label: [] for label in target_sets}
 
     for outer in range(n_folds):
         calibration = (outer + 1) % n_folds
