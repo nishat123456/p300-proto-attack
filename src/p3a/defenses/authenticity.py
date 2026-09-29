@@ -232,3 +232,116 @@ def cross_validate_authenticity(pool: list[AttackInputs],
                 item[f"far_{suffix}"] = float(np.mean([r[f"far_{suffix}"] for r in rows]))
         summary[label] = item
     return summary
+
+
+def cross_subject_authenticity(source_pool: list[AttackInputs],
+                               target_eval_chunks: dict[str, AttackInputs],
+                               fs: float = 60.0,
+                               fprs=DEFAULT_FPRS,
+                               n_folds: int = DEFAULT_FOLDS,
+                               seed: int = 0,
+                               c: float = 0.1) -> dict[str, dict]:
+    """Fit on one subject and evaluate another with clean-only calibration.
+
+    The classifier sees induced and genuine samples from the source subject
+    only. Source features are normalized using source genuine samples. For each
+    target outer fold, a different target fold supplies genuine samples to fit
+    the target normalization and operating thresholds. No target attacks or
+    target evaluation samples enter fitting or calibration.
+    """
+    if n_folds < 2:
+        raise ValueError("n_folds must be at least 2")
+    if not source_pool or not target_eval_chunks:
+        raise ValueError("source_pool and target_eval_chunks must be non-empty")
+
+    source_pairs = [_sets(chunk, fs) for chunk in source_pool]
+    source_induced = _concat([pair[0] for pair in source_pairs])
+    source_genuine = _concat([pair[1] for pair in source_pairs], deduplicate=True)
+    if not len(source_induced.values) or not len(source_genuine.values):
+        raise ValueError("source subject needs induced and genuine samples")
+
+    # Domain normalization is defined by clean physiology only. This prevents
+    # target attacks from influencing either the feature transform or model.
+    source_scaler = RobustScaler(quantile_range=(10.0, 90.0)).fit(
+        source_genuine.values
+    )
+    source_x = np.concatenate([
+        source_scaler.transform(source_induced.values),
+        source_scaler.transform(source_genuine.values),
+    ])
+    source_y = np.concatenate([
+        np.ones(len(source_induced.values)),
+        np.zeros(len(source_genuine.values)),
+    ])
+    model = LogisticRegression(
+        C=c, class_weight="balanced", max_iter=2000, random_state=seed,
+    ).fit(source_x, source_y)
+
+    target_sets = {
+        label: _sets(chunk, fs) for label, chunk in target_eval_chunks.items()
+    }
+    target_genuine = _concat(
+        [pair[1] for pair in target_sets.values()], deduplicate=True
+    )
+    records: dict[str, list[dict]] = {label: [] for label in target_eval_chunks}
+
+    for outer in range(n_folds):
+        calibration = (outer + 1) % n_folds
+        cal_gen = target_genuine.trial_index % n_folds == calibration
+        if not cal_gen.any():
+            continue
+        target_scaler = RobustScaler(quantile_range=(10.0, 90.0)).fit(
+            target_genuine.values[cal_gen]
+        )
+        calibration_scores = model.decision_function(
+            target_scaler.transform(target_genuine.values[cal_gen])
+        )
+        thresholds = {
+            float(fpr): _threshold(calibration_scores, float(fpr)) for fpr in fprs
+        }
+
+        for label, (induced, genuine) in target_sets.items():
+            ind_test = induced.trial_index % n_folds == outer
+            gen_test = genuine.trial_index % n_folds == outer
+            if not ind_test.any() or not gen_test.any():
+                continue
+            ind_scores = model.decision_function(
+                target_scaler.transform(induced.values[ind_test])
+            )
+            gen_scores = model.decision_function(
+                target_scaler.transform(genuine.values[gen_test])
+            )
+            scores = np.concatenate([ind_scores, gen_scores])
+            labels = np.concatenate([
+                np.ones(len(ind_scores)), np.zeros(len(gen_scores)),
+            ])
+            row = {
+                "fold": outer,
+                "calibration_fold": calibration,
+                "auc": float(roc_auc_score(labels, scores)),
+                "n_induced": int(len(ind_scores)),
+                "n_genuine": int(len(gen_scores)),
+                "n_calibration_genuine": int(cal_gen.sum()),
+            }
+            for fpr, threshold in thresholds.items():
+                suffix = str(fpr).replace(".", "p")
+                row[f"threshold_{suffix}"] = threshold
+                row[f"tpr_{suffix}"] = float(np.mean(ind_scores >= threshold))
+                row[f"far_{suffix}"] = float(np.mean(gen_scores >= threshold))
+            records[label].append(row)
+
+    summary = {}
+    for label, rows in records.items():
+        item = {"folds": rows, "auc": float("nan"), "n_folds": len(rows)}
+        if rows:
+            item["auc"] = float(np.mean([row["auc"] for row in rows]))
+            for fpr in fprs:
+                suffix = str(float(fpr)).replace(".", "p")
+                item[f"tpr_{suffix}"] = float(
+                    np.mean([row[f"tpr_{suffix}"] for row in rows])
+                )
+                item[f"far_{suffix}"] = float(
+                    np.mean([row[f"far_{suffix}"] for row in rows])
+                )
+        summary[label] = item
+    return summary

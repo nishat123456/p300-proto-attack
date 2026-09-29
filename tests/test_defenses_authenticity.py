@@ -3,6 +3,7 @@ import numpy as np
 from p3a.defenses import artifacts as art
 from p3a.defenses.authenticity import (
     authenticity_features,
+    cross_subject_authenticity,
     cross_validate_authenticity,
 )
 
@@ -48,3 +49,34 @@ def test_nested_authenticity_evaluation_reports_calibrated_operating_points(tmp_
             assert 0.0 <= record[f"far_{suffix}"] <= 1.0
         for fold in record["folds"]:
             assert fold["fold"] != fold["calibration_fold"]
+
+
+def test_cross_subject_evaluation_uses_clean_target_calibration(tmp_path):
+    source = _combos(tmp_path / "source")
+    methods = [
+        ("pgd", "none", "none", 1.0),
+        ("target_only", "signal", "cross_subject", 1.0),
+        ("noise", "none", "none", 1.0),
+        ("tiny_noise", "none", "none", 1.0),
+    ]
+    write_subject(tmp_path / "target", "B", n_trials=20, n_targets=2,
+                  methods=methods, eps=(0.2,), seed=9)
+    target = {
+        spec.label: art.combo_to_inputs(
+            art.load_combo(tmp_path / "target", "B", spec)
+        )
+        for spec in art.available_combos(tmp_path / "target", "B")
+    }
+    pool = [value for key, value in source.items()
+            if key.startswith(("pgd_", "target_only_", "noise_"))]
+    result = cross_subject_authenticity(pool, target, n_folds=5, seed=3)
+    assert set(result) == set(target)
+    for record in result.values():
+        assert record["n_folds"] == 5
+        assert np.isfinite(record["auc"])
+        for fold in record["folds"]:
+            assert fold["fold"] != fold["calibration_fold"]
+            assert fold["n_calibration_genuine"] == 4
+            for suffix in ("0p01", "0p05", "0p1"):
+                assert 0.0 <= fold[f"tpr_{suffix}"] <= 1.0
+                assert 0.0 <= fold[f"far_{suffix}"] <= 1.0
