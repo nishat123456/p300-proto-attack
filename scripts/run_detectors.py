@@ -171,7 +171,7 @@ def run_subject(args) -> dict:
                 inputs.attacked_erp, inputs.true_idx, inputs.target_idx,
                 templates, args.fs_out, channel_map,
             )
-            for row, record in zip(_manifest_rows(combos[spec]), records):
+            for row, record in zip(_manifest_rows(combos[spec], spec), records):
                 row.update(record)
                 row["channel_map_source"] = channel_map.source
                 row["pz_index"] = channel_map.pz_index
@@ -229,10 +229,14 @@ def _detector_row(spec, detector, auc_value, tpr, far, folds, model_kind=None):
     }
 
 
-def _manifest_rows(inputs):
+def _manifest_rows(inputs, spec):
     """Per-sample identity rows aligned with the flattened attack arrays."""
     n = len(inputs.trial_index)
     return [{
+        "subject": str(spec.subject).upper(),
+        "method": spec.method,
+        "generator": spec.generator,
+        "bank": spec.bank,
         "trial_index": int(inputs.trial_index[i]),
         "trial_id": str(inputs.trial_id[i]),
         "true_idx": int(inputs.true_idx[i]),

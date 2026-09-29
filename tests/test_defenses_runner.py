@@ -65,7 +65,8 @@ def test_run_detectors_writes_both_csvs(tmp_path):
     assert len(plausibility) == n_samples
     assert {"waveform_corr_pz", "waveform_corr_cz", "p300_latency_ms",
             "p300_amplitude", "topography_corr", "psd_distance_db",
-            "channel_map_source", "target_symbol"} <= set(plausibility.columns)
+            "channel_map_source", "target_symbol", "subject", "method",
+            "generator", "bank"} <= set(plausibility.columns)
 
 
 def test_run_detectors_config_records_channel_map(tmp_path):
