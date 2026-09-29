@@ -31,4 +31,27 @@ Per-subject results; bootstrap 95% CIs (2000 resamples over trials); paired Wilc
 - If the defense also fails on its training attack families (TPR at 5% FPR < 0.5): stop and reassess.
 
 ## Amendments
-_None yet._
+
+### 2026-09-29: post-hoc authenticity-defense rescue
+
+The original kill test was unblinded before this amendment. H1 failed and the
+original H2 implementation produced held-out clean false-alarm rates near 50
+percent despite selecting its threshold for 5 percent on the training fold.
+The following analysis is explicitly exploratory and does not replace the
+pre-registered H1 or H2 result.
+
+Before running the rescue, we fixed an interpretable authenticity detector with
+temporal-shape, P300-window, spatial-dispersion, spectral, and repeat-consistency
+features. Evaluation uses five folds defined by test trial index modulo five.
+For outer fold k, fold (k+1) modulo five contains genuine calibration samples
+only, the remaining three folds fit an L2 logistic regression with C=0.1 and
+balanced classes, and fold k is evaluated. Thresholds are fixed from the clean
+calibration scores at nominal false-alarm rates 1, 5, and 10 percent. We report
+both calibrated held-out TPR and observed held-out clean FAR for every attack.
+
+The bounded rescue is viable only if both subjects have observed FAR no greater
+than 10 percent and median calibrated TPR on the registered training families
+no lower than 70 percent at the nominal 10 percent operating point. A stronger
+Q1-candidate signal requires observed FAR no greater than 5 percent and median
+TPR no lower than 80 percent on held-out attack families at the nominal 5
+percent point. Failure of the viability gate stops defense expansion.
