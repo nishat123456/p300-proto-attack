@@ -257,7 +257,9 @@ class GeneratorProvider(_DeltaProvider):
                 proto_feat, use_prototype=self.use_prototype, eps_mult=eps_mult_sub,
             )
         delta[index] = sub
-        ok[index] = True
+        # ``ok`` is a NumPy array. A CUDA tensor index asks NumPy to convert
+        # the device tensor and crashes; keep its indexing entirely on host.
+        ok[np.asarray(keep, dtype=np.int64)] = True
         distance_out[np.asarray(keep)] = np.asarray(distances, dtype=np.float64)
         return delta, distance_out, ok
 

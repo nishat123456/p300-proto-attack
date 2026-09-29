@@ -154,6 +154,35 @@ def copy_decoders(src: Path, dest: Path = OUT_DIR / "decoders") -> Path:
     return dest
 
 
+def restore_prior_output(input_root: Path = INPUT_ROOT,
+                         out_dir: Path = OUT_DIR) -> Path | None:
+    """Restore a prior failed shard output attached as a resume dataset.
+
+    A resumed Kaggle run starts with an empty writable directory. When an input
+    dataset contains an ``attacks`` or ``tiny_noise`` directory, copy its
+    kill-test files into the new output tree. Existing files win, so this is
+    safe to call on every run and the normal checkpoint checks skip completed
+    models and evaluation combinations.
+    """
+    input_root, out_dir = Path(input_root), Path(out_dir)
+    candidates = []
+    for child in input_root.rglob("*"):
+        if child.is_dir() and ((child / "attacks").is_dir()
+                               or (child / "tiny_noise").is_dir()
+                               or (child / "attacks_eval").is_dir()):
+            candidates.append(child)
+    if not candidates:
+        return None
+    # Prefer the richest candidate if nested directories happen to match.
+    source = max(candidates, key=lambda p: sum(1 for q in p.rglob("*") if q.is_file()))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name in ("attacks", "tiny_noise", "attacks_eval", "banks"):
+        src = source / name
+        if src.is_dir():
+            shutil.copytree(src, out_dir / name, dirs_exist_ok=True)
+    return source
+
+
 # --------------------------------------------------------------------------
 # Sharding plan
 # --------------------------------------------------------------------------
@@ -529,6 +558,9 @@ def main(argv=None) -> int:
             decoder_src = find_decoder_dir()
             _tee(f"found decoder checkpoints at {decoder_src}", handle)
             decoder_dir = copy_decoders(decoder_src)
+            resume_src = restore_prior_output()
+            if resume_src is not None:
+                _tee(f"restored prior kill-test output from {resume_src}", handle)
 
             labels_dir = CODE_DIR / "data" / "raw" / "comp3"
             gen_methods = {

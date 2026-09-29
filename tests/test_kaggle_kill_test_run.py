@@ -90,6 +90,19 @@ def test_copy_decoders_only_copies_expected_suffixes(tmp_path):
     assert names == {"A_eegnet_s0.pt", "A_eegnet_s0.metrics.json"}
 
 
+def test_restore_prior_output_copies_checkpoints_and_artifacts(tmp_path):
+    prior = tmp_path / "input" / "resume" / "out" / "kill_test"
+    (prior / "attacks").mkdir(parents=True)
+    (prior / "attacks_eval" / "A").mkdir(parents=True)
+    (prior / "attacks" / "A_target_only_signal_cross_subject_s0.pt").write_text("ckpt")
+    (prior / "attacks_eval" / "A" / "clean.npz").write_text("artifact")
+    out = tmp_path / "working" / "out" / "kill_test"
+    source = run.restore_prior_output(tmp_path / "input", out)
+    assert source == prior
+    assert (out / "attacks" / "A_target_only_signal_cross_subject_s0.pt").is_file()
+    assert (out / "attacks_eval" / "A" / "clean.npz").is_file()
+
+
 def test_install_editable_invokes_pip(tmp_path, monkeypatch):
     calls = []
     monkeypatch.setattr(run.subprocess, "run", lambda cmd, check: calls.append((cmd, check)))
