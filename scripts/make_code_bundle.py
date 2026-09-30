@@ -58,6 +58,7 @@ REQUIRED_FILES = (
     "src/p3a/__init__.py",
     "src/p3a/models/speller.py",
     "scripts/train_all_decoders.py",
+    "scripts/evaluate_bnci_clean_far.py",
     "scripts/train_decoder.py",
     "splits/comp3_A.json",
     "splits/comp3_B.json",
