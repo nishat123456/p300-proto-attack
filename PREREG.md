@@ -115,3 +115,21 @@ sample count and observed FAR per subject, without claiming a precise 5% FAR
 guarantee or attack TPR. The original calibration-fit behavior is preserved as
 the CLI default. All tests and processing run on Kaggle. BNCI2015-003 stays
 locked. This isolates a fitting-stage issue; it is not claimed as a novel method.
+
+### 2026-10-04: fixed feature-baseline development diagnostic
+
+After the independent-normalization BNCI audit failed, compare three fixed
+conventional scorers on inspected Comp III feature exports: logistic C=0.1,
+random forest with 200 trees/minimum leaf 10/sqrt features/balanced classes,
+and clean-only Ledoit-Wolf Mahalanobis distance. Seed 20261004. No target attack
+is used for fitting or hyperparameter choice. Target normalization uses the
+three genuine folds excluding evaluation and threshold-calibration folds.
+Thresholds retain the existing empirical quantile at nominal 1/5/10 percent.
+All attack/budget identities remain separate; report all rows and AUC plus
+observed FAR/TPR, including held-out Tiny Noise and prototype variants.
+No winner is claimed as a confirmed method from these unblinded development
+results. This diagnoses nonlinear separability and conventional anomaly
+baselines; it is not a reproduction of Chen/Wu's network-feature detector.
+Their study already evaluates EEG detector approaches, so this comparison is
+not claimed as novel: https://arxiv.org/abs/2212.00727
+All tests/computation run on Kaggle; BNCI2015-003 stays locked.

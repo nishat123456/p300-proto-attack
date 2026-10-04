@@ -263,7 +263,8 @@ def cross_subject_authenticity(source_pool: list[AttackInputs],
 
 
 def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
-                               n_folds=DEFAULT_FOLDS, seed=0, c=0.1):
+                               n_folds=DEFAULT_FOLDS, seed=0, c=0.1,
+                               model_kind="logistic", independent_normalization=False):
     """Evaluate exported features with the same clean-only fitting protocol."""
     if n_folds < 2 or not source_pairs or not target_sets:
         raise ValueError("need source and target sets and at least two folds")
@@ -285,9 +286,8 @@ def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
         np.ones(len(source_induced.values)),
         np.zeros(len(source_genuine.values)),
     ])
-    model = LogisticRegression(
-        C=c, class_weight="balanced", max_iter=2000, random_state=seed,
-    ).fit(source_x, source_y)
+    from p3a.defenses.feature_baselines import fit_detector
+    model = fit_detector(model_kind, source_x, source_y, seed, c)
 
     target_genuine = _concat(
         [pair[1] for pair in target_sets.values()], deduplicate=True
@@ -299,8 +299,14 @@ def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
         cal_gen = target_genuine.trial_index % n_folds == calibration
         if not cal_gen.any():
             continue
+        norm_gen = cal_gen
+        if independent_normalization:
+            if n_folds < 3:
+                raise ValueError("independent normalization needs at least three folds")
+            norm_gen = ((target_genuine.trial_index % n_folds != outer) &
+                        (target_genuine.trial_index % n_folds != calibration))
         target_scaler = RobustScaler(quantile_range=(10.0, 90.0)).fit(
-            target_genuine.values[cal_gen]
+            target_genuine.values[norm_gen]
         )
         calibration_scores = model.decision_function(
             target_scaler.transform(target_genuine.values[cal_gen])
@@ -331,6 +337,7 @@ def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
                 "n_induced": int(len(ind_scores)),
                 "n_genuine": int(len(gen_scores)),
                 "n_calibration_genuine": int(cal_gen.sum()),
+                "n_normalization_genuine": int(norm_gen.sum()),
             }
             for fpr, threshold in thresholds.items():
                 suffix = str(fpr).replace(".", "p")
