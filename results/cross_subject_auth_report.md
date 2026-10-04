@@ -1,5 +1,10 @@
 # Cross-subject authenticity defense: exploratory Comp III result
 
+**Superseded on 2026-10-04:** budget-specific TPR claims in this historical report
+are invalid because attack labels omitted epsilon and overwrote feature sets.
+See `cross_subject_auth_v6_report.md` and corrected v6 artifacts. This file is
+preserved as an audit trail and must not be cited as verified budget performance.
+
 ## Status
 
 This is an exploratory development result on Competition III subjects A and B. It is not external validation and does not establish Q1 readiness. The frozen BNCI evaluation remains necessary.

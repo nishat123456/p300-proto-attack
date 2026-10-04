@@ -33,5 +33,8 @@ https://www.scitepress.org/publishedPapers/2026/148196/pdf/index.html
 
 ## Current correction status
 
-Code and regression test prepared. Historical cross-subject report remains an
-audit trail, not valid epsilon-specific evidence. Remote validation is pending.
+Correction v6 completed on Kaggle; 288 portable tests passed, including budget
+identity coverage. Corrected causal prototype detection at epsilon 0.2 is only
+12-13% A to B and 28-32% B to A at nominal 5% FAR. Current architecture must not
+be broadly expanded as a validated defense. See cross_subject_auth_v6_report.md
+for verified rows, provenance qualifications and calibration feasibility.
