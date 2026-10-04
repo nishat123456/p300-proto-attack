@@ -40,17 +40,19 @@ def main():
             file = row["file"]
             if Path(file).name != file:
                 raise ValueError("unsafe feature filename")
-            pairs[row["label"]] = (load_set(folder / file), genuine)
+            if file in pairs:
+                raise ValueError("duplicate feature filename")
+            pairs[file] = (load_set(folder / file), genuine)
         subjects[subject] = (manifest, pairs)
     rows, folds = [], {}
     for source, target in (("A", "B"), ("B", "A")):
         sm, sp = subjects[source]
         tm, tp = subjects[target]
-        pool = [sp[row.label] for row in sm.itertuples() if row.method in DEFAULT_TRAIN_POOL]
+        pool = [sp[row.file] for row in sm.itertuples() if row.method in DEFAULT_TRAIN_POOL]
         result = cross_subject_feature_sets(pool, tp, seed=a.seed)
         folds[source + "_to_" + target] = result
         for row in tm.to_dict("records"):
-            metrics = result[row["label"]]
+            metrics = result[row["file"]]
             for far in (0.01, 0.05, 0.1):
                 suffix = str(far).replace(".", "p")
                 rows.append(dict(source=source, target=target, method=row["method"],

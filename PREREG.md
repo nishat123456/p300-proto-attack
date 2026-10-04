@@ -83,3 +83,22 @@ median held-out-family TPR of at least 80 percent with no subject below 70
 percent, plus a defense-aware adaptive attack and clean spelling-cost analysis.
 If the frozen detector fails the Q2 gate on BNCI 2014-008, BNCI 2015-003 test
 outcomes will not be used for tuning.
+
+### 2026-10-04: defense-only scope and budget-identity correction
+
+The user selected a defense-led manuscript, with a one-week submission target.
+This is a target for preparation, not a guarantee of acceptance or publication.
+Existing attacks remain evaluation stress tests; no attack novelty is claimed.
+The original failed H1 result and prior calibration failures remain recorded.
+Before selecting a new method or research question, compare the closest existing
+defense studies and document the specific candidate gap.
+
+The exploratory cross-subject evaluator keyed feature sets by an attack label
+without epsilon. Multiple budget files overwrote one another, and the retained
+metrics were reused across budget rows. Source fitting also reused those sets.
+Historical budget-specific cross-subject claims are withdrawn pending rerun.
+The correction uses unique manifest filenames, rejects duplicate filenames,
+and has a regression test that verifies distinct source and evaluation budgets.
+All tests and corrected evaluation run on Kaggle. Previously inspected data
+remain development evidence. BNCI2015-003 remains locked. Existing scientific
+gates are unchanged, and no positive result or journal quartile is guaranteed.
