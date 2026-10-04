@@ -102,3 +102,16 @@ and has a regression test that verifies distinct source and evaluation budgets.
 All tests and corrected evaluation run on Kaggle. Previously inspected data
 remain development evidence. BNCI2015-003 remains locked. Existing scientific
 gates are unchanged, and no positive result or journal quartile is guaranteed.
+
+### 2026-10-04: independent-normalization clean-only repair audit
+
+The prior BNCI2014-008 clean outcomes are already known. This diagnostic is
+exploratory, not fresh external confirmation or a replacement primary outcome.
+Keep all frozen splits, source model settings and seed unchanged. Fit target
+preprocessing and feature normalization on the 24 training characters; select
+the empirical 5% threshold using only five validation characters; inspect six
+test characters. Do not tune on this repeat's outcomes. Report normalization
+sample count and observed FAR per subject, without claiming a precise 5% FAR
+guarantee or attack TPR. The original calibration-fit behavior is preserved as
+the CLI default. All tests and processing run on Kaggle. BNCI2015-003 stays
+locked. This isolates a fitting-stage issue; it is not claimed as a novel method.

@@ -80,20 +80,33 @@ def clean_features(trials, fit_trials, seed: int) -> np.ndarray:
     return authenticity_features(np.stack(erps), np.stack(windows), pre.fs_out)
 
 
-def evaluate_subject(model, trials, split, nominal_far: float, seed: int) -> dict:
+def evaluate_subject(model, trials, split, nominal_far: float, seed: int,
+                     normalization_fit: str = "calibration") -> dict:
     by_id = {trial.trial_id: trial for trial in trials}
     calibration = [by_id[key] for key in split["val"]]
     test = [by_id[key] for key in split["test"]]
-    values = clean_features(calibration + test, calibration, seed)
-    cal, held = values[:len(calibration)], values[len(calibration):]
-    target_scaler = RobustScaler(quantile_range=(10.0, 90.0)).fit(cal)
+    if normalization_fit not in ("train", "calibration"):
+        raise ValueError("normalization_fit must be train or calibration")
+    fitting = ([by_id[key] for key in split["train"]]
+               if normalization_fit == "train" else calibration)
+    if not fitting or not calibration or not test:
+        raise ValueError("normalization, calibration and test sets must be nonempty")
+    if normalization_fit == "train" and (set(split["train"]) &
+                                         (set(split["val"]) | set(split["test"]))):
+        raise ValueError("normalization trials must be disjoint from calibration/test")
+    values = clean_features(fitting + calibration + test, fitting, seed)
+    norm = values[:len(fitting)]
+    cal = values[len(fitting):len(fitting) + len(calibration)]
+    held = values[len(fitting) + len(calibration):]
+    target_scaler = RobustScaler(quantile_range=(10.0, 90.0)).fit(norm)
     cal_scores = model.decision_function(target_scaler.transform(cal))
     test_scores = model.decision_function(target_scaler.transform(held))
     threshold = _threshold(cal_scores, nominal_far)
     return {"subject": trials[0].subject_id, "nominal_far": nominal_far,
             "observed_far": float(np.mean(test_scores >= threshold)),
             "n_calibration": len(calibration), "n_test": len(test),
-            "threshold": threshold}
+            "threshold": threshold, "normalization_fit": normalization_fit,
+            "n_normalization": len(fitting)}
 
 
 def main(argv=None):
@@ -104,6 +117,8 @@ def main(argv=None):
     p.add_argument("--out-dir", required=True)
     p.add_argument("--seed", type=int, default=20260929)
     p.add_argument("--nominal-far", type=float, default=0.05)
+    p.add_argument("--normalization-fit", choices=("train", "calibration"),
+                   default="calibration")
     args = p.parse_args(argv)
     set_seed(args.seed)
     root, out = Path(args.data_root), Path(args.out_dir)
@@ -118,13 +133,16 @@ def main(argv=None):
         trials = load_subject(root, subject)
         payload = json.loads((Path(args.splits_dir) / f"bnci2014_008_{subject}.json").read_text())
         rows.append(evaluate_subject(model, trials, payload["split"],
-                                     args.nominal_far, args.seed + index * 1000))
+                                     args.nominal_far, args.seed + index * 1000,
+                                     args.normalization_fit))
     frame = pd.DataFrame(rows)
     frame.to_csv(out / "bnci2014_008_clean_far.csv", index=False)
     passed = bool((frame.observed_far <= 0.05).all())
     report = {"stage": "clean-only external calibration gate",
               "attack_tpr_evaluated": False, "gate_far_le_0p05_all_subjects": passed,
-              "subjects": rows, "provenance": environment(args.seed)}
+              "subjects": rows, "config": vars(args),
+              "status": "exploratory clean-only repair; previously inspected dataset",
+              "provenance": environment(args.seed)}
     (out / "bnci2014_008_clean_far.json").write_text(json.dumps(report, indent=2) + "\n")
     (out / "bnci2014_008_clean_far.md").write_text(
         "# BNCI 2014-008 clean FAR gate\n\n" +
