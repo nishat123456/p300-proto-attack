@@ -24,6 +24,8 @@ def parse_args(argv=None):
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--fs-out", type=float, default=60.0)
     parser.add_argument("--seed", type=int, default=20260929)
+    parser.add_argument("--representation", choices=("summary", "channel_time"),
+                        default="summary")
     return parser.parse_args(argv)
 
 
@@ -48,7 +50,12 @@ def run(args):
     genuine_written = False
     for index, spec in enumerate(specs):
         inputs = art.combo_to_inputs(art.load_combo(root, subject, spec))
-        induced, genuine = extract_authenticity_sets(inputs, args.fs_out)
+        representation = getattr(args, "representation", "summary")
+        if representation == "channel_time":
+            from p3a.defenses.spatiotemporal_features import extract_rich_sets
+            induced, genuine = extract_rich_sets(inputs, args.fs_out)
+        else:
+            induced, genuine = extract_authenticity_sets(inputs, args.fs_out)
         if not genuine_written:
             _save(out / "genuine.npz", genuine)
             genuine_written = True
@@ -64,12 +71,18 @@ def run(args):
             "file": filename,
             "n_induced": len(induced.values),
             "n_features": induced.values.shape[1],
+            "representation": representation,
+            "n_channels": inputs.attacked_erp.shape[1],
+            "erp_samples": inputs.attacked_erp.shape[2],
         })
     pd.DataFrame(rows).to_csv(out / "manifest.csv", index=False)
     write_config(out, "feature_export.config.json", {
         "subject": subject,
         "seed": args.seed,
         "fs_out": args.fs_out,
+        "representation": getattr(args, "representation", "summary"),
+        "channel_order": "retained artifact channel index; no cross-montage mapping",
+        "time_bins": 12 if getattr(args, "representation", "summary") == "channel_time" else 0,
         "n_combos": len(rows),
         "contents": "engineered features and identifiers only; no raw EEG",
     })

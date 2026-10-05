@@ -154,3 +154,20 @@ window order using synthetic inputs on Kaggle. This tests lost identity/order,
 not whether a new representation improves detection. No replacement method is
 selected. Prior EEG detector work already exists (Chen/Wu, JNE 2024); report
 this as development diagnosis, not novelty. BNCI2015-003 remains locked.
+
+### 2026-10-04: bounded channel/time representation diagnostic
+
+Prior-work review confirms EEG adversarial detectors and spatial/temporal EEG
+processing already exist (Chen/Wu JNE 2024, Tiny Noise NSR 2021, cybersecure
+fake-P300 defense 2021). No first-spatial-defense or new-method claim is made.
+Export existing summary features plus 12 chronological averaged-ERP bins per
+channel, preserving artifact channel indices. This is an ablation of lost
+channel/time identity, not individual-flash or repetition-sequence recovery.
+Keep all channels; no label-based electrode/time selection. Original summary
+features remain the paired control. Fixed logistic C=0.1, source training pool,
+independent target normalization/calibration/evaluation folds, all budget/attack
+identities and seed 20260929 are retained for subsequent comparison. Export
+derived features only; raw waveforms remain on their existing Kaggle accounts.
+No raw EEG is downloaded. Cross-montage transfer is not tested by this ablation.
+This is exploratory inspected Comp III development; no target-output tuning
+or confirmation claim. Tests/processing run on Kaggle. BNCI2015-003 stays locked.
