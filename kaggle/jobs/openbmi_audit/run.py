@@ -51,7 +51,7 @@ def main():
     base='https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100542/'
     config=dict(seed=args.seed, subjects=[1], sessions=[1,2],
                 selection='fixed first subject, both sessions; no outcome-based selection',
-                source_commit='filled_in_exact_runner_commit_record', python=platform.python_version(),
+                source_commit='09499cf', runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), python=platform.python_version(),
                 stage='metadata and sample size only; no attack or detector evaluation',
                 reference='MOABB Lee2019_ERP documentation; nasion reference documented, not measured',
                 no_raw_output=True, frozen_splits_untouched=True)
