@@ -1,0 +1,1 @@
+Metadata-only audit completed. Character-block and stimulus membership reconstruction remains unresolved; no compatibility or performance guarantee. All calculations executed on Kaggle. Raw EEG removed from working storage after inspection. BNCI2015-003 was not accessed.
