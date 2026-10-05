@@ -171,3 +171,18 @@ derived features only; raw waveforms remain on their existing Kaggle accounts.
 No raw EEG is downloaded. Cross-montage transfer is not tested by this ablation.
 This is exploratory inspected Comp III development; no target-output tuning
 or confirmation claim. Tests/processing run on Kaggle. BNCI2015-003 stays locked.
+
+### 2026-10-05: OpenBMI metadata and sample-size feasibility audit
+
+Fixed subject1, sessions1 and2, both official ERP phases. This subset is selected
+by index before outcomes, not by decoding or detection performance. Kaggle-only
+audit retrieves public source files in cloud working storage, records hashes,
+schema, channel metadata, event alignment and documented versus inferred
+60-flash block counts. Do not treat inferred blocks or Target/NonTarget labels
+as verified symbol membership or independent decision identifiers. No attack,
+detector fitting or performance evaluation occurs. Raw EEG is never downloaded
+locally or copied into output artifacts. Report IID zero-alarm confidence bounds
+and exchangeable rank resolution as design assumptions, not EEG guarantees.
+Only focused audit assertions execute; this is not a full-repository test run.
+Existing frozen splits/gates unchanged and BNCI2015-003 remains locked. Source
+metadata: official MOABB Lee2019_ERP documentation and public OpenBMI deposit.
