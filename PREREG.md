@@ -186,3 +186,14 @@ and exchangeable rank resolution as design assumptions, not EEG guarantees.
 Only focused audit assertions execute; this is not a full-repository test run.
 Existing frozen splits/gates unchanged and BNCI2015-003 remains locked. Source
 metadata: official MOABB Lee2019_ERP documentation and public OpenBMI deposit.
+
+### 2026-10-05: OpenBMI ordering and decision-identity follow-up
+
+Keep fixed subject1 and both sessions. Kaggle-only metadata diagnostics inspect
+onset duplicates, class-run storage order, stable chronological gap summaries,
+label vocabulary, strict indexing bounds and target counts in inferred60-flash
+blocks. Sorting is diagnostic, not a validated loader transformation. No symbol
+mapping is invented from Target/NonTarget labels; no attack/defense evaluation
+runs. Raw EEG remains cloud-only, compact summaries only are retrieved. Existing
+splits/gates unchanged and BNCI2015-003 stays locked. Original OpenBMI toolbox
+and GigaScience documentation are references, not code copied into our runner.
