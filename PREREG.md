@@ -133,3 +133,12 @@ baselines; it is not a reproduction of Chen/Wu's network-feature detector.
 Their study already evaluates EEG detector approaches, so this comparison is
 not claimed as novel: https://arxiv.org/abs/2212.00727
 All tests/computation run on Kaggle; BNCI2015-003 stays locked.
+
+### 2026-10-04: baseline diagnostic seed deviation disclosure
+
+After outputs were available, inspection found the inherited Kaggle runner
+explicitly passed seed 20260929 rather than the amendment/default 20261004.
+The completed v2 comparison is therefore a disclosed protocol deviation and
+exploratory diagnostic, not an exact amended-seed run. Preserve its outputs
+and report their actual configuration; do not select a winning method or
+claim confirmation from these results. Existing gates remain unchanged.
