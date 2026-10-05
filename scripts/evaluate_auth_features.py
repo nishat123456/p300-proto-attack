@@ -9,13 +9,13 @@ from p3a.defenses.genuine_vs_induced import DEFAULT_TRAIN_POOL
 from p3a.utils.repro import environment
 
 
-def load_set(path):
+def load_set(path, expected_features=36):
     with np.load(path, allow_pickle=False) as data:
         if set(data.files) != {"values", "trial_index", "trial_id"}:
             raise ValueError("unexpected feature payload")
         x = data["values"]
         ids, indices = data["trial_id"], data["trial_index"]
-        if x.ndim != 2 or x.shape[1] != 36 or not np.isfinite(x).all():
+        if x.ndim != 2 or x.shape[1] != expected_features or not np.isfinite(x).all():
             raise ValueError("invalid engineered feature array")
         if len(x) != len(ids) or len(x) != len(indices):
             raise ValueError("unaligned feature identifiers")

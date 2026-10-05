@@ -15,6 +15,9 @@ def main():
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--seed", type=int, default=20261004)
     parser.add_argument("--score-diagnostics", action="store_true")
+    parser.add_argument("--feature-dimension", type=int, default=36)
+    parser.add_argument("--models", nargs="+", choices=("logistic", "forest", "mahalanobis"),
+                        default=["logistic", "forest", "mahalanobis"])
     args = parser.parse_args()
     root, out = Path(args.root), Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -22,20 +25,20 @@ def main():
     for subject in ("A", "B"):
         folder = root / subject
         manifest = pd.read_csv(folder / "manifest.csv")
-        genuine = load_set(folder / "genuine.npz")
+        genuine = load_set(folder / "genuine.npz", args.feature_dimension)
         pairs = {}
         for row in manifest.to_dict("records"):
             name = row["file"]
             if Path(name).name != name or name in pairs:
                 raise ValueError("unsafe or duplicate feature identity")
-            pairs[name] = (load_set(folder / name), genuine)
+            pairs[name] = (load_set(folder / name, args.feature_dimension), genuine)
         sets[subject] = manifest, pairs
     rows, details = [], {}
     for source, target in (("A", "B"), ("B", "A")):
         sm, sp = sets[source]
         tm, tp = sets[target]
         pool = [sp[row.file] for row in sm.itertuples() if row.method in DEFAULT_TRAIN_POOL]
-        for kind in ("logistic", "forest", "mahalanobis"):
+        for kind in args.models:
             result = cross_subject_feature_sets(
                 pool, tp, seed=args.seed, model_kind=kind,
                 independent_normalization=True,
@@ -58,6 +61,7 @@ def main():
         normalization="three genuine folds; distinct threshold and evaluation folds",
         status="exploratory fixed diagnostic; no novelty or confirmation claim",
         score_diagnostics=args.score_diagnostics,
+        models=args.models, feature_dimension=args.feature_dimension,
         provenance=environment(args.seed)), indent=2))
 
 
