@@ -142,3 +142,15 @@ The completed v2 comparison is therefore a disclosed protocol deviation and
 exploratory diagnostic, not an exact amended-seed run. Preserve its outputs
 and report their actual configuration; do not select a winning method or
 claim confirmation from these results. Existing gates remain unchanged.
+
+### 2026-10-04: score and information-loss audit
+
+Instrument the fixed comparison with per-fold calibration/clean/induced score
+quantiles, extrema, threshold values, exceedance counts and ties. Keep the actual
+completed v2 seed 20260929 and every model/fold/budget setting unchanged to
+isolate instrumentation. No threshold is changed or chosen from attack scores.
+Test the existing feature extractor's invariance to electrode permutation and
+window order using synthetic inputs on Kaggle. This tests lost identity/order,
+not whether a new representation improves detection. No replacement method is
+selected. Prior EEG detector work already exists (Chen/Wu, JNE 2024); report
+this as development diagnosis, not novelty. BNCI2015-003 remains locked.

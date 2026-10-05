@@ -14,6 +14,7 @@ def main():
     parser.add_argument("--root", required=True)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--seed", type=int, default=20261004)
+    parser.add_argument("--score-diagnostics", action="store_true")
     args = parser.parse_args()
     root, out = Path(args.root), Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -38,6 +39,7 @@ def main():
             result = cross_subject_feature_sets(
                 pool, tp, seed=args.seed, model_kind=kind,
                 independent_normalization=True,
+                score_diagnostics=args.score_diagnostics,
             )
             details[f"{source}_to_{target}_{kind}"] = result
             for row in tm.to_dict("records"):
@@ -55,6 +57,7 @@ def main():
         seed=args.seed, logistic_c=0.1, forest_trees=200, forest_min_leaf=10,
         normalization="three genuine folds; distinct threshold and evaluation folds",
         status="exploratory fixed diagnostic; no novelty or confirmation claim",
+        score_diagnostics=args.score_diagnostics,
         provenance=environment(args.seed)), indent=2))
 
 

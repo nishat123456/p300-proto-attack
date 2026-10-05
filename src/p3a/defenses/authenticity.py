@@ -264,7 +264,8 @@ def cross_subject_authenticity(source_pool: list[AttackInputs],
 
 def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
                                n_folds=DEFAULT_FOLDS, seed=0, c=0.1,
-                               model_kind="logistic", independent_normalization=False):
+                               model_kind="logistic", independent_normalization=False,
+                               score_diagnostics=False):
     """Evaluate exported features with the same clean-only fitting protocol."""
     if n_folds < 2 or not source_pairs or not target_sets:
         raise ValueError("need source and target sets and at least two folds")
@@ -339,6 +340,13 @@ def cross_subject_feature_sets(source_pairs, target_sets, fprs=DEFAULT_FPRS,
                 "n_calibration_genuine": int(cal_gen.sum()),
                 "n_normalization_genuine": int(norm_gen.sum()),
             }
+            if score_diagnostics:
+                from p3a.defenses.feature_baselines import score_summary
+                row["score_diagnostics"] = {
+                    "calibration": score_summary(calibration_scores, thresholds),
+                    "genuine": score_summary(gen_scores, thresholds),
+                    "induced": score_summary(ind_scores, thresholds),
+                }
             for fpr, threshold in thresholds.items():
                 suffix = str(fpr).replace(".", "p")
                 row[f"threshold_{suffix}"] = threshold

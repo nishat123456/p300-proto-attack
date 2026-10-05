@@ -49,3 +49,20 @@ def test_normalization_excludes_calibration_and_evaluation(monkeypatch):
         assert len(fitted_indices) == 15
         assert not np.any(fitted_indices % 5 == outer)
         assert not np.any(fitted_indices % 5 == (outer+1) % 5)
+
+
+def test_score_summary_separates_ties_from_strict_exceedances():
+    from p3a.defenses.feature_baselines import score_summary
+    result = score_summary(np.array([0.1, 0.5, 0.5, 0.8]), {0.05: 0.5})
+    assert result["thresholds"]["0.05"] == {
+        "value": 0.5, "n_ge": 3, "n_gt": 1, "n_equal": 2}
+
+
+def test_current_features_discard_channel_identity_and_window_order():
+    from p3a.defenses.authenticity import authenticity_features
+    rng = np.random.default_rng(8)
+    erp = rng.normal(size=(3, 4, 48)).astype(np.float32)
+    windows = rng.normal(size=(3, 5, 4, 30)).astype(np.float32)
+    original = authenticity_features(erp, windows)
+    permuted = authenticity_features(erp[:, ::-1], windows[:, ::-1, ::-1])
+    assert np.allclose(original, permuted, atol=1e-5)
