@@ -237,3 +237,13 @@ subjects by performance. Trial identity includes session. No frozen splits
 created/changed, no decoder/defense fitting. Timestamp reversal physical cause
 remains unresolved; candidate cannot be labeled deployed/all-subject validated.
 All tests/processing Kaggle-only; raw EEG/code tree excluded from retrieval.
+
+### 2026-10-12: approved loader contract and sample-design cloud validation
+
+User approved exact private source/scripts/tests payload to private Kaggle job
+mustaqimnishat/p3a-openbmi-contract-design. Run portable suite with documented
+raw/path exclusions. Compute one-sided95% exact bounds0/1/2 alarms and chance of
+upper5% certification at IID rates1/3/5%, fixed n6/20/33/36/59/69/100/200/500.
+Design sensitivity only, no EEG processing/model performance or frozen allocation.
+All tests/calculations on Kaggle; compact outputs only. Existing gates/splits and
+BNCI2015-003 lock unchanged.
