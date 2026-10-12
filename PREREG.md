@@ -197,3 +197,13 @@ mapping is invented from Target/NonTarget labels; no attack/defense evaluation
 runs. Raw EEG remains cloud-only, compact summaries only are retrieved. Existing
 splits/gates unchanged and BNCI2015-003 stays locked. Original OpenBMI toolbox
 and GigaScience documentation are references, not code copied into our runner.
+
+### 2026-10-12: original OpenBMI schedule consistency audit
+
+Fixed subject1 both sessions, cloud-only. Inspect original random_cell_order.mat
+structure/coverage; compare known copy-spelling target labels with original and
+chronological event-order schedule interpretations, without fitting decoders.
+Count mismatches and within-block timing anomalies. Label agreement is necessary
+but not sufficient to establish physical flash identity or indexing origin.
+No memberships guessed, performance runs or frozen-file changes. Raw stays cloud;
+compact summaries only. BNCI2015-003 locked. Exact runner fingerprint recorded.
