@@ -207,3 +207,13 @@ Count mismatches and within-block timing anomalies. Label agreement is necessary
 but not sufficient to establish physical flash identity or indexing origin.
 No memberships guessed, performance runs or frozen-file changes. Raw stays cloud;
 compact summaries only. BNCI2015-003 locked. Exact runner fingerprint recorded.
+
+### 2026-10-12: timestamp reversal and epoch alignment audit
+
+Fixed subject1 both sessions. On Kaggle record original reversal positions and
+sample differences. Compare provided smt epochs to x[t+ival+shift] for fixed
+shifts-2,-1,0,1,2 and predeclared event indices0,1,59,60,last plus first3
+reversal starts. Original prep_segmentation uses MATLAB one-based indexing.
+Report errors/correlations without automatically choosing alignment or assuming
+provided epochs are unfiltered. No model tuning/performance evaluation. Existing
+gates/splits unchanged; BNCI2015-003 locked. Raw EEG never retrieved locally.
