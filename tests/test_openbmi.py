@@ -22,3 +22,18 @@ def test_rejects_invalid(kind):
     if kind=='labels': d['y_dec'][0]=1 if d['y_dec'][0]==2 else 2
     if kind=='end': d['x']=d['x'][:800]
     with pytest.raises(ValueError): build_trials(d,s,'A',1,1,'train')
+
+@pytest.mark.parametrize('kind',['fs_zero','fs_nan','label3','time_nan','fraction','channels','schedule_fraction','schedule_short','phrase'])
+def test_input_contract(kind):
+    d,s=fixture()
+    phrase='A'
+    if kind=='fs_zero': d['fs']=0
+    if kind=='fs_nan': d['fs']=float('nan')
+    if kind=='label3': d['y_dec'][0]=3
+    if kind=='time_nan': d['t']=d['t'].astype(float);d['t'][0]=float('nan')
+    if kind=='fraction': d['t']=d['t'].astype(float);d['t'][0]+=.5
+    if kind=='channels': d['chan']=['Cz']
+    if kind=='schedule_fraction': s=[a.astype(float) for a in s];s[0][0,0]=1.5
+    if kind=='schedule_short': s=s[:4]
+    if kind=='phrase': phrase='?'
+    with pytest.raises(ValueError): build_trials(d,s,phrase,1,1,'train')

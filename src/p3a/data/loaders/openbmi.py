@@ -7,6 +7,11 @@ LAYOUT = Layout('openbmi_schedule36','ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789_',6,6)
 
 
 def build_trials(data, schedule, phrase, subject, session, split):
+    if len(schedule)<5: raise ValueError('five schedule entries required')
+    for a in schedule[:5]:
+        a=np.asarray(a)
+        if a.shape!=(12,6) or not np.isfinite(a).all() or not np.all(a==np.floor(a)):
+            raise ValueError('finite integer12x6 schedule required')
     groups_raw=np.concatenate([np.asarray(a,dtype=int) for a in schedule[:5]],axis=0)
     if groups_raw.shape != (60,6) or groups_raw.min()<1 or groups_raw.max()>36:
         raise ValueError('invalid five-sequence schedule')
@@ -17,6 +22,13 @@ def build_trials(data, schedule, phrase, subject, session, split):
     if not np.all(groups.sum(axis=0)==10): raise ValueError('invalid symbol coverage')
     x=np.asarray(data['x']); t=np.asarray(data['t']).ravel()
     labels=np.asarray(data['y_dec']).ravel(); fs=float(data['fs'])
+    channels=[str(v) for v in np.asarray(data['chan']).ravel()]
+    if not np.isfinite(fs) or fs<=0: raise ValueError('positive finite sampling rate required')
+    if not phrase or any(c not in LAYOUT.symbols for c in phrase): raise ValueError('invalid phrase')
+    if x.ndim!=2 or x.shape[1]!=len(channels) or len(set(channels))!=len(channels):
+        raise ValueError('unaligned or duplicate channels')
+    if not np.isfinite(t).all() or not np.isin(labels,[1,2]).all():
+        raise ValueError('invalid event values or binary labels')
     if not np.all(t==np.floor(t)) or len(t)!=60*len(phrase) or len(labels)!=len(t):
         raise ValueError('unaligned integer event/character counts')
     t=t.astype(np.int64)-1
