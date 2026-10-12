@@ -217,3 +217,11 @@ reversal starts. Original prep_segmentation uses MATLAB one-based indexing.
 Report errors/correlations without automatically choosing alignment or assuming
 provided epochs are unfiltered. No model tuning/performance evaluation. Existing
 gates/splits unchanged; BNCI2015-003 locked. Raw EEG never retrieved locally.
+
+### 2026-10-12: constant-baseline alignment diagnostic
+
+Prior raw/smt slices mismatch. Keep same fixed offsets/events and compute
+per-channel temporal-mean-centered relative errors to isolate a constant offset.
+Kaggle-only, no model fitting or chosen alignment. A remaining discrepancy
+requires provenance/preprocessing review, not blind offset choice. Raw remains
+cloud; compact results only. Existing gates/splits and BNCI2015-003 lock retained.
