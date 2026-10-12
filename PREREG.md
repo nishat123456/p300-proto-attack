@@ -225,3 +225,15 @@ per-channel temporal-mean-centered relative errors to isolate a constant offset.
 Kaggle-only, no model fitting or chosen alignment. A remaining discrepancy
 requires provenance/preprocessing review, not blind offset choice. Raw remains
 cloud; compact results only. Existing gates/splits and BNCI2015-003 lock retained.
+
+### 2026-10-12: bounded OpenBMI loader candidate validation
+
+Preserve stored event order, original five-sequence schedule and documented
+MATLAB index conversion. Candidate constructs raw character trials with known
+copy-spelling targets and rejects count/label/schedule/boundary mismatches.
+Validate synthetic ordering/index/negative/duplicate/label/end-boundary tests
+on Kaggle, then predeclared subjects2/3 session1, both phases. Do not choose
+subjects by performance. Trial identity includes session. No frozen splits
+created/changed, no decoder/defense fitting. Timestamp reversal physical cause
+remains unresolved; candidate cannot be labeled deployed/all-subject validated.
+All tests/processing Kaggle-only; raw EEG/code tree excluded from retrieval.
