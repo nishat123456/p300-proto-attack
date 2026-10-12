@@ -51,7 +51,7 @@ def main():
     base='https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100542/'
     config=dict(seed=args.seed, subjects=[1], sessions=[1,2],
                 selection='fixed first subject, both sessions; no outcome-based selection',
-                source_commit='30011a1', runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), python=platform.python_version(),
+                source_commit='77ee691', runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), python=platform.python_version(),
                 stage='event ordering and identity metadata only; no performance evaluation',
                 reference='MOABB Lee2019_ERP documentation; nasion reference documented, not measured',
                 no_raw_output=True, frozen_splits_untouched=True)
@@ -68,10 +68,12 @@ def main():
         for item in cells.ravel():
             a=np.asarray(item)
             if a.ndim==2: schedule_rows.append(a.astype(int))
+    schedule_available_shapes=[list(a.shape) for a in schedule_rows]
+    schedule_rows=schedule_rows[:5]  # Original ERP_performance uses nSeq1..Nsequence=5.
     schedule_ok=bool(len(schedule_rows)==5 and all(a.shape==(12,6) and a.min()>=1 and a.max()<=36 for a in schedule_rows))
     if schedule_ok:
         schedule_ok=all(np.all(np.bincount(a.ravel(),minlength=37)[1:]==2) for a in schedule_rows)
-    config['schedule']=dict(url=schedule_url,sha256=hashlib.sha256(response.content).hexdigest(),keys=keys,valid_structure=schedule_ok,shapes=[list(a.shape) for a in schedule_rows])
+    config['schedule']=dict(url=schedule_url,sha256=hashlib.sha256(response.content).hexdigest(),keys=keys,available_shapes=schedule_available_shapes,selection='first five entries as original decoder Nsequence=5',valid_structure=schedule_ok,shapes=[list(a.shape) for a in schedule_rows])
     (out/'config.json').write_text(json.dumps(config,indent=2))
     records=[]
     for session in (1,2):
