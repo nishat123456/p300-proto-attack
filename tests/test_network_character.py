@@ -24,3 +24,18 @@ def test_character_selected_by_evidence_not_anomaly():
     r=predicted_character_score([0,4,0,4],[9,1,9,3],g)
     assert r['predicted_index']==1 and r['score']==2
     with pytest.raises(ValueError): predicted_character_score([0,1],[1,2],np.zeros((2,2),dtype=bool))
+
+def test_reference_adjustment_improves_linear_confidence_without_parameter_grads():
+    from p3a.defenses.network_reference_scores import NetworkMahalanobis
+    from p3a.defenses.network_character import mahalanobis_input_adjustment
+    class Linear(nn.Module):
+        def __init__(self):
+            super().__init__();self.encoder=nn.Flatten(start_dim=1)
+    m=Linear();m.train()
+    ref=NetworkMahalanobis().fit(np.array([[0,0],[.1,.1],[1,1],[1.1,1.1]]),[0,0,1,1])
+    x=torch.tensor([[[3.],[3.]]])
+    adjusted=mahalanobis_input_adjustment(m,x,ref,.01)
+    assert ref.score(adjusted.numpy().reshape(1,2))[0]<ref.score(x.numpy().reshape(1,2))[0]
+    assert m.training and not adjusted.requires_grad
+    assert torch.equal(mahalanobis_input_adjustment(m,x,ref,0),x)
+    with pytest.raises(ValueError): mahalanobis_input_adjustment(m,x,ref,-1)

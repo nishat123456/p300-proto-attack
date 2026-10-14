@@ -59,3 +59,26 @@ def predicted_character_score(flash_evidence,flash_anomaly,groups):
     symbol_evidence=(g.T@evidence)/g.sum(axis=0)
     predicted=int(np.argmax(symbol_evidence))
     return dict(predicted_index=predicted,score=float(anomaly[g[:,predicted]].mean()))
+
+
+def mahalanobis_input_adjustment(model,epochs,reference,epsilon):
+    """One reference-confidence gradient step, explicit caller-specified epsilon.
+
+    Calibration means this input adjustment, not a clean-FAR threshold fit.
+    Shared shrinkage covariance remains our documented family adaptation.
+    """
+    if not np.isfinite(epsilon) or epsilon<0: raise ValueError('finite nonnegative epsilon required')
+    flags=[(m,m.training) for m in model.modules()]
+    try:
+        model.eval()
+        x=epochs.detach().clone().requires_grad_(True)
+        features=model.encoder(x.unsqueeze(1))
+        means=torch.as_tensor(reference.means,device=x.device,dtype=x.dtype)
+        precision=torch.as_tensor(reference.precision,device=x.device,dtype=x.dtype)
+        delta=features[:,None,:]-means[None,:,:]
+        distances=torch.einsum('ncd,df,ncf->nc',delta,precision,delta).min(dim=1).values
+        gradient=torch.autograd.grad(distances.sum(),x)[0]
+        if not torch.isfinite(gradient).all(): raise ValueError('nonfinite confidence gradient')
+        return (x-epsilon*gradient.sign()).detach()
+    finally:
+        for m,flag in flags: m.training=flag
