@@ -247,3 +247,16 @@ upper5% certification at IID rates1/3/5%, fixed n6/20/33/36/59/69/100/200/500.
 Design sensitivity only, no EEG processing/model performance or frozen allocation.
 All tests/calculations on Kaggle; compact outputs only. Existing gates/splits and
 BNCI2015-003 lock unchanged.
+
+### 2026-10-14: development-only real-data network execution smoke
+
+Fixed subject1 session1 official training phase only. First10 characters fit
+EEGNet for2 epochs, next3 reference activations, next1 query. Provided baseline-
+adjusted epochs resampled1000->60Hz are an execution diagnostic, not final raw-
+injection preprocessing. Scaling fits training characters only. Smoke8 dropout
+draws/k20/epsilon.001 are fixed functionality settings, not benchmark choices.
+Exercise BU/LID/shared-shrinkage MD/confidence-adjusted MD and decoder-predicted
+character aggregation. Output finite/shape checks and provenance only, no
+accuracy/FAR/TPR/AUC, no evaluation subjects or model/checkpoint output. Portable
+tests run first on Kaggle. Raw stays cloud, compact JSON/log retrieval only;
+old gates/splits unchanged, BNCI2015-003 locked.
