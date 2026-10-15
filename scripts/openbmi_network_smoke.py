@@ -62,13 +62,31 @@ def main():
         schedule=loadmat(sp,simplify_cells=True)['rc_order'];rows=np.concatenate([np.asarray(z,dtype=int) for z in schedule[:5]])
         groups=np.zeros((60,36),dtype=bool)
         for i,row in enumerate(rows):groups[i,row-1]=True
+        from p3a.defenses.raw_detector_pipeline import RawDetectorPipeline
+        from p3a.attacks.adaptive_evasion import defense_aware_pgd
+        pipeline=RawDetectorPipeline(pre.to(device),model,torch.as_tensor(onsets[13],device=device).long().unsqueeze(0),
+            torch.as_tensor(groups,device=device).bool().unsqueeze(0),features,md.means,md.precision,20,8,a.seed,.001,
+            reference_labels=y[600:780].astype(int)).to(device)
+        query_raw=torch.as_tensor(trials[13],device=device).unsqueeze(0)
+        probe=query_raw.detach().clone().requires_grad_(True)
+        gradient=torch.autograd.grad(pipeline.score(probe,'md').sum(),probe)[0]
+        target=(pipeline.logits(query_raw).argmax(dim=1)+1)%36
+        budget=.01*float(np.median([t.std(axis=1).mean() for t in trials[:10]]))
+        delta=defense_aware_pgd(query_raw,target,pipeline.logits,lambda z:pipeline.score(z,'md'),0.,1.,budget,1.,2,1,a.seed)
+        raw_check=dict(finite=bool(torch.isfinite(delta).all()),within_budget=bool(delta.abs().max()<=budget+1e-6),
+            gradient_finite=bool(torch.isfinite(gradient).all()),gradient_nonzero=bool(gradient.abs().sum()>0),
+            raw_eps=budget,steps=2,restarts=1,scope='functionality only; artificial threshold0/scale1, not calibrated security evaluation')
+        if not all(raw_check[k] for k in ('finite','within_budget','gradient_finite','gradient_nonzero')):raise RuntimeError('raw adaptive integration failed')
+        scores['kde']=pipeline.score(query_raw,'kde').detach().cpu().numpy()
+        # KDE is a character-level smoke check, unlike the per-flash paths above.
+        kde_character_finite=bool(np.isfinite(scores.pop('kde')).all())
         model.eval()
         with torch.no_grad(): evidence=model(query).cpu().numpy()
         checks={name:dict(n_flash_scores=len(v),finite=bool(np.isfinite(v).all()),
             character_score_finite=bool(np.isfinite(predicted_character_score(evidence,v,groups)['score']))) for name,v in scores.items()}
         if not all(c['finite'] and c['character_score_finite'] for c in checks.values()):raise RuntimeError('nonfinite detector integration')
         result=dict(seed=a.seed,source_commit='4bc41bb plus smoke overlay',subject=1,session=1,phase='train only',
-            source_sha256=digest.hexdigest(),device=str(device),preprocessing=pre.to_config(),decoder_epochs=2,fit_characters=list(range(10)),
+            source_sha256=digest.hexdigest(),raw_adaptive_check=raw_check,kde_character_finite=kde_character_finite,device=str(device),preprocessing=pre.to_config(),decoder_epochs=2,fit_characters=list(range(10)),
             reference_characters=list(range(10,13)),query_character=13,checks=checks,
             status='execution smoke only; no accuracy/FAR/TPR/AUC or independent evaluation',
             limitations='raw Preprocessor and gather_epochs execution; no attacks or frozen benchmark;8draws/k20/epsilon.001 are smoke only')
