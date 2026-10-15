@@ -20,7 +20,7 @@ def digest(path):
 def main():
     p=argparse.ArgumentParser()
     for name in ('checkpoint','source-json','raw-dir','schedule','out-dir','git-commit'):p.add_argument('--'+name,required=True)
-    p.add_argument('--seed',type=int,required=True);a=p.parse_args()
+    p.add_argument('--seed',type=int,required=True);p.add_argument('--fit-template',action='store_true');a=p.parse_args()
     # Load only our own trusted private source-job checkpoint, never arbitrary user models.
     checkpoint=torch.load(a.checkpoint,map_location='cpu',weights_only=False)
     c=checkpoint['config'];validate_source_policy(c)
@@ -33,7 +33,7 @@ def main():
     model=EEGNet(62,epoch_window(pre.fs_out),**{k:v for k,v in c['decoder'].items() if k!='architecture'}).to(device)
     model.load_state_dict(checkpoint['model']);model.eval()
     schedule=loadmat(a.schedule,simplify_cells=True)['rc_order'][:5]
-    expected={v['subject']:v for v in provenance['source_files']};features=[];labels=[];owners=[];identities=[];files=[]
+    expected={v['subject']:v for v in provenance['source_files']};features=[];labels=[];owners=[];identities=[];files=[];template_trials=[]
     if set(expected)!=set(range(1,19)):raise ValueError('exact18 source provenance files required')
     for subject in range(1,19):
         path=Path(a.raw_dir)/f'sess01_subj{subject:02d}_EEG_ERP.mat';sha=digest(path)
@@ -49,6 +49,7 @@ def main():
                 features.append(encoder_features(model,epochs))
             labels.extend(trial.target_flash_mask().astype(int).tolist());owners.extend([subject]*60)
             identities.extend([trial.trial_id+f':flash{i:02d}' for i in range(60)])
+        if a.fit_template:template_trials.extend(trials)
         files.append(dict(subject=subject,sha256=sha));del data,trials
         print('source references',subject,flush=True)
     x=np.concatenate(features);y=np.asarray(labels);owners=np.asarray(owners)
@@ -62,5 +63,22 @@ def main():
         artifact_sha256=digest(out/f'references_seed{a.seed}.npz'),reference_count=len(ref),feature_dimension=ref.shape[1],reference_identities=[identities[i] for i in indices],
         subject_class_counts={f'{s}:{label}':int(np.sum((owners[indices]==s)&(ref_y==label))) for s in range(1,19) for label in (0,1)},
         scope='source-only references, no target outcomes; NPZ remains Kaggle',config=c)
+    if a.fit_template:
+        from p3a.attacks.source_template import fit_source_template
+        from p3a.models.letter_head import symbol_evidence
+        total=np.zeros(62);squares=np.zeros(62);count=0
+        for trial in template_trials:
+            raw=trial.eeg.astype(np.float64);total+=raw.sum(axis=1);squares+=(raw*raw).sum(axis=1);count+=raw.shape[1]
+        scale=float(np.median(np.sqrt(np.maximum(squares/count-(total/count)**2,0))))
+        if not np.isfinite(scale) or scale<=0:raise ValueError('invalid source raw template budget scale')
+        for parameter in model.parameters():parameter.requires_grad_(False)
+        def logits(raw,onsets,groups):
+            signal=pre(raw);on=downsample_onsets(onsets,pre.q)
+            epochs=gather_epochs(signal,on,epoch_window(pre.fs_out));b,f,channels,length=epochs.shape
+            return symbol_evidence(model(epochs.reshape(b*f,channels,length)).reshape(b,f),groups)
+        template,history=fit_source_template(template_trials,logits,.2*scale,a.seed,device=str(device))
+        artifact=out/f'source_template_seed{a.seed}.pt'
+        torch.save(dict(template=template.cpu(),seed=a.seed,source_checkpoint_sha256=info['checkpoint_sha256'],history=history),artifact)
+        info['source_template']=dict(artifact_sha256=digest(artifact),raw_scale=scale,**history)
     (out/f'references_seed{a.seed}.json').write_text(json.dumps(info,indent=2))
 if __name__=='__main__':main()
