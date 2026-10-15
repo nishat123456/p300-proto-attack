@@ -76,6 +76,7 @@ def main():
         raw_check=dict(finite=bool(torch.isfinite(delta).all()),within_budget=bool(delta.abs().max()<=budget+1e-6),
             gradient_finite=bool(torch.isfinite(gradient).all()),gradient_nonzero=bool(gradient.abs().sum()>0),
             raw_eps=budget,steps=2,restarts=1,scope='functionality only; artificial threshold0/scale1, not calibrated security evaluation')
+        (out/'raw_adaptive_diagnostic.json').write_text(json.dumps(raw_check,indent=2))
         if not all(raw_check[k] for k in ('finite','within_budget','gradient_finite','gradient_nonzero')):raise RuntimeError('raw adaptive integration failed')
         scores['kde']=pipeline.score(query_raw,'kde').detach().cpu().numpy()
         # KDE is a character-level smoke check, unlike the per-flash paths above.
