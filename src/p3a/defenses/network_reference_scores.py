@@ -58,3 +58,27 @@ class NetworkMahalanobis:
         if x.shape[1]!=self.means.shape[1]: raise ValueError('feature dimension mismatch')
         delta=x[:,None,:]-self.means[None,:,:]
         return np.einsum('ncd,df,ncf->nc',delta,self.precision,delta).min(axis=1)
+
+
+def source_reference_indices(subjects,labels,limit=5000,seed=20261013):
+    """Fixed equal subject/class quotas, source IDs1..18 only, no replacement."""
+    owners=np.asarray(subjects);y=np.asarray(labels)
+    if owners.ndim!=1 or y.shape!=owners.shape or not np.isin(owners,np.arange(1,19)).all() or not np.isin(y,[0,1]).all():
+        raise ValueError('aligned source1..18 subjects and binary labels required')
+    if set(owners.tolist())!=set(range(1,19)) or not isinstance(limit,int) or limit<36:
+        raise ValueError('all18 source subjects and at least36 reference slots required')
+    rng=np.random.default_rng(seed);cells=[]
+    for subject in range(1,19):
+        for label in (0,1):
+            indices=np.flatnonzero((owners==subject)&(y==label))
+            if not len(indices):raise ValueError('each source subject/class requires observations')
+            cells.append(rng.permutation(indices))
+    target=min(limit,len(y));quota=target//36
+    chosen=[list(cell[:quota]) for cell in cells]
+    remaining=target-sum(map(len,chosen))
+    for i,cell in enumerate(cells):
+        extra=min(remaining,max(0,len(cell)-len(chosen[i])))
+        chosen[i].extend(cell[len(chosen[i]):len(chosen[i])+extra]);remaining-=extra
+    result=np.sort(np.concatenate([np.asarray(v,dtype=int) for v in chosen]))
+    if len(result)!=target or len(np.unique(result))!=target:raise ValueError('reference sampling contract failed')
+    return result
