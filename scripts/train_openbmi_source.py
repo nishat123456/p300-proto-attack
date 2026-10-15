@@ -20,7 +20,7 @@ def validate_source_policy(config):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--config',required=True);p.add_argument('--raw-dir',required=True)
-    p.add_argument('--schedule',required=True);p.add_argument('--out-dir',required=True);p.add_argument('--seed',type=int,required=True)
+    p.add_argument('--schedule',required=True);p.add_argument('--git-commit',required=True);p.add_argument('--out-dir',required=True);p.add_argument('--seed',type=int,required=True)
     a=p.parse_args();c=json.loads(Path(a.config).read_text());validate_source_policy(c)
     if a.seed not in c['seeds']:raise ValueError('seed not preregistered in source config')
     torch.manual_seed(a.seed);rng=np.random.default_rng(a.seed);torch.set_num_threads(2)
@@ -34,7 +34,9 @@ def main():
         group=build_trials(d,schedule,phrase,subject,1,'train')
         if len(group)!=33:raise ValueError('unexpected source character count')
         trials.extend(group)
-        provenance.append(dict(subject=subject,file=path.name,size=path.stat().st_size,trial_ids=[t.trial_id for t in group]))
+        with path.open('rb') as handle:
+            file_hash=hashlib.file_digest(handle,'sha256').hexdigest()
+        provenance.append(dict(subject=subject,file=path.name,sha256=file_hash,size=path.stat().st_size,trial_ids=[t.trial_id for t in group]))
         del d
     pp=c['preprocessing'];pre=Preprocessor(62,pp['raw_fs'],band=tuple(pp['band_hz']),target_fs=pp['target_fs'],car=pp['car'])
     pre.fit_scaling([t.eeg for t in trials]);xs=[];ys=[];owners=[]
@@ -58,7 +60,7 @@ def main():
             loss.backward();opt.step();total+=float(loss.detach())*len(idx)
         losses.append(total/len(x));print('source epoch',epoch+1,losses[-1],flush=True)
     torch.save(dict(model=model.cpu().state_dict(),preprocessor=pre.state_dict(),config=c,seed=a.seed),out/f'source_seed{a.seed}.pt')
-    (out/f'source_seed{a.seed}.json').write_text(json.dumps(dict(seed=a.seed,config=c,preprocessor=pre.to_config(),source_files=provenance,
+    (out/f'source_seed{a.seed}.json').write_text(json.dumps(dict(seed=a.seed,git_commit=a.git_commit,config_sha256=hashlib.sha256(Path(a.config).read_bytes()).hexdigest(),schedule_sha256=hashlib.sha256(Path(a.schedule).read_bytes()).hexdigest(),config=c,preprocessor=pre.to_config(),source_files=provenance,
         runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),training_losses=losses,n_flash_epochs=len(x),
         positive_weight=float(pos_weight.cpu()),status='source training only, no target evaluation'),indent=2))
 if __name__=='__main__':main()
