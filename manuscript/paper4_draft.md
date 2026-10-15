@@ -47,7 +47,8 @@ establish the magnitude and practical consequences of failures beyond prior work
 - Chen/Jia/Wu, NeuralNetworks2025, DOI10.1016/j.neunet.2025.107516: nine defenses,
   five datasets, three networks and four scenarios; generic benchmarking not novel.
 - Conceicao daCosta etal., ICEIS2026, DOI10.5220/0014819600004018:
-  conventional detector/ANFIS comparison; full protocol extraction incomplete.
+  conventional detector/ANFIS precedent; primary protocol review is now recorded
+  in results/iceis2026_primary_review.md. No first-detector claim.
 
 ## Methods: completed development work
 
