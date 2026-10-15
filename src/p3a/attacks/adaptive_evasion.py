@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 
 def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
-                      eps_raw,weight,steps,restarts,seed):
+                      eps_raw,weight,steps,restarts,seed,audit=None):
     if eeg.ndim!=3 or not eeg.is_floating_point() or not torch.isfinite(eeg).all():
         raise ValueError('finite raw [B,C,T] input required')
     b=len(eeg)
@@ -34,6 +34,8 @@ def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
             if not torch.isfinite(loss).all():raise ValueError('nonfinite adaptive objective')
             better=loss.detach()<best_loss
             best[better]=x.detach()[better];best_loss=torch.minimum(best_loss,loss.detach())
+            if audit is not None and (iteration%20==0 or iteration==steps):
+                audit(dict(restart=restart,iteration=iteration,ce=ce.detach().cpu().tolist(),score=score.detach().cpu().tolist(),best_objective=best_loss.cpu().tolist()))
             if iteration==steps:break
             gradient=torch.autograd.grad(loss.sum(),x)[0]
             if not torch.isfinite(gradient).all():raise ValueError('nonfinite adaptive gradient')
@@ -41,4 +43,18 @@ def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
             x=eeg+(x-eeg).clamp(-eps_raw,eps_raw)
     # Subtracting large float32 baselines can round beyond the projected bound.
     # Enforce the declared perturbation budget on the returned delta itself.
-    return (best-eeg).detach().clamp(-eps_raw,eps_raw)
+    return project_applied_delta(eeg,best-eeg,eps_raw)
+
+
+def project_applied_delta(eeg,delta,eps_raw):
+    """Enforce the budget on the actually representable raw sum, not only delta."""
+    if eeg.shape!=delta.shape or not math.isfinite(eps_raw) or eps_raw<0:
+        raise ValueError('aligned raw delta and finite nonnegative budget required')
+    with torch.no_grad():
+        applied=eeg+delta.clamp(-eps_raw,eps_raw)
+        # One rounding ULP inward repairs addition/subtraction cancellation.
+        excess=(applied-eeg).abs()>eps_raw
+        applied=torch.where(excess,torch.nextafter(applied,eeg),applied)
+        result=applied-eeg
+        if not torch.isfinite(result).all() or (result.abs()>eps_raw).any():raise ValueError('raw projection failed')
+        return result

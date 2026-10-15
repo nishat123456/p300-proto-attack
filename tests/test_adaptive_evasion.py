@@ -29,3 +29,16 @@ def test_returned_budget_with_large_float32_baseline():
     delta=run(x,eps)
     assert torch.isfinite(delta).all()
     assert delta.abs().max()<=eps
+    assert ((x+delta)-x).abs().max()<=eps
+
+
+def test_raw_projection_and_trace_contract():
+    from p3a.attacks.adaptive_evasion import project_applied_delta
+    x=torch.tensor([[[10000.,-10000.,0.]]]);eps=.3678136825561524
+    d=project_applied_delta(x,torch.ones_like(x),eps)
+    assert ((x+d)-x).abs().max()<=eps
+    assert torch.equal(project_applied_delta(x,d,0),torch.zeros_like(x))
+    trace=[]
+    defense_aware_pgd(torch.zeros(1,1,8),torch.ones(1,dtype=torch.long),logits,score,0.,1.,.2,1.,2,1,7,audit=trace.append)
+    assert [row['iteration'] for row in trace]==[0,2]
+    assert trace[-1]['best_objective'][0]<=trace[0]['best_objective'][0]
