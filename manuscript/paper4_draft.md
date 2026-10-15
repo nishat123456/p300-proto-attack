@@ -80,8 +80,9 @@ Subject52 official train fails identity, with528 schedule/known-label mismatches
 and no compatible symbol in any33 blocks under the fixed schedule. Its test
 passes; subjects53/54 pass both phases. Full54-person compatibility is false.
 Physical timing cause remains unresolved. No precise per-user5% assurance from36
-test characters. Fixed three-seed source training is running on Kaggle; its
-completion and resulting reference/calibration pipeline are not yet verified.
+test characters. Fixed three-seed source training completed on Kaggle at the recorded30-epoch
+final checkpoints, with no independent performance outcome. The resulting
+reference/template/calibration pipeline is not yet verified end to end.
 
 ## Independent methods specification: prospective, not executed results
 
