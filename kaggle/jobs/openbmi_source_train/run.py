@@ -7,7 +7,7 @@ for name,value in json.loads(zlib.decompress(base64.b64decode('eJzFfYmW20aS4K/Am
 os.environ['PYTHONPATH']=str(code/'src')+':'+str(code)
 out=Path('/kaggle/working/out');out.mkdir(exist_ok=True)
 raw=Path('/kaggle/working/raw_source');raw.mkdir(exist_ok=True)
-revision='SOURCE_REVISION'
+revision='381ac26'
 (out/'runner_provenance.json').write_text(json.dumps(dict(seed=20261013,git_commit=revision,runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='source subjects1-18 official train only; no target performance'),indent=2))
 tests=sorted(str(p) for p in (code/'tests').glob('test_*.py'))
 result=subprocess.run([sys.executable,'-m','pytest','-q',*tests],cwd=code,text=True,capture_output=True)
