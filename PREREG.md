@@ -260,3 +260,14 @@ character aggregation. Output finite/shape checks and provenance only, no
 accuracy/FAR/TPR/AUC, no evaluation subjects or model/checkpoint output. Portable
 tests run first on Kaggle. Raw stays cloud, compact JSON/log retrieval only;
 old gates/splits unchanged, BNCI2015-003 locked.
+
+### 2026-10-14: session1 all-subject structural coverage
+
+After raw integration passes on development data, audit all54 documented
+OpenBMI subjects, session1 train/test metadata, schedule-label consistency,
+loader boundaries/IDs and fixed sampled epoch alignment. No model fitting,
+performance metric or subject selection by outcomes. Hardened loader checks
+remain mandatory; stop/report incompatibility rather than excluding subjects
+silently. Compact metadata only retrieved, raw files removed after each subject.
+This is not a performance freeze or confirmation run; old splits/gates and
+BNCI2015-003 lock unchanged.

@@ -1,0 +1,65 @@
+{
+  "seed": 20261014,
+  "source_commit": "4bc41bb plus smoke overlay",
+  "subject": 1,
+  "session": 1,
+  "phase": "train only",
+  "source_sha256": "8cb4217a6f72466448b8259bb8f072c25f81437c075b0619ea14686eea0848b2",
+  "device": "cpu",
+  "preprocessing": {
+    "n_channels": 62,
+    "fs": 1000.0,
+    "band": [
+      0.5,
+      20.0
+    ],
+    "target_fs": 60.0,
+    "car": true,
+    "numtaps": 2001,
+    "q": 17,
+    "fs_out": 58.8235294117647
+  },
+  "decoder_epochs": 2,
+  "fit_characters": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "reference_characters": [
+    10,
+    11,
+    12
+  ],
+  "query_character": 13,
+  "checks": {
+    "bu": {
+      "n_flash_scores": 60,
+      "finite": true,
+      "character_score_finite": true
+    },
+    "lid": {
+      "n_flash_scores": 60,
+      "finite": true,
+      "character_score_finite": true
+    },
+    "md": {
+      "n_flash_scores": 60,
+      "finite": true,
+      "character_score_finite": true
+    },
+    "md_adjusted": {
+      "n_flash_scores": 60,
+      "finite": true,
+      "character_score_finite": true
+    }
+  },
+  "status": "execution smoke only; no accuracy/FAR/TPR/AUC or independent evaluation",
+  "limitations": "raw Preprocessor and gather_epochs execution; no attacks or frozen benchmark;8draws/k20/epsilon.001 are smoke only"
+}
