@@ -1,3 +1,5 @@
 # Current portable suite status, October15,2026
 
 V11 stopped with10 collection errors, not failing numerical assertions: project test helper imports were shadowed by an installed third-party `tests` package, and the packaging omitted kaggle/jobs/train_decoders/run.py used by a runner test. Preserve failure evidence. Add a project tests package initializer and the missing runner to the private cloud payload; rerun the same current portable suite with exactly the same four historical raw/path exclusions. No additional test is excluded, assertion weakened or scientific gate changed. Current broad suite remains unverified until the corrected job completes. The preceding28 integration tests remain their narrower evidence, not a substitute.
+
+V12 corrected namespace shadowing and runner omission, then exposed3 legacy flat `defense_helpers` imports that were incompatible with package imports. Normalize these3 imports to tests.defense_helpers, with no assertion changes or new exclusions. V13 remains pending; broad suite is not claimed passed.

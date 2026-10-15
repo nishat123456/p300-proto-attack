@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from defense_helpers import write_subject
+from tests.defense_helpers import write_subject
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "run_cross_subject_authenticity.py"

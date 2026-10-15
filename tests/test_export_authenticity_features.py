@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from defense_helpers import write_subject
+from tests.defense_helpers import write_subject
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "export_authenticity_features.py"

@@ -7,7 +7,7 @@ from p3a.defenses.authenticity import (
     cross_validate_authenticity,
 )
 
-from defense_helpers import write_subject
+from tests.defense_helpers import write_subject
 
 
 def _combos(tmp_path):
