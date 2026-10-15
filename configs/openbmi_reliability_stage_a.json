@@ -1,0 +1,16 @@
+{
+  "status": "stage-A source-development execution specification; independent test gate closed",
+  "dataset": "OpenBMI ERP, recorded markers, session1",
+  "development_subjects": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+  "validation_subjects": [19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],
+  "sealed_evaluation_subjects": [37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54],
+  "seeds": [20261013,20261014,20261015],
+  "preprocessing": {"band_hz":[0.5,20.0],"car":true,"target_fs":60.0,"raw_fs":1000.0,"decimation_factor":17,"actual_fs":58.8235294117647,"epoch_seconds":0.8,"stored_event_order":true,"matlab_index_shift":-1},
+  "source_training": {"official_phase":"train","characters_per_subject":33,"optimizer":"Adam","learning_rate":0.001,"epochs":30,"flash_batch_size":64,"loss":"binary_cross_entropy_with_logits","class_weighting":"source training empirical class ratio only","early_stopping":false,"checkpoint":"final epoch, no evaluation selection"},
+  "decoder": {"architecture":"repository EEGNet","F1":8,"D":2,"F2":16,"temporal_kernel":32,"separable_kernel":16,"pool1":4,"pool2":4,"dropout":0.25},
+  "reference_statistics": {"BU_dropout_draws":30,"LID_k":20,"reference_epoch_limit":5000,"reference_sampling":"source train only, seed-stratified by subject and flash class","MD_covariance":"shared source-class LedoitWolf residual covariance","MD_input_adjustment_epsilon_normalized":[0.0,0.001],"layer":"final flattened encoder","character_aggregation":"mean flash anomaly among flashes supporting decoder-predicted character"},
+  "target_clean_allocation_proposal": {"normalization":13,"calibration":20,"evaluation":36,"allocation_seed":20261013,"threshold_nominal_fars":[0.01,0.05,0.1],"threshold_rule":"higher empirical quantile, score strictly above threshold rejects; ties retained","normalization_fit":"raw preprocessing channel statistics on normalization characters only"},
+  "forbidden_stage_A": ["fit or inspect any performance on subjects37-54","generate performance results for BNCI2015-003","choose best source model from evaluation outcomes","change old frozen splits"],
+  "still_required_before_independent_test": ["coverage audit complete","reference baseline fulltext gaps disclosed","attack generators and detector-aware optimization fully specified","uncertainty clustering and multiple comparisons fully specified","immutable trial and target manifests generated on Kaggle","source validation report preserved"],
+  "scope": "No physical onset robustness or precise per-user5% FAR guarantee. StageA is not full performance preregistration."
+}
