@@ -1,0 +1,5 @@
+# End-to-end reference/template/calibration completion, October15,2026
+
+Private p3a-openbmi-refcal v1 completed all3 source seeds and fixed validation subject19 train-only calibration. Its28 synthetic integration tests passed16.66s. Source references are5000 encoder activations of dimension48, with shared-shrinkage MD and source-only template200updates/800rawsamples. Compact output binds source checkpoints/EEG/reference/template/schedule identities by hashes. Each calibration records13 normalization and20 calibration IDs and scores for7detectors, with no official test or attack performance. Models, NPZ reference features, templates and raw EEG remain on Kaggle; only JSON/log/text retrieved.
+
+Completion establishes execution, not FAR/TPR/attack strength or Q1 readiness. Next fixedsubject19 clean validation uses frozen thresholds/preprocessor,36 official test characters, all7methods/3seeds/all nominal operating points. It is development validation, never sealed evaluation or a winner-selection procedure. Independent protocol/manifests/attack/generalization/cost validation and manuscript results remain pending.
