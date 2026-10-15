@@ -11,12 +11,14 @@ from p3a.defenses.torch_reference_scores import mahalanobis_score,lid_score,drop
 
 
 class RawDetectorPipeline(nn.Module):
-    def __init__(self,preprocessor,decoder,onsets,groups,reference_features,means,precision,k,draws,seed,adjustment_epsilon):
+    def __init__(self,preprocessor,decoder,onsets,groups,reference_features,means,precision,k,draws,seed,adjustment_epsilon,reference_labels=None,kde_bandwidth=.5):
         super().__init__()
         self.preprocessor=preprocessor;self.decoder=decoder
         self.register_buffer('onsets',onsets.long());self.register_buffer('groups',groups.bool())
         for name,value in [('reference_features',reference_features),('means',means),('precision',precision)]:
             self.register_buffer(name,torch.as_tensor(value,dtype=torch.float32))
+        self.register_buffer('reference_labels',torch.as_tensor([] if reference_labels is None else reference_labels,dtype=torch.long))
+        self.kde_bandwidth=kde_bandwidth
         self.k=k;self.draws=draws;self.seed=seed;self.adjustment_epsilon=adjustment_epsilon
         if adjustment_epsilon<0:raise ValueError('nonnegative reference adjustment required')
         self.eval()
@@ -39,6 +41,11 @@ class RawDetectorPipeline(nn.Module):
         evidence=self.decoder(epochs).reshape(b,f)
         if kind=='bu':
             values=dropout_uncertainty_score(self.decoder,epochs,self.draws,self.seed)
+        elif kind=='kde':
+            from p3a.defenses.kde_reference import torch_kde_anomaly
+            if len(self.reference_labels)!=len(self.reference_features):raise ValueError('source reference labels required for KDE')
+            flash_predictions=(self.decoder(epochs)>0).long()
+            values=torch_kde_anomaly(self._features(epochs),self.reference_features,self.reference_labels,flash_predictions,self.kde_bandwidth)
         elif kind=='lid':values=lid_score(self._features(epochs),self.reference_features,self.k)
         elif kind in ('md','md_adjusted'):
             if kind=='md_adjusted':
