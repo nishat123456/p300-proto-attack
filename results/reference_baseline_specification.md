@@ -1,5 +1,13 @@
 # Reference detector family implementation checkpoint
 
+> Historical checkpoint, not current implementation status. As of October15,
+> input-gradient adjustment, dropout/character wrappers and all7 adapted baselines
+> have executed in real source/reference/calibration and clean validation jobs.
+> Zhang/Gu full text was subsequently retrieved/reviewed. See
+> manuscript/supplement_methods_and_provenance.md and
+> results/reference_calibration_v1_report.md for current scope; multilayer MD and
+> exact paper reproduction are still not claimed. Historical text below preserved.
+
 13 October2026. Source: Chen/Wu arXiv2212.00727v1, equations9/10/11-13,
 https://arxiv.org/pdf/2212.00727. This is a source-reviewed family adaptation,
 not a certified exact JNE2024 reproduction. Only formulas were independently
