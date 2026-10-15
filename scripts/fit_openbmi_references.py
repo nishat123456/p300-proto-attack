@@ -59,7 +59,7 @@ def main():
     out=Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
     np.savez_compressed(out/f'references_seed{a.seed}.npz',features=ref,labels=ref_y,means=md.means,precision=md.precision,classes=md.classes)
     info=dict(seed=a.seed,git_commit=a.git_commit,runner_sha256=digest(__file__),checkpoint_sha256=digest(a.checkpoint),schedule_sha256=digest(a.schedule),source_files=files,
-        reference_count=len(ref),feature_dimension=ref.shape[1],reference_identities=[identities[i] for i in indices],
+        artifact_sha256=digest(out/f'references_seed{a.seed}.npz'),reference_count=len(ref),feature_dimension=ref.shape[1],reference_identities=[identities[i] for i in indices],
         subject_class_counts={f'{s}:{label}':int(np.sum((owners[indices]==s)&(ref_y==label))) for s in range(1,19) for label in (0,1)},
         scope='source-only references, no target outcomes; NPZ remains Kaggle',config=c)
     (out/f'references_seed{a.seed}.json').write_text(json.dumps(info,indent=2))
