@@ -1,0 +1,380 @@
+........................................................................ [ 20%]
+........................................................................ [ 41%]
+......................................FFFF.FFFFF.FF..................... [ 61%]
+........................................................................ [ 82%]
+...............................................................          [100%]
+=================================== FAILURES ===================================
+__________________________ test_metadata_file_exists ___________________________
+
+    def test_metadata_file_exists():
+>       assert META_PATH.is_file()
+E       AssertionError: assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json').is_file
+
+tests/test_kaggle_job_metadata.py:33: AssertionError
+_____________________ test_metadata_matches_prompt_exactly _____________________
+
+    def test_metadata_matches_prompt_exactly():
+        # Ignore any extra keys Kaggle tolerates; every required key must match.
+>       meta = _meta()
+               ^^^^^^^
+
+tests/test_kaggle_job_metadata.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_job_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_dataset_sources_order_and_contents ____________________
+
+    def test_dataset_sources_order_and_contents():
+>       assert _meta()["dataset_sources"] == EXPECTED["dataset_sources"]
+               ^^^^^^^
+
+tests/test_kaggle_job_metadata.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_job_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_code_file_present_next_to_metadata ____________________
+
+    def test_code_file_present_next_to_metadata():
+>       assert (JOB_DIR / _meta()["code_file"]).is_file()
+                          ^^^^^^^
+
+tests/test_kaggle_job_metadata.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_job_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/train_decoders/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_kaggle_sh_has_required_subcommands ____________________
+
+    def test_kaggle_sh_has_required_subcommands():
+>       script = (REPO / "scripts" / "kaggle.sh").read_text()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_kaggle_job_metadata.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/scripts/kaggle.sh'), mode = 'r'
+buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/scripts/kaggle.sh'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+__________________________ test_metadata_file_exists ___________________________
+
+    def test_metadata_file_exists():
+>       assert META_PATH.is_file()
+E       AssertionError: assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json').is_file
+
+tests/test_kaggle_kill_test_metadata.py:33: AssertionError
+_________________________ test_metadata_matches_prompt _________________________
+
+    def test_metadata_matches_prompt():
+>       meta = _meta()
+               ^^^^^^^
+
+tests/test_kaggle_kill_test_metadata.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_kill_test_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+________________ test_kernel_sources_attach_the_decoders_kernel ________________
+
+    def test_kernel_sources_attach_the_decoders_kernel():
+>       assert _meta()["kernel_sources"] == ["mustaqimnishat/p3a-train-decoders"]
+               ^^^^^^^
+
+tests/test_kaggle_kill_test_metadata.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_kill_test_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_code_file_present_next_to_metadata ____________________
+
+    def test_code_file_present_next_to_metadata():
+>       assert (JOB_DIR / _meta()["code_file"]).is_file()
+                          ^^^^^^^
+
+tests/test_kaggle_kill_test_metadata.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_kaggle_kill_test_metadata.py:29: in _meta
+    return json.loads(META_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/kill_test/kernel-metadata.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+____________ test_run_py_mentions_shard_env_vars_and_no_credentials ____________
+
+    def test_run_py_mentions_shard_env_vars_and_no_credentials():
+>       text = (JOB_DIR / "run.py").read_text()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_kaggle_kill_test_metadata.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/kaggle/jobs/kill_test/run.py')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/kaggle/jobs/kill_test/run.py'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_kaggle_sh_supports_shard_and_output ___________________
+
+    def test_kaggle_sh_supports_shard_and_output():
+>       script = (REPO / "scripts" / "kaggle.sh").read_text()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_kaggle_kill_test_metadata.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/kaggle/working/code/scripts/kaggle.sh'), mode = 'r'
+buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/working/code/scripts/kaggle.sh'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=============================== warnings summary ===============================
+tests/test_cross_subject_authenticity_cli.py: 1 warning
+tests/test_defenses_authenticity.py: 6 warnings
+tests/test_defenses_genuine_vs_induced.py: 6 warnings
+tests/test_defenses_runner.py: 12 warnings
+tests/test_feature_baselines.py: 2 warnings
+  /usr/local/lib/python3.13/dist-packages/sklearn/linear_model/_logistic.py:451: DeprecationWarning: scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0.
+    opt_res = optimize.minimize(
+
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+  /usr/local/lib/python3.13/dist-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+  /usr/local/lib/python3.13/dist-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+  /usr/local/lib/python3.13/dist-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_kill_test_cli.py::test_cli_writes_report_and_config
+  /usr/local/lib/python3.13/dist-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_kaggle_job_metadata.py::test_metadata_file_exists - Asserti...
+FAILED tests/test_kaggle_job_metadata.py::test_metadata_matches_prompt_exactly
+FAILED tests/test_kaggle_job_metadata.py::test_dataset_sources_order_and_contents
+FAILED tests/test_kaggle_job_metadata.py::test_code_file_present_next_to_metadata
+FAILED tests/test_kaggle_job_metadata.py::test_kaggle_sh_has_required_subcommands
+FAILED tests/test_kaggle_kill_test_metadata.py::test_metadata_file_exists - A...
+FAILED tests/test_kaggle_kill_test_metadata.py::test_metadata_matches_prompt
+FAILED tests/test_kaggle_kill_test_metadata.py::test_kernel_sources_attach_the_decoders_kernel
+FAILED tests/test_kaggle_kill_test_metadata.py::test_code_file_present_next_to_metadata
+FAILED tests/test_kaggle_kill_test_metadata.py::test_run_py_mentions_shard_env_vars_and_no_credentials
+FAILED tests/test_kaggle_kill_test_metadata.py::test_kaggle_sh_supports_shard_and_output
+11 failed, 340 passed, 41 warnings in 45.50s
