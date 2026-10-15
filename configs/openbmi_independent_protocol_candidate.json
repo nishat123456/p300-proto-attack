@@ -1,0 +1,243 @@
+{
+  "version": "openbmi_recorded_marker_independent_v1_candidate",
+  "status": "complete operating settings for integration review; NOT independent performance unlock or frozen manifests",
+  "seeds": [
+    20261013,
+    20261014,
+    20261015
+  ],
+  "subject_roles": {
+    "development": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "validation": [
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ],
+    "evaluation": [
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54
+    ]
+  },
+  "eligibility": {
+    "requires": "both official phases pass fixed stored-order schedule/label and boundary checks",
+    "unavailable_subjects": {
+      "52": "session1 train identity mismatch"
+    },
+    "retain_unavailable_in_flow": true,
+    "replace_subjects": false
+  },
+  "allocation": {
+    "normalization": 13,
+    "calibration": 20,
+    "evaluation": 36,
+    "seed": 20261013,
+    "normalization_calibration_phase": "official train only",
+    "evaluation_phase": "official test only",
+    "reuse_across_model_seeds": true
+  },
+  "detectors": [
+    "confidence",
+    "entropy",
+    "bu",
+    "lid",
+    "md",
+    "md_adjusted",
+    "kde"
+  ],
+  "reference": {
+    "phase": "source1-18 official train only",
+    "max_epochs": 5000,
+    "sampling": "seeded equal subject/class quotas without replacement; remaining quota filled in sorted subject/class order",
+    "lid_k": 20,
+    "kde_bandwidth": 0.5,
+    "md_covariance": "shared LedoitWolf source-class residuals",
+    "md_adjustment_epsilon_normalized": 0.001,
+    "BU_point_draws": 30,
+    "BU_final_adaptive_verification_draws": 100,
+    "aggregation": "mean anomaly over flashes supporting decoder-predicted symbol"
+  },
+  "normalization": {
+    "fit": "13 normalization raw characters only",
+    "deployment_scale": "target-normalization-only channel statistics with same fixed preprocessing architecture; no evaluation fit",
+    "budget_scale": "median over channels of concatenated normalization raw EEG population standard deviation ddof0",
+    "budget_scope": "all channels/all samples before preprocessing, offline recorded-marker access"
+  },
+  "calibration": {
+    "nominal_far": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "primary_nominal_far": 0.05,
+    "quantile": "numpy higher at1-alpha on20 independent clean calibration characters",
+    "reject": "score strictly greater; retain ties",
+    "score_scale": "max(calibration median absolute deviation,1e-6)",
+    "no_attack_calibration": true
+  },
+  "budgets": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "primary_budget": 0.2,
+  "targets": {
+    "count_per_character": 1,
+    "exclude_intended": true,
+    "seed": 20261013,
+    "same_target_all_methods_budgets_seeds": true,
+    "freeze_before_outcomes": true
+  },
+  "attacks": {
+    "FGSM": {
+      "targeted": true,
+      "steps": 1,
+      "step": "epsilon",
+      "random_start": false
+    },
+    "PGD": {
+      "targeted": true,
+      "steps": 200,
+      "restarts": 3,
+      "step": "epsilon/10",
+      "select": "minimum targeted CE per character"
+    },
+    "Gaussian_control": {
+      "targeted": false,
+      "distribution": "independent standard normal then per-trial Linf rescale to budget"
+    },
+    "Tiny_template_adaptation": {
+      "status": "source-training integration still pending; must report missing if not executable, cannot silently drop",
+      "training_subjects": "1-18 official train only",
+      "optimizer": "Adam",
+      "lr": 0.01,
+      "updates": 200,
+      "batch_size": 8,
+      "template_samples": 192,
+      "placement": "recorded target-group flash onsets, saturating raw Linf budget",
+      "scope": "gradient-trained idea adaptation, not exact NSR reproduction"
+    }
+  },
+  "adaptive": {
+    "objective": "targeted CE+lambda*softplus((anomaly-clean_threshold)/clean_MAD_scale)",
+    "weights": [
+      0,
+      0.1,
+      1,
+      10
+    ],
+    "steps": 200,
+    "restarts": 3,
+    "step": "epsilon/10",
+    "BU_EOT_gradient_draws": 30,
+    "BU_final_verification_draws": 100,
+    "verification_seed_offset": 1000000,
+    "convergence_budget": 0.2,
+    "convergence_steps": 400,
+    "convergence_restarts": 5,
+    "select": "attacker chooses successful nonrejected candidate across fixed settings; retain every per-setting row",
+    "never_threshold_tune": true
+  },
+  "outcomes": {
+    "primary": [
+      "per-subject clean FAR at nominal5%",
+      "defended targeted success across all original attack attempts at budget.20"
+    ],
+    "secondary": [
+      "conditional TPR among successful manipulations with denominator",
+      "clean accuracy",
+      "accepted correct/all clean",
+      "accepted wrong/all clean",
+      "accepted accuracy with denominator",
+      "all nominal FAR/budget curves",
+      "detector-unaware AUC including genuine decoder errors"
+    ],
+    "failure_denominators": "never discard unsuccessful attacks from end-to-end targeted-success denominator"
+  },
+  "uncertainty": {
+    "per_user": "two-sided95% exact binomial IID descriptions, not guarantees",
+    "population": "equal subject weighting after averaging3seeds",
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 20261013,
+      "unit": "subject, preserve paired methods/budgets/targets/seeds"
+    },
+    "comparisons": "paired differences versus confidence baseline for all6other detectors, all reported; pointwise intervals descriptive, no familywise significance claim or selected winner",
+    "no_confirmatory_pvalues": true
+  },
+  "cost": {
+    "observed": [
+      "rejection count per original clean character",
+      "accepted wrong count",
+      "recorded last-minus-first marker+.8s decision-duration proxy",
+      "synchronized GPU batch1 inference walltime after5warmup and30repeats on fixedsource query; median/p95 hardware/software recorded"
+    ],
+    "retry": "1/(1-FAR)-1 ideal unchanged IID retry sensitivity only; undefined if FAR1",
+    "not_claimed": [
+      "physical onset latency",
+      "clinical throughput",
+      "backspace-corrected utility",
+      "per-user5%assurance"
+    ]
+  },
+  "gate_before_evaluation": [
+    "source job complete and provenance verified",
+    "all7 detector calibration/integration executable",
+    "Tiny source adaptation or explicit prospective amendment before outcomes",
+    "cloud immutable partition/target manifest verification",
+    "full current portable test scope/exclusions recorded",
+    "validation report and protocol content hashes committed before sealed outcomes"
+  ],
+  "frozen_historical_artifacts": "unchanged; BNCI2015-003 remains locked"
+}
