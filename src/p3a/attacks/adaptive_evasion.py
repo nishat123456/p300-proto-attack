@@ -24,7 +24,7 @@ def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
     best=eeg.detach().clone();best_loss=torch.full((b,),float('inf'),device=eeg.device)
     step=eps_raw/10
     for restart in range(restarts):
-        x=eeg.detach()+torch.empty_like(eeg).uniform_(-eps_raw,eps_raw,generator=rng)
+        x=eeg.detach()+project_applied_delta(eeg,torch.empty_like(eeg).uniform_(-eps_raw,eps_raw,generator=rng),eps_raw)
         for iteration in range(steps+1):
             x=x.detach().requires_grad_(True)
             logits=logits_fn(x);score=score_fn(x)
@@ -40,7 +40,7 @@ def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
             gradient=torch.autograd.grad(loss.sum(),x)[0]
             if not torch.isfinite(gradient).all():raise ValueError('nonfinite adaptive gradient')
             x=x-step*gradient.sign()
-            x=eeg+(x-eeg).clamp(-eps_raw,eps_raw)
+            x=eeg+project_applied_delta(eeg,x-eeg,eps_raw)
     # Subtracting large float32 baselines can round beyond the projected bound.
     # Enforce the declared perturbation budget on the returned delta itself.
     return project_applied_delta(eeg,best-eeg,eps_raw)
