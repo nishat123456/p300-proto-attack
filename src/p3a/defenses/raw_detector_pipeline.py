@@ -39,7 +39,10 @@ class RawDetectorPipeline(nn.Module):
     def score(self,raw,kind):
         epochs,b,f=self._epochs(raw)
         evidence=self.decoder(epochs).reshape(b,f)
-        if kind=='bu':
+        if kind in ('confidence','entropy'):
+            from p3a.defenses.torch_reference_scores import probability_anomaly
+            values=probability_anomaly(evidence.reshape(-1),kind)
+        elif kind=='bu':
             values=dropout_uncertainty_score(self.decoder,epochs,self.draws,self.seed)
         elif kind=='kde':
             from p3a.defenses.kde_reference import torch_kde_anomaly

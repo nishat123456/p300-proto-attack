@@ -16,7 +16,7 @@ def test_raw_input_gradients_reach_all_detector_paths():
     p=RawDetectorPipeline(Pre(),Decoder(),torch.tensor([[0,4]]),torch.tensor([[[1,0],[0,1]]],dtype=torch.bool),refs,means,torch.eye(8),3,8,7,.001,reference_labels=torch.tensor([0]*6+[1]*6))
     raw=torch.randn(1,2,10,requires_grad=True)
     assert p.logits(raw).shape==(1,2)
-    for kind in ('bu','lid','md','md_adjusted','kde'):
+    for kind in ('bu','lid','md','md_adjusted','kde','confidence','entropy'):
         score=p.score(raw,kind)
         gradient=torch.autograd.grad(score.sum(),raw,retain_graph=True)[0]
         assert score.shape==(1,) and torch.isfinite(gradient).all() and gradient.abs().sum()>0

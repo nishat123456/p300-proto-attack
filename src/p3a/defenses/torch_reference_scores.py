@@ -49,3 +49,13 @@ def predicted_character_anomaly(flash_evidence,flash_scores,groups):
     predicted=means.argmax(dim=1)
     mask=groups.gather(2,predicted[:,None,None].expand(-1,groups.shape[1],1)).squeeze(2)
     return (flash_scores*mask).sum(dim=1)/mask.sum(dim=1)
+
+
+def probability_anomaly(logits,kind):
+    """Conventional binary confidence/entropy controls, higher means anomalous."""
+    if not logits.is_floating_point() or not torch.isfinite(logits).all():
+        raise ValueError('finite floating point decoder logits required')
+    p=logits.sigmoid()
+    if kind=='confidence':return 1-torch.maximum(p,1-p)
+    if kind=='entropy':return torch.nn.functional.softplus(logits)-logits*p
+    raise ValueError('unknown probability control')

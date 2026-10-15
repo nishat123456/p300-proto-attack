@@ -34,3 +34,18 @@ def test_eot_parity_and_gradient():
     actual=dropout_uncertainty_score(m,x,8,7)
     assert np.allclose(actual.detach().numpy(),expected)
     assert torch.isfinite(torch.autograd.grad(actual.sum(),x)[0]).all()
+
+
+def test_probability_controls_analytic_extremes_and_gradient():
+    from p3a.defenses.torch_reference_scores import probability_anomaly
+    z=torch.tensor([-1000.,-1.,0.,1.,1000.],requires_grad=True)
+    confidence=probability_anomaly(z,'confidence')
+    entropy=probability_anomaly(z,'entropy')
+    assert torch.isfinite(confidence).all() and torch.isfinite(entropy).all()
+    assert confidence[2]==.5 and torch.allclose(entropy[2],torch.tensor(2.).log())
+    assert confidence[0]==0 and confidence[-1]==0
+    assert entropy[0]==0 and entropy[-1]==0
+    assert torch.allclose(confidence[1],confidence[3])
+    assert torch.allclose(entropy[1],entropy[3])
+    gradient=torch.autograd.grad((entropy+confidence).sum(),z)[0]
+    assert torch.isfinite(gradient).all() and gradient[1]!=0 and gradient[3]!=0
