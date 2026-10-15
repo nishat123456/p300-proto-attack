@@ -67,7 +67,8 @@ Earlier cloud portable suite314 passed with explicit raw/path exclusions.
 New focused integration tests progressed to28 passing cases, including raw
 adaptive gradients/budget, reference sampling, calibration leakage and variable-
 length source template guards. A broader current suite initially failed test
-collection because of namespace/payload packaging; a corrected run is pending.
+collection because of namespace/payload packaging; the corrected Kagglev14 run passed351
+tests with41 warnings in45.98s, preserving the same four raw/path exclusions.
 These are software verification scopes, not independent statistical validation.
 
 ## Independent results: pending
