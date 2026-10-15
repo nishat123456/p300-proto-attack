@@ -1,0 +1,5 @@
+# Source reference integration, October15,2026
+
+Reference-testsv7 completed23 tests in7.79 seconds, including independent clean calibration guards. Source GPUv1 is still running and must not be restarted to incorporate unrelated reference code. The new scripts/fit_openbmi_references.py consumes its own trusted source checkpoint, original source JSON/EEG hashes and source-only official train identities. It reconstructs the fixed preprocessing/model, extracts frozen encoder activations, samples5000 references by fixed subject/class quotas without replacement, fits shared residual LedoitWolf MD, and writes cloud-only NPZ plus compact provenance JSON. No validation/evaluation inputs or outcomes enter fitting. Source archive, checkpoints and reference features remain on Kaggle.
+
+Synthetic source-only sampling tests are queued in reference-testsv8. End-to-end reference fitting is not yet run and must consume the verified completed source job, not an unverified checkpoint. Full target calibration runner/Tiny integration, final protocol/manifest freeze and independent outcomes remain pending. Existing gates/splits unchanged, BNCI2015-003 locked.
