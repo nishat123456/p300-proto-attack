@@ -39,4 +39,6 @@ def defense_aware_pgd(eeg,target,logits_fn,score_fn,threshold,score_scale,
             if not torch.isfinite(gradient).all():raise ValueError('nonfinite adaptive gradient')
             x=x-step*gradient.sign()
             x=eeg+(x-eeg).clamp(-eps_raw,eps_raw)
-    return (best-eeg).detach()
+    # Subtracting large float32 baselines can round beyond the projected bound.
+    # Enforce the declared perturbation budget on the returned delta itself.
+    return (best-eeg).detach().clamp(-eps_raw,eps_raw)

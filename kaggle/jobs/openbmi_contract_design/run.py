@@ -49,8 +49,8 @@ def main():
     import requests
     from scipy.io import loadmat, whosmat
     base='https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100542/'
-    config=dict(seed=args.seed, subjects=list(range(1,55)), sessions=[1],
-                selection='all documented54 subjects session1; no outcome-based selection',
+    config=dict(seed=args.seed, subjects=[52], sessions=[1],
+                selection='fixed subject52 failure diagnosis only; not compatibility or performance validation',
                 source_commit='c335257', runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), python=platform.python_version(),
                 stage='event ordering and identity metadata only; no performance evaluation',
                 reference='MOABB Lee2019_ERP documentation; nasion reference documented, not measured',
@@ -84,7 +84,7 @@ def main():
     subprocess.run([sys.executable,'-m','pytest','-q',str(code/'tests/test_openbmi.py')],check=True)
     from p3a.data.loaders.openbmi import build_trials
     records=[]
-    for subject,session in tuple((subject,1) for subject in range(1,55)):
+    for subject,session in ((52,1),):
         name=f'sess{session:02d}_subj{subject:02d}_EEG_ERP.mat'
         url=base+f'session{session}/s{subject}/'+name
         path=raw/name
@@ -161,10 +161,18 @@ def main():
                 epoch_shape=list(epoch.shape),offset_comparisons=matches,
                 formula='x[t + ival + shift]; MATLAB integer indexing predicts shift=-1 if ival are integer sample offsets',
                 caveat='No shift automatically chosen. Filtered/baseline-adjusted epochs may differ; correlations do not prove exact alignment.')
-            loader_trials=build_trials(data,schedule_rows,phrase,subject,session,split)
-            membership['loader_trial_count']=len(loader_trials)
-            membership['loader_trial_ids']=[t.trial_id for t in loader_trials]
-            del loader_trials
+            membership['mismatch_event_indices']=np.flatnonzero(expected_labels!=labels).tolist()
+            membership['expected_target_counts_by_block']=(expected_labels.reshape(-1,60)==1).sum(axis=1).tolist()
+            membership['stored_target_counts_by_block']=(labels.reshape(-1,60)==1).sum(axis=1).tolist()
+            try:
+                loader_trials=build_trials(data,schedule_rows,phrase,subject,session,split)
+                membership['loader_trial_count']=len(loader_trials)
+                membership['loader_trial_ids']=[t.trial_id for t in loader_trials]
+                del loader_trials
+            except ValueError as exc:
+                membership['loader_error']=str(exc)
+                membership['compatibility_validated']=False
+                # Preserve rejection as evidence; never bypass it in model execution.
             expected=33 if split=='train' else 36
             records.append(dict(subject=subject,session=session,split=split,url=url,
                 file_sha256=digest.hexdigest(),file_bytes=path.stat().st_size,

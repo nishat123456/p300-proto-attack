@@ -21,3 +21,11 @@ def test_detector_penalty_changes_tradeoff():
 
 def test_invalid_scale_rejected():
     with pytest.raises(ValueError):defense_aware_pgd(torch.zeros(1,1,8),torch.ones(1,dtype=torch.long),logits,score,0.,0.,.1,1.,10,1,0)
+
+
+def test_returned_budget_with_large_float32_baseline():
+    x=torch.full((2,1,8),10000.,dtype=torch.float32)
+    eps=.3678136825561524
+    delta=run(x,eps)
+    assert torch.isfinite(delta).all()
+    assert delta.abs().max()<=eps
