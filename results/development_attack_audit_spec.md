@@ -1,0 +1,9 @@
+# Fixed development attack/optimization audit, October15,2026
+
+Use validation19's first stored official-test character, not selected by any decoder/detector outcome. All3 fixed model seeds share the same SHA256 seed20261013+trialID wrong-symbol draw. This is one development character repeated under fixed settings, not an attack TPR/population estimate or independent confirmation. All settings/results must be preserved, no winning defense/seed selected.
+
+All5 budgets.05/.10/.20/.30/.50 are scaled from the existing13normalization-only raw scale. FGSM one epsilon step, Gaussian Linf control, trained source template, targeted PGD200steps/3restarts. At primary.20 test all7 detector-aware paths and weights0/.1/1/10 at200steps/3restarts plus400steps/5restarts. Thresholds and MAD scales stay calibrated at nominal5%; EOT30 gradients and independent100-draw verification(seed+1000000). At weight0 the detector term is absent, so avoid computing its zero-weight objective score; reported verification still computes every detector.
+
+Record targeted outcome, all7 scores/rejections, raw applied Linf, optimization time, finite/zero detector gradients and restart/iteration objective traces every20steps and endpoints. A zero gradient is reported, never taken as evidence of robustness. Stronger-optimization comparisons are audits, not proof of global optimality. Do not collapse settings into a positive defense claim. A failure/nonconvergence requires repair/report, never a relaxed threshold.
+
+Enforce the numerical budget on `(raw+delta)-raw`, not only the stored delta: float32 baseline addition can round across an epsilon boundary. Project offending representable values one ULP inward and verify the actual applied difference; zero budget remains exact zero. Synthetic tests run on Kaggle first. Full sealed-user evaluation, generalization, uncertainty and clean spelling cost remain required after this development audit.

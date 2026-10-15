@@ -101,9 +101,9 @@ def main():
         for steps,restarts in ((200,3),(400,5)):
             for weight in (0.,.1,1.,10.):
                 trace=[];synchronize();start=time.perf_counter()
-                delta=defense_aware_pgd(raw,target,eot.logits,lambda z:eot.score(z,method),threshold,scale,eps,weight,steps,restarts,a.seed,audit=trace.append)
+                delta=defense_aware_pgd(raw,target,eot.logits,(lambda z:z.flatten(1).sum(1)*0) if weight==0 else (lambda z:eot.score(z,method)),threshold,scale,eps,weight,steps,restarts,a.seed,audit=trace.append)
                 synchronize();elapsed=time.perf_counter()-start
-                settings=dict(detector=method,weight=weight,steps=steps,restarts=restarts,gradient=gradient_info)
+                settings=dict(detector=method,weight=weight,steps=steps,restarts=restarts,gradient=gradient_info,objective_score_not_computed_when_weight_zero=True)
                 traces.append(dict(settings=settings,trace=trace))
                 record('detector_aware',.2,delta,settings,elapsed)
     (out/f'attack_audit_complete_seed{a.seed}.json').write_text(json.dumps(dict(**metadata,n_settings=len(rows),status='fixed development audit complete'),indent=2))
