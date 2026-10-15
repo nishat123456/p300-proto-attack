@@ -1,0 +1,5 @@
+# Source template integration, October15,2026
+
+Implemented a fixed-update source-only gradient-trained template adaptation, with exact source1-18/train guard, no target outcome fitting,200Adam updates/.01/8 accumulated variable-length trial gradients, seeded random wrong-symbol targets and raw budget projection. This is not an exact NSR reproduction or new attack. An actual OpenBMI source-fit wrapper still needs attachment to the completed source checkpoint; no template has been trained or evaluated by this implementation yet.
+
+The earlier192sample candidate inherited the CompIII240Hz convention. Before OpenBMI outcomes, explicitly correct this to800samples at1000Hz for the documented0.8second template duration. This is a prospective dataset-unit correction, not an outcome-selected length. Record one template per source model seed trained at primary0.20 source raw scale; rescale the same template at all reported budgets. Neither physical causality nor hardware timing robustness follows from recorded-onset placement. New synthetic tests are pending Kaggle, never local.

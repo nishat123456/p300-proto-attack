@@ -165,9 +165,14 @@
       "lr": 0.01,
       "updates": 200,
       "batch_size": 8,
-      "template_samples": 192,
+      "template_samples": 800,
       "placement": "recorded target-group flash onsets, saturating raw Linf budget",
-      "scope": "gradient-trained idea adaptation, not exact NSR reproduction"
+      "scope": "gradient-trained idea adaptation, not exact NSR reproduction",
+      "template_seconds": 0.8,
+      "initialization": "seeded Gaussian std0.001 in unit template coordinates",
+      "training_budget": "primary0.20 times source concatenated raw median channel std; rescale same learned template at every declared evaluation budget",
+      "batching": "accumulate8 individual variable-length trial gradients per Adam update, no raw padding",
+      "projection": "unit template clipped[-1,1], placed perturbation rescaled/clamped raw budget"
     }
   },
   "adaptive": {
