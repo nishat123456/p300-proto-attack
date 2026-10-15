@@ -71,6 +71,20 @@ collection because of namespace/payload packaging; the corrected Kagglev14 run p
 tests with41 warnings in45.98s, preserving the same four raw/path exclusions.
 These are software verification scopes, not independent statistical validation.
 
+## OpenBMI development clean-validation result
+
+Fixed validation subject19 had36/36 clean characters decoded correctly for each
+of the three source seeds, with no seed selected. At nominal5%, rejection counts
+for seeds20261013/14/15 were confidence0/0/0, entropy0/0/0, BU0/2/1, LID1/0/2,
+MD0/2/3, adjusted MD0/2/3 and KDE1/1/0, each out of36. Preserve all1/5/10%
+operating-point records in results/validation_clean_v1. These are repeated
+measurements on one development subject, not108 independent characters or3
+people. There are no genuine decoder errors here to establish rejection
+behavior on mistaken clean decisions. Zero false alarms has a two-sided95%
+IID upper bound9.74%; serial dependence and user shift remain unresolved.
+No detector is selected as a confirmed winner and no threshold is retuned.
+Attack detection and sealed-user outcomes remain unmeasured.
+
 ## Independent results: pending
 
 No independent OpenBMI decoder, attack or detector performance has been measured.
@@ -81,8 +95,9 @@ and no compatible symbol in any33 blocks under the fixed schedule. Its test
 passes; subjects53/54 pass both phases. Full54-person compatibility is false.
 Physical timing cause remains unresolved. No precise per-user5% assurance from36
 test characters. Fixed three-seed source training completed on Kaggle at the recorded30-epoch
-final checkpoints, with no independent performance outcome. The resulting
-reference/template/calibration pipeline is not yet verified end to end.
+final checkpoints, with no independent performance outcome. The source-reference/template/calibration pipeline and fixed validation19
+clean audit have completed across all3seeds. Attack-path and independent
+evaluation verification remain pending.
 
 ## Independent methods specification: prospective, not executed results
 
