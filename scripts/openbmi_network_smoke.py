@@ -26,11 +26,23 @@ def main():
         d=loadmat(path,simplify_cells=True,variable_names=['EEG_ERP_train'])['EEG_ERP_train']
         # First ten development characters train; next three reference; next one query.
         # Provided epochs already baseline-adjusted: diagnostic route, not final raw-attack pipeline.
-        raw=np.asarray(d['smt'][:,:840,:],dtype=np.float32)
-        x=resample_poly(raw,3,50,axis=0).transpose(1,2,0).copy()
-        y=(np.asarray(d['y_dec']).ravel()[:840]==1).astype(np.float32)
-        scale=x[:600].std(axis=(0,2),keepdims=True).clip(1e-6)
-        x=x/scale
+        from p3a.preproc.pipeline import Preprocessor
+        from p3a.data.epochs import downsample_onsets,gather_epochs,epoch_window
+        times=np.asarray(d['t']).ravel()[:840].astype(np.int64)-1
+        continuous=np.asarray(d['x']);trials=[];onsets=[]
+        for block in times.reshape(14,60):
+            begin=max(0,int(block.min())-1000);end=int(block.max())+1001
+            if end>len(continuous):raise ValueError('raw trial boundary exceeds recording')
+            trials.append(continuous[begin:end].T.astype(np.float32));onsets.append(block-begin)
+        pre=Preprocessor(62,1000.,target_fs=60.)
+        pre.fit_scaling(trials[:10])
+        extracted=[]
+        for raw,onset in zip(trials,onsets):
+            with torch.no_grad():
+                signal=pre(torch.as_tensor(raw).unsqueeze(0))
+                ds=torch.as_tensor(downsample_onsets(onset,pre.q)).long().unsqueeze(0)
+                extracted.append(gather_epochs(signal,ds,epoch_window(pre.fs_out))[0].numpy())
+        x=np.concatenate(extracted);y=(np.asarray(d['y_dec']).ravel()[:840]==1).astype(np.float32)
         device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         model=EEGNet(x.shape[1],x.shape[2]).to(device);opt=torch.optim.Adam(model.parameters(),lr=.001)
         for epoch in range(2):
@@ -56,9 +68,9 @@ def main():
             character_score_finite=bool(np.isfinite(predicted_character_score(evidence,v,groups)['score']))) for name,v in scores.items()}
         if not all(c['finite'] and c['character_score_finite'] for c in checks.values()):raise RuntimeError('nonfinite detector integration')
         result=dict(seed=a.seed,source_commit='4bc41bb plus smoke overlay',subject=1,session=1,phase='train only',
-            source_sha256=digest.hexdigest(),device=str(device),decoder_epochs=2,fit_characters=list(range(10)),
+            source_sha256=digest.hexdigest(),device=str(device),preprocessing=pre.to_config(),decoder_epochs=2,fit_characters=list(range(10)),
             reference_characters=list(range(10,13)),query_character=13,checks=checks,
             status='execution smoke only; no accuracy/FAR/TPR/AUC or independent evaluation',
-            limitations='provided-epoch resampling route, not frozen raw-injection benchmark;8draws/k20/epsilon.001 are smoke settings only')
+            limitations='raw Preprocessor and gather_epochs execution; no attacks or frozen benchmark;8draws/k20/epsilon.001 are smoke only')
         (out/'network_smoke.json').write_text(json.dumps(result,indent=2))
 if __name__=='__main__':main()
