@@ -271,3 +271,20 @@ remain mandatory; stop/report incompatibility rather than excluding subjects
 silently. Compact metadata only retrieved, raw files removed after each subject.
 This is not a performance freeze or confirmation run; old splits/gates and
 BNCI2015-003 lock unchanged.
+
+### 2026-10-15: outcome-independent metadata eligibility and reporting
+
+All54 OpenBMI session1 subjects were structurally inspected before independent
+model outcomes. Subject52 official train fails fixed-schedule label identity
+(528 mismatches; no schedule-compatible symbol in any33 blocks); its test passes.
+Retain all planned18 evaluation participants in feasibility/flow reporting,
+explicitly mark52 calibrated-character estimand unavailable, never assign an
+invented performance score or silently substitute a subject. Primary calibrated
+analysis eligibility requires both phases pass unchanged identity/boundary checks.
+If manifest verification agrees,17 assessable and1 unavailable must be disclosed;
+available-case results do not establish all-person performance or random missingness.
+Do not repurpose36 test characters for13norm/20cal to force a passing allocation.
+No performance benchmark is unlocked by this amendment: full attack/statistical/
+cost protocol and new immutable cloud manifests remain prerequisites. Source1-18
+training proceeds under previously recorded settings. Old frozen splits/gates
+unchanged, BNCI2015-003 locked. See results/metadata_eligibility_protocol_decision.md.
