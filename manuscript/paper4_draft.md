@@ -200,3 +200,18 @@ Independent benchmark, closest-paper fulltext matrix, reproduced baselines,
 uncertainty/cluster-aware analysis, clean-error/rejection cost, defense-aware
 stress test, source-audited results tables/figures, complete methods/supplement,
 author/professor review, journal scope/current category-quartile verification.
+
+### Development detector-aware optimization audit (16 October)
+
+On one fixed validation subject19 character, at the primary raw budget0.20,
+ordinary targeted PGD was rejected by MD, adjusted MD and KDE in all three model
+seeds, while confidence, entropy, BU and LID accepted it. Optimizing separately
+against each detector with weights0.1,1,10 reached the wrong target and passed
+that attacked detector for every seed at both200steps/3restarts and400steps/
+5restarts. This does not establish simultaneous evasion of all detectors or a
+population success rate. Longer optimization improved some objective endpoints
+without changing these binary outcomes. Finite values, actual raw budgets and
+trace consistency passed cloud checks. The finding rules out a robust-defense
+claim from this example; independent participant outcomes are still pending.
+Full settings, timings, gradients and limitations are preserved in
+results/development_attack_audit_interpretation.md and development_attack_summary_v2.
