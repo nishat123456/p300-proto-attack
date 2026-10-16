@@ -95,7 +95,7 @@ optimality. Full independent attack/generalization evidence remains required.
 |Source training|Source381ac26, runner543cebf|results/source_training_v1|3seeds,30epochs,35640flash source-only; not accuracy evidence|
 |Reference/template/calibration|Sourcef689536, runnera0b6cf6|results/reference_calibration_v1|5000x48references/templates/fixed19calibration;28tests16.66s|
 |Fixed clean validation19|Source766ea82, runner01b89d6|results/validation_clean_v1|29tests13.70s,36/36correct eachseed; method/seed rejection0-3/36 at nominal5%|
-|Real attack/convergence audit|Source3eefe17, runner9cae903|kaggle/jobs/openbmi_attack_audit|Running, outcomes unverified|
+|Real attack/convergence audit|Source3eefe17, runner9cae903|kaggle/jobs/openbmi_attack_audit|Complete,31tests; fixed-character individually adaptive evasion, evidence1582f56|
 
 Every dataset/model/reference/schedule artifact is hash-bound in compact JSON.
 Training losses and final checkpoint completion are not accuracy or security
@@ -129,7 +129,7 @@ explicit user authorization.
 |Specific literature gap|Closest primary studies reviewed; broad/adaptive precedents disclosed|Finish remaining protocol comparisons; demonstrate substantive independent contribution|
 |Valid frozen independent protocol|Candidate settings and pre-outcome eligibility amendment|Final integration/source review and new immutable cloud manifests before sealed outcomes|
 |Baselines/generalization|Source fitting and one validation user's clean results|Independent users, all planned methods/budgets/seeds, cross-session claims only if actually tested|
-|Adaptive evasion|Real development optimization audit running|Convergence/gradient evidence and independent stress tests; preserve failures|
+|Adaptive evasion|Fixed-character audit complete, each detector individually evaded|Independent stress tests and population uncertainty; preserve negative finding|
 |Clean spelling cost/uncertainty|Accounting code and one-user IID descriptions|User-cluster uncertainty, genuine-error behavior, measured cost; no fabricated throughput|
 |Manuscript/supplement/reproducibility|Draft methods/provenance and verified development failures|Real independent results/figures, complete sources/limitations and professor review|
 

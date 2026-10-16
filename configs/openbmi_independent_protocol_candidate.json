@@ -138,7 +138,8 @@
     "exclude_intended": true,
     "seed": 20261013,
     "same_target_all_methods_budgets_seeds": true,
-    "freeze_before_outcomes": true
+    "freeze_before_outcomes": true,
+    "algorithm": "int(SHA256(str(20261013)+\":\"+trial_id),16) modulo35, increment if result>=intended index; zero-based36-symbol layout"
   },
   "attacks": {
     "FGSM": {
@@ -159,7 +160,7 @@
       "distribution": "independent standard normal then per-trial Linf rescale to budget"
     },
     "Tiny_template_adaptation": {
-      "status": "source-training integration still pending; must report missing if not executable, cannot silently drop",
+      "status": "executed source training/refcal and fixed development attack audit; adaptation, not exact reproduction",
       "training_subjects": "1-18 official train only",
       "optimizer": "Adam",
       "lr": 0.01,
@@ -193,7 +194,9 @@
     "convergence_steps": 400,
     "convergence_restarts": 5,
     "select": "attacker chooses successful nonrejected candidate across fixed settings; retain every per-setting row",
-    "never_threshold_tune": true
+    "never_threshold_tune": true,
+    "evaluation_budgets": "all five declared budgets for200steps/3restarts;400steps/5restarts at primary0.20 only",
+    "union_reporting": "per-detector attacker union over predeclared weights and convergence candidates, not simultaneous evasion of every detector; retain individual settings and denominators"
   },
   "outcomes": {
     "primary": [
@@ -245,5 +248,21 @@
     "full current portable test scope/exclusions recorded",
     "validation report and protocol content hashes committed before sealed outcomes"
   ],
-  "frozen_historical_artifacts": "unchanged; BNCI2015-003 remains locked"
+  "frozen_historical_artifacts": "unchanged; BNCI2015-003 remains locked",
+  "execution_failures": {
+    "policy": "persist completed settings; resume missing identity keys only with identical bound inputs/config, no outcome-selected reruns",
+    "identity_key": [
+      "subject",
+      "trial_id",
+      "model_seed",
+      "attack",
+      "budget",
+      "attacked_detector",
+      "weight",
+      "steps",
+      "restarts"
+    ],
+    "numerical_failure": "mark unavailable with reason and report coverage, never count as successful defense or silently discard",
+    "eligibility_failure": "halt affected subject; preserve flow and metadata reason; no relabel/substitute"
+  }
 }
