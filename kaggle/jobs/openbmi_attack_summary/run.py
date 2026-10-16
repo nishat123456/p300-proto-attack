@@ -41,3 +41,19 @@ result=dict(scope='One fixed development character, three model seeds. Not popul
 (out/'attack_summary.json').write_text(json.dumps(result,indent=2))
 (out/'attack_summary.md').write_text('# Development optimization audit\n\n'+result['scope']+'\n\n'+result['checks']+'\n\nAll settings and paired convergence evidence are preserved in attack_summary.json. No detector or seed selected. Independent gate remains closed.\n')
 print(result['checks'],flush=True)
+lines=['# Fixed development optimization results', '',result['scope'], '', result['checks'], '', 'Counts below are settings on the same character, not independent trials or TPR estimates. Longer-run differences do not prove global convergence.', '']
+for report in reports:
+    lines.extend([f"## Model seed {report['seed']}",'',f"Zero raw score-gradient methods at the clean probe: {report['zero_gradient_methods']}",'','|Attack|Budget|Target reached|Accepted by methods|Seconds|','|---|---|---|---|---|'])
+    for r in report['rows']:
+        if r['attack']=='detector_aware':continue
+        accepted=[m for m,v in r['targeted_and_accepted'].items() if v]
+        lines.append(f"|{r['attack']}|{r['budget']}|{r['targeted_success']}|{','.join(accepted)}|{r['optimization_seconds']:.3f}|")
+    lines.extend(['','|Detector|Weight|Target reached 200/400|Own detector accepted targeted 200/400|Seconds 200/400|','|---|---|---|---|---|'])
+    for pair in report['convergence_pairs']:
+        m=pair['detector']
+        lines.append(f"|{m}|{pair['weight']}|{pair['short_targeted_success']}/{pair['long_targeted_success']}|{pair['short_accepted'][m]}/{pair['long_accepted'][m]}|{pair['short_seconds']:.3f}/{pair['long_seconds']:.3f}|")
+    lines.extend(['','|Detector|Weight|Steps/restarts|Initial/final best objective|','|---|---|---|---|'])
+    for t in report['traces']:
+        s=t['settings'];lines.append(f"|{s['detector']}|{s['weight']}|{s['steps']}/{s['restarts']}|{t['first_best_objective']:.6g}/{t['last_best_objective']:.6g}|")
+    lines.append('')
+(out/'attack_summary.md').write_text('\n'.join(lines)+'\n')
