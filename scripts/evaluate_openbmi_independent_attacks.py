@@ -66,13 +66,18 @@ def main():
         return RawDetectorPipeline(pre,model,on,groups,features,means,precision,20,draws,seed,.001,reference_labels=labels,kde_bandwidth=.5).to(device)
     eot=pipeline(30,a.seed);verify=pipeline(100,a.seed+1000000)
     # Shards are immutable once complete; accidental repeats must not overwrite evidence.
-    out=Path(a.out_dir)/f's{a.subject:02d}_seed{a.seed}_trial{a.trial_index:03d}';out.mkdir(parents=True,exist_ok=False);rows=[];traces=[]
+    out=Path(a.out_dir)/f's{a.subject:02d}_seed{a.seed}_trial{a.trial_index:03d}';out.mkdir(parents=True,exist_ok=True);rows=[];traces=[]
     metadata=dict(seed=a.seed,subject=a.subject,trial_id=trial.trial_id,target=target_index,intended=intended,
         target_rule='fixed SHA256 seed20261013+trialID, exclude intended, shared all models/settings',
         git_commit=a.git_commit,runner_sha256=digest(__file__),checkpoint_sha256=digest(a.checkpoint),
         reference_sha256=digest(a.references),calibration_sha256=digest(a.calibration),template_sha256=digest(a.template),
         scope='frozen independent character shard; no method/seed selection',protocol_sha256=protocol_hash,manifest_sha256=manifest_hash,
-        gradient_draws=30,verification_draws=100,verification_seed=a.seed+1000000)
+        gradient_draws=30,verification_draws=100,verification_seed=a.seed+1000000,raw_sha256=digest(a.raw_file),schedule_sha256=digest(a.schedule),user_preprocessor_sha256=digest(a.user_preprocessor))
+    from p3a.eval.shard_checkpoint import load_shard,save_shard,setting_key
+    checkpoint_path=out/f'attack_audit_seed{a.seed}.json'
+    rows,traces=load_shard(checkpoint_path,metadata)
+    completed={setting_key(r['attack'],r['budget'],r['settings']) for r in rows}
+    def done(name,budget,settings):return setting_key(name,budget,settings) in completed
     def synchronize():
         if device.type=='cuda':torch.cuda.synchronize()
     def record(name,budget,delta,settings,elapsed):
@@ -84,21 +89,29 @@ def main():
         rows.append(dict(attack=name,budget=budget,raw_epsilon=epsilon,applied_linf=float(actual.abs().max()),
             predicted=predicted,targeted_success=predicted==target_index,scores=scores,rejected_at_nominal5=rejected,
             optimization_seconds=elapsed,settings=settings))
-        (out/f'attack_audit_seed{a.seed}.json').write_text(json.dumps(dict(**metadata,rows=rows,traces=traces),indent=2))
+        save_shard(checkpoint_path,metadata,rows,traces)
+        completed.add(setting_key(name,budget,settings))
         print('attack path complete',a.seed,name,budget,settings,flush=True)
     for budget in (.05,.1,.2,.3,.5):
-        eps=budget*calibration['normalization_raw_scale'];rng=torch.Generator(device=device).manual_seed(a.seed)
-        synchronize();start=time.perf_counter()
-        z=raw.detach().clone().requires_grad_(True)
-        loss=torch.nn.functional.cross_entropy(eot.logits(z),target);gradient=torch.autograd.grad(loss,z)[0]
-        record('FGSM',budget,project_applied_delta(raw,-eps*gradient.sign(),eps),dict(steps=1),time.perf_counter()-start)
-        start=time.perf_counter();noise=torch.randn(raw.shape,device=device,generator=rng)
-        record('Gaussian_control',budget,project_applied_delta(raw,linf_rescale(noise,eps),eps),{},time.perf_counter()-start)
-        start=time.perf_counter();placed=place_template_at_onsets(template,on,groups,target,raw.shape[-1])
-        record('source_template',budget,project_applied_delta(raw,linf_rescale(placed,eps),eps),dict(source_updates=200),time.perf_counter()-start)
-        start=time.perf_counter()
-        delta=defense_aware_pgd(raw,target,eot.logits,lambda z:z.flatten(1).sum(1)*0,0.,1.,eps,0.,200,3,a.seed)
-        synchronize();record('PGD',budget,delta,dict(steps=200,restarts=3),time.perf_counter()-start)
+        eps=budget*calibration['normalization_raw_scale']
+        if not done('FGSM',budget,dict(steps=1)):
+            synchronize();start=time.perf_counter()
+            z=raw.detach().clone().requires_grad_(True)
+            gradient=torch.autograd.grad(torch.nn.functional.cross_entropy(eot.logits(z),target),z)[0]
+            synchronize();record('FGSM',budget,project_applied_delta(raw,-eps*gradient.sign(),eps),dict(steps=1),time.perf_counter()-start)
+        if not done('Gaussian_control',budget,{}):
+            rng=torch.Generator(device=device).manual_seed(a.seed)
+            synchronize();start=time.perf_counter();noise=torch.randn(raw.shape,device=device,generator=rng)
+            delta=project_applied_delta(raw,linf_rescale(noise,eps),eps)
+            synchronize();record('Gaussian_control',budget,delta,{},time.perf_counter()-start)
+        if not done('source_template',budget,dict(source_updates=200)):
+            synchronize();start=time.perf_counter();placed=place_template_at_onsets(template,on,groups,target,raw.shape[-1])
+            delta=project_applied_delta(raw,linf_rescale(placed,eps),eps)
+            synchronize();record('source_template',budget,delta,dict(source_updates=200),time.perf_counter()-start)
+        if not done('PGD',budget,dict(steps=200,restarts=3)):
+            synchronize();start=time.perf_counter()
+            delta=defense_aware_pgd(raw,target,eot.logits,lambda z:z.flatten(1).sum(1)*0,0.,1.,eps,0.,200,3,a.seed)
+            synchronize();record('PGD',budget,delta,dict(steps=200,restarts=3),time.perf_counter()-start)
     eps=.2*calibration['normalization_raw_scale']
     for method in METHODS:
         threshold=calibration['methods'][method]['thresholds']['0.05'];scale=calibration['methods'][method]['score_scale']
@@ -107,11 +120,14 @@ def main():
         gradient_info=dict(finite=True,l1=float(grad.abs().sum()),zero=bool(grad.abs().sum()==0))
         for steps,restarts in (((200,3),(400,5)) if a.trial_index==0 else ((200,3),)):
             for weight in (1.,):
+                if done('detector_aware',.2,dict(detector=method,weight=weight,steps=steps,restarts=restarts)):continue
                 trace=[];synchronize();start=time.perf_counter()
                 delta=defense_aware_pgd(raw,target,eot.logits,(lambda z:z.flatten(1).sum(1)*0) if weight==0 else (lambda z:eot.score(z,method)),threshold,scale,eps,weight,steps,restarts,a.seed,audit=trace.append)
                 synchronize();elapsed=time.perf_counter()-start
                 settings=dict(detector=method,weight=weight,steps=steps,restarts=restarts,gradient=gradient_info,objective_score_not_computed_when_weight_zero=True)
                 traces.append(dict(settings=settings,trace=trace))
                 record('detector_aware',.2,delta,settings,elapsed)
+    expected_settings=34 if a.trial_index==0 else27
+    if len(rows)!=expected_settings:raise ValueError('incomplete or unexpected setting coverage')
     (out/f'attack_audit_complete_seed{a.seed}.json').write_text(json.dumps(dict(**metadata,n_settings=len(rows),status='independent character shard complete'),indent=2))
 if __name__=='__main__':main()
