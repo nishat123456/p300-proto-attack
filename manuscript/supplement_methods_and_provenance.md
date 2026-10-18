@@ -136,3 +136,15 @@ explicit user authorization.
 No arbitrary detection percentage or passing software-test count establishes
 Q1 readiness. If evidence cannot support the intended claim, preserve the gap
 and required next work instead of declaring success.
+
+## G. Dedicated execution integration update, 18 October
+
+The validation-only dedicated runner integration completed across all3 seeds:
+manifest-bound calibration,36 clean decisions, first-character approved-recipe
+attack and a second invocation with unchanged checkpoint bytes. Current portable
+scope passed363 tests/41warnings43.88s. Exact launcher06781cf/source dd7c11f;
+results/execution_integration_v1_report.md and compact tree preserve evidence.
+This replaces pending software integration status for those exercised paths,
+not independent evaluation or a forced mid-setting crash test. No final sealed
+release receipt exists. Source-query timing and complete aggregate/orchestration
+remain pending; journal readiness is not established.
