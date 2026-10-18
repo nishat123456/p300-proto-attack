@@ -26,3 +26,14 @@ def test_release_binds_identity_targets_and_content(tmp_path):
     with pytest.raises(ValueError,match='hash'):load_execution_release(p,m,r,37,20261013,'a'*64)
     receipt=json.loads(r.read_text());receipt['manifest_sha256']=digest(m);r.write_text(json.dumps(receipt))
     with pytest.raises(ValueError,match='targets'):load_execution_release(p,m,r,37,20261013,'a'*64)
+
+
+def test_validation_integration_cannot_unlock_sealed(tmp_path):
+    p,m,r,digest=setup(tmp_path,'validation_integration_only')
+    train=[f'openbmi_candidate:s19_session1:train:{i:03d}' for i in range(33)]
+    test=[f'openbmi_candidate:s19_session1:test:{i:03d}' for i in range(36)]
+    m.write_text(json.dumps(build_subject_manifest(19,train,test,'a'*64,digest(p))))
+    receipt=json.loads(r.read_text());receipt['manifest_sha256']=digest(m);r.write_text(json.dumps(receipt))
+    assert load_execution_release(p,m,r,19,20261013,'a'*64,validation_integration=True)[0]['role']=='validation'
+    with pytest.raises(ValueError):load_execution_release(p,m,r,19,20261013,'a'*64)
+    with pytest.raises(ValueError):load_execution_release(p,m,r,37,20261013,'a'*64,validation_integration=True)

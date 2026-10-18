@@ -21,13 +21,14 @@ def main():
     for name in ('checkpoint','references','calibration','user-preprocessor','raw-file','schedule','out-dir','git-commit'):
         p.add_argument('--'+name,required=True)
     for name in ('protocol','manifest','release-receipt'):p.add_argument('--'+name,required=True)
+    p.add_argument('--validation-integration',action='store_true',help='fixed subject19 only; never opens sealed evaluation')
     p.add_argument('--subject',type=int,required=True);p.add_argument('--seed',type=int,required=True);a=p.parse_args()
     torch.manual_seed(a.seed);torch.set_num_threads(2)
     calibration=json.loads(Path(a.calibration).read_text())
     if calibration['subject']!=a.subject or calibration['seed']!=a.seed:raise ValueError('calibration identity mismatch')
     for name,path in [('checkpoint',a.checkpoint),('reference',a.references),('raw',a.raw_file),('schedule',a.schedule)]:
         if calibration[name+'_sha256']!=digest(path):raise ValueError('calibration input hash mismatch: '+name)
-    manifest,protocol_hash,manifest_hash=load_execution_release(a.protocol,a.manifest,a.release_receipt,a.subject,a.seed,digest(a.raw_file))
+    manifest,protocol_hash,manifest_hash=load_execution_release(a.protocol,a.manifest,a.release_receipt,a.subject,a.seed,digest(a.raw_file),validation_integration=a.validation_integration)
     checkpoint=torch.load(a.checkpoint,map_location='cpu',weights_only=False);c=checkpoint['config'];validate_source_policy(c)
     if checkpoint['seed']!=a.seed:raise ValueError('checkpoint seed mismatch')
     state=torch.load(a.user_preprocessor,map_location='cpu',weights_only=False)
