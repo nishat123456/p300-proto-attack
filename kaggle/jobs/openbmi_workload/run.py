@@ -17,3 +17,14 @@ result=dict(scope='Planning extrapolation from ONE development character; exclud
 (out/'workload.json').write_text(json.dumps(result,indent=2))
 (out/'workload.md').write_text('# Prospective workload accounting\n\n'+result['scope']+'\n\nSettings: '+str(result['settings_all_subjects_seeds'])+'\n\nEstimated serial GPU hours: '+str(result['estimated_serial_gpu_hours'])+'\n\nEstimated serial GPU days: '+str(result['estimated_serial_gpu_days'])+'\n\nThis is a resource-feasibility diagnostic, not permission to choose a favorable subset or discard budgets.\n')
 print(result['scope'],result['estimated_serial_gpu_hours'])
+reduced=[]
+for report in d['reports']:
+    rows=report['rows']
+    baseline=sum(r['optimization_seconds'] for r in rows if r['attack']!='detector_aware')
+    short=sum(r['optimization_seconds'] for r in rows if r['attack']=='detector_aware' and r['settings']['steps']==200 and r['settings']['weight']==1)
+    long=sum(r['optimization_seconds'] for r in rows if r['attack']=='detector_aware' and r['settings']['steps']==400 and r['settings']['weight']==1)
+    reduced.append(dict(seed=report['seed'],per_user_seconds=36*(baseline+short)+long,baseline_seconds_per_character=baseline,adaptive_short_seconds_per_character=short,convergence_seconds_first_character=long))
+seconds=17*sum(r['per_user_seconds'] for r in reduced)
+revised=dict(scope='Approved prospective optionB; planning extrapolation from one development character, excludes verification/calibration/I/O/failures; not wallclock guarantee',subjects=17,seeds=3,characters=36,settings=17*3*(36*(20+7)+7),estimated_serial_gpu_hours=seconds/3600,per_seed=reduced,gate='still CLOSED pending final integration/tests/immutable protocol')
+(out/'revised_workload.json').write_text(json.dumps(revised,indent=2))
+(out/'revised_workload.md').write_text('# Approved resource-bounded scope estimate\n\n'+revised['scope']+'\n\nSettings: '+str(revised['settings'])+'\n\nEstimated serial GPU hours: '+str(revised['estimated_serial_gpu_hours'])+'\n\n'+revised['gate']+'\n')

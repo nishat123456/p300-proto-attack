@@ -1,5 +1,5 @@
 {
-  "version": "openbmi_recorded_marker_independent_v1_candidate",
+  "version": "openbmi_recorded_marker_independent_v2_resource_candidate",
   "status": "complete operating settings for integration review; NOT independent performance unlock or frozen manifests",
   "seeds": [
     20261013,
@@ -179,10 +179,7 @@
   "adaptive": {
     "objective": "targeted CE+lambda*softplus((anomaly-clean_threshold)/clean_MAD_scale)",
     "weights": [
-      0,
-      0.1,
-      1,
-      10
+      1.0
     ],
     "steps": 200,
     "restarts": 3,
@@ -195,8 +192,13 @@
     "convergence_restarts": 5,
     "select": "attacker chooses successful nonrejected candidate across fixed settings; retain every per-setting row",
     "never_threshold_tune": true,
-    "evaluation_budgets": "all five declared budgets for200steps/3restarts;400steps/5restarts at primary0.20 only",
-    "union_reporting": "per-detector attacker union over predeclared weights and convergence candidates, not simultaneous evasion of every detector; retain individual settings and denominators"
+    "evaluation_budgets": [
+      0.2
+    ],
+    "union_reporting": "per-detector attacker union over predeclared weights and convergence candidates, not simultaneous evasion of every detector; retain individual settings and denominators",
+    "convergence_characters": "fixed first official test character per eligible evaluation subject, all3seeds/all7detectors; no outcome selection",
+    "zero_weight_comparator": "ordinary targeted PGD already retained at all five budgets; do not duplicate identical weight0 per detector",
+    "scope_limitation": "one fixed adaptive recipe and specified longer-run sensitivity, not full former grid or worst-case robustness"
   },
   "outcomes": {
     "primary": [
@@ -264,5 +266,6 @@
     ],
     "numerical_failure": "mark unavailable with reason and report coverage, never count as successful defense or silently discard",
     "eligibility_failure": "halt affected subject; preserve flow and metadata reason; no relabel/substitute"
-  }
+  },
+  "scope_amendment": "2026-10-18 user authorized agent judgment for Q1/Q2 package after concrete resource choices; selected optionB before sealed performance, full original development grid preserved"
 }

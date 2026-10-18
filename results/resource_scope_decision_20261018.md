@@ -34,3 +34,10 @@ not selecting a detector that looked good. No amendment or sealed performance
 has been executed. Keep the candidate and historical gates unchanged until the
 scientific scope choice is recorded. Implementation of input/provenance guards
 can continue independently; no compute purchase or account reset authorized.
+
+## Decision recorded after user response
+
+18 October2026: user replied "whatever puts us to q1 or q2" to the concrete
+options. Agent selectedB as authorized scientific scope judgment, with the
+limitations above and no journal guarantee. Appended prospective PREREG amendment
+and updated candidate config; final freeze and independent launch remain gated.

@@ -288,3 +288,22 @@ No performance benchmark is unlocked by this amendment: full attack/statistical/
 cost protocol and new immutable cloud manifests remain prerequisites. Source1-18
 training proceeds under previously recorded settings. Old frozen splits/gates
 unchanged, BNCI2015-003 locked. See results/metadata_eligibility_protocol_decision.md.
+
+### 2026-10-18: prospective resource-bounded adaptive scope
+
+After the full cloud workload estimate and concrete scope options were presented,
+the user authorized the agent to choose what supports the Q1/Q2 submission goal.
+Adopt optionB before any sealed participant performance: retain all17 eligible
+evaluation users (18 in flow with52 unavailable), all36 test characters, all3
+model seeds, all7 detectors, all5 budgets for clean/nonadaptive comparisons.
+Detector-aware evaluation uses primary0.20, fixed weight1,200steps/3restarts;
+400steps/5restarts sensitivity uses the fixed first official test character per
+eligible user, every model seed and detector. Ordinary PGD is the weight0
+comparator, not duplicated per detector. Preserve every setting and negative
+result in the earlier development grid. This is one explicit adaptive recipe,
+not the former full weight/budget grid or a worst-case robustness guarantee.
+Resource rationale: results/resource_scope_decision_20261018.md and verified
+cloud workload outputs. No threshold, user or defense selected from sealed
+outcomes. New workload accounting, executable guards/tests and immutable final
+protocol/manifests remain required before performance unlock. Historical frozen
+splits/gates and BNCI2015-003 lock are unchanged.
