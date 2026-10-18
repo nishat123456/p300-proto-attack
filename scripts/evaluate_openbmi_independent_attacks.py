@@ -127,7 +127,7 @@ def main():
                 settings=dict(detector=method,weight=weight,steps=steps,restarts=restarts,gradient=gradient_info,objective_score_not_computed_when_weight_zero=True)
                 traces.append(dict(settings=settings,trace=trace))
                 record('detector_aware',.2,delta,settings,elapsed)
-    expected_settings=34 if a.trial_index==0 else27
+    expected_settings=34 if a.trial_index==0 else 27
     if len(rows)!=expected_settings:raise ValueError('incomplete or unexpected setting coverage')
     (out/f'attack_audit_complete_seed{a.seed}.json').write_text(json.dumps(dict(**metadata,n_settings=len(rows),status='independent character shard complete'),indent=2))
 if __name__=='__main__':main()
