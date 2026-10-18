@@ -11,3 +11,8 @@ def test_atomic_resume_binding_and_duplicates(tmp_path):
     save_shard(p,meta,[row,row],[])
     with pytest.raises(ValueError,match='duplicate'):load_shard(p,meta)
     assert setting_key('PGD',.2,{'steps':200,'restarts':3})!=setting_key('PGD',.1,{'steps':200,'restarts':3})
+
+def test_independent_attack_runner_parses():
+    import ast
+    from pathlib import Path
+    ast.parse((Path(__file__).parents[1]/'scripts/evaluate_openbmi_independent_attacks.py').read_text())
