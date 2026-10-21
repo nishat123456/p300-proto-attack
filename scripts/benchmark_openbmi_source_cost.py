@@ -12,7 +12,7 @@ from p3a.models.eegnet import EEGNet
 from p3a.preproc.pipeline import Preprocessor
 from p3a.defenses.raw_detector_pipeline import RawDetectorPipeline
 from p3a.defenses.clean_calibration import METHODS
-from p3a.eval.reliability_cost import measure_inference,marker_duration_seconds
+from p3a.eval.reliability_cost import measure_inference,marker_duration_seconds,exclude_query_references
 
 def main():
     parser=argparse.ArgumentParser()
@@ -35,14 +35,18 @@ def main():
     pre=Preprocessor(62,pp['raw_fs'],band=tuple(pp['band_hz']),target_fs=pp['target_fs'],car=pp['car']).to(device);pre.load_state_dict(checkpoint['preprocessor'])
     model=EEGNet(62,epoch_window(pre.fs_out),**{k:v for k,v in c['decoder'].items() if k!='architecture'}).to(device)
     model.load_state_dict(checkpoint['model']);model.eval()
+    reference_ids=proof['reference_identities']
+    keep=exclude_query_references(reference_ids,trial.trial_id)
+    if int(keep.sum())<20:raise ValueError('insufficient leave-query-out timing references')
     with np.load(a.references,allow_pickle=False) as ref:
-        pipeline=RawDetectorPipeline(pre,model,torch.as_tensor(trial.onsets,device=device).long().unsqueeze(0),torch.as_tensor(trial.flash_groups,device=device).bool().unsqueeze(0),ref['features'].copy(),ref['means'].copy(),ref['precision'].copy(),20,100,a.seed,.001,reference_labels=ref['labels'].copy(),kde_bandwidth=.5).to(device)
+        if len(ref['features'])!=len(reference_ids):raise ValueError('reference identity alignment mismatch')
+        pipeline=RawDetectorPipeline(pre,model,torch.as_tensor(trial.onsets,device=device).long().unsqueeze(0),torch.as_tensor(trial.flash_groups,device=device).bool().unsqueeze(0),ref['features'][keep].copy(),ref['means'].copy(),ref['precision'].copy(),20,100,a.seed,.001,reference_labels=ref['labels'][keep].copy(),kde_bandwidth=.5).to(device)
     raw=torch.as_tensor(trial.eeg,device=device).unsqueeze(0)
     def score(method):
         # Detach each result; adjusted-MD intentionally needs input gradients internally.
         return pipeline.score(raw,method).detach()
     timing={method:measure_inference(lambda m=method:score(m),torch.cuda.synchronize) for method in METHODS}
     out=Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
-    result=dict(seed=a.seed,git_commit=a.git_commit,runner_sha256=digest(__file__),checkpoint_sha256=digest(a.checkpoint),reference_sha256=digest(a.references),raw_sha256=digest(a.raw_file),schedule_sha256=digest(a.schedule),trial_id=trial.trial_id,methods=timing,marker_duration_seconds=marker_duration_seconds(trial.onsets,trial.fs),hardware=torch.cuda.get_device_name(),torch_version=torch.__version__,cuda_version=torch.version.cuda,python_version=platform.python_version(),scope='fixed source1 first train query batch1 synchronized computation; not clinical or physical latency, no performance outcome')
+    result=dict(seed=a.seed,git_commit=a.git_commit,runner_sha256=digest(__file__),checkpoint_sha256=digest(a.checkpoint),reference_sha256=digest(a.references),raw_sha256=digest(a.raw_file),schedule_sha256=digest(a.schedule),trial_id=trial.trial_id,timing_reference_policy='explicit leave-query-out by stored trial/flash identity, timing only; independent detector references unchanged',excluded_query_reference_count=int((~keep).sum()),remaining_reference_count=int(keep.sum()),methods=timing,marker_duration_seconds=marker_duration_seconds(trial.onsets,trial.fs),hardware=torch.cuda.get_device_name(),torch_version=torch.__version__,cuda_version=torch.version.cuda,python_version=platform.python_version(),scope='fixed source1 first train query batch1 synchronized computation; not clinical or physical latency, no performance outcome')
     (out/f'source_cost_seed{a.seed}.json').write_text(json.dumps(result,indent=2,allow_nan=False))
 if __name__=='__main__':main()

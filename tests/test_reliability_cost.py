@@ -12,3 +12,9 @@ def test_timing_calls_and_scope():
     assert len(calls)==5 and len(sync)==8
     assert len(r['seconds'])==3 and r['median_seconds']>=0 and r['p95_seconds']>=0
     assert 'not physical' in r['scope']
+
+def test_timing_reference_exclusion_uses_exact_trial_identity():
+    from p3a.eval.reliability_cost import exclude_query_references
+    mask=exclude_query_references(['trial0:flash00','trial01:flash00','other:flash02'],'trial0')
+    assert mask.tolist()==[False,True,True]
+    with pytest.raises(ValueError):exclude_query_references(['x','x'],'query')

@@ -19,3 +19,9 @@ def measure_inference(callback,synchronize,warmup=5,repeats=30):
         synchronize();start=time.perf_counter();callback();synchronize()
         elapsed.append(time.perf_counter()-start)
     return dict(warmup=warmup,repeats=repeats,seconds=elapsed,median_seconds=float(np.median(elapsed)),p95_seconds=float(np.quantile(elapsed,.95)),scope='batch1 computation only; not physical latency or clinical spelling throughput')
+
+def exclude_query_references(reference_ids,query_trial_id):
+    """Timing-only leave-query-out identity mask, never distance-based filtering."""
+    if len(reference_ids)!=len(set(reference_ids)) or not reference_ids or not query_trial_id:
+        raise ValueError('unique nonempty reference identities and query identity required')
+    return np.asarray([not identity.startswith(query_trial_id+':flash') for identity in reference_ids],dtype=bool)
