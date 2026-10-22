@@ -1,74 +1,113 @@
 # Clean rejection and adaptive manipulation in P300 spellers: character-level reliability of existing detectors
 
-Working manuscript,21 October2026 Central. **Not submission-ready.** Authors/order,
+Working manuscript,22 October2026 Central. **Not submission-ready.** Authors/order,
 affiliations and target journal require confirmation. No acceptance claim.
 
 ## Abstract draft
 
-P300 speller security depends on both detecting manipulations and avoiding
-false rejection of genuine character decisions. We investigate whether attack
-ranking performance translates into useful independently clean-calibrated
-operating points. A CompetitionIII development study compares conventional
-classifiers, engineered authenticity features and a paired channel/time
-representation. Prototype-guided targeted attacks remain difficult to detect
-under subject transfer, and richer features produce direction-dependent
-trade-offs rather than consistent improvement. A cloud-reproduced software and
-data audit identifies attack-budget identity defects, calibration sample
-limitations and event-order assumptions that affect defensible conclusions.
-A prespecified recorded-marker OpenBMI evaluation is running, with independent results pending.
-Consequently this draft establishes development failures and methodological
-limits, not a validated general-purpose defense or population low-FAR guarantee.
+P300 speller security requires character decisions that remain useful after a
+system rejects suspicious signals. Ranking attack examples by anomaly does not
+by itself quantify genuine character rejection, accepted decoding errors or
+successful manipulations that pass a deployed threshold. We evaluate these
+outcomes for seven existing detector controls and adaptations in an offline
+recorded-marker OpenBMI protocol. Source models use18 participants; clean-user
+normalization and threshold calibration use disjoint official training decisions;
+evaluation retains all36 official test characters per available held-out user.
+The prespecified study includes17 eligible evaluation participants, three fixed
+model seeds, five nonadaptive perturbation budgets and detector-aware stress
+tests. One further intended participant remains in the flow with an unavailable
+calibrated estimand because training labels fail identity validation. All-original-
+attempt rates, participant uncertainty and explicit rejection-cost assumptions
+separate reliability from successful-attack-only detection. Independent execution
+is incomplete, so population results and the final results/conclusion sentences
+of this abstract remain pending. Development failures motivate the protocol but
+do not establish a new detector, robustness or a per-user false-alarm guarantee.
 
-## Candidate contribution, subject to independent validation
+## Introduction
 
-A character-level evaluation separating clean-user normalization, threshold
-calibration and evaluation, with observed FAR and uncertainty, multiple fixed manipulation families, defended
-targeted success and explicit rejection cost. This is not a
-new detector or first EEG/P300 defense benchmark. The independent study must
-establish the magnitude and practical consequences of failures beyond prior work.
+A P300 speller maps repeated stimulus responses to a character. Manipulating the
+recorded signal can therefore change the selected symbol, even when the added
+perturbation is small. Targeted P300 manipulation is established prior work
+[@zhang2021tinynoise]. Generative and attention-guided EEG attacks further motivate
+checking structured signal manipulations rather than only random corruption
+[@jung2023gpn; @zhong2025auap]. A signal detector adds a second decision: whether
+to accept the character. Rejecting an attack may be useful, but rejecting genuine
+characters also imposes a cost. A detector's ranking performance alone does not
+specify either outcome at a threshold calibrated for a new user.
+
+Existing EEG security studies already examine attack detection, subject transfer,
+P300 defense benchmarks and detector-aware evasion. These are not new claims of
+this study. The question here is narrower: under clean-only user calibration,
+what proportion of genuine character decisions is rejected, what genuine errors
+remain accepted, and what proportion of all targeted manipulation attempts both
+changes the character and passes the detector? We examine these outcomes together
+rather than interpreting a nominal false-alarm setting or attack-ranking score
+as a reliability guarantee.
+
+The protocol separates source learning, clean-user normalization, clean threshold
+calibration and held-out character evaluation. It fixes model seeds, attack
+budgets and the adaptive recipe before evaluation; retains unsuccessful attacks
+in end-to-end denominators; averages model seeds within participants; and reports
+participant-level uncertainty. Rejection and source-query compute costs have
+explicit assumptions. The empirical scope is an offline recorded-marker signal-
+access setting, not a live headset attack or clinical throughput experiment.
+
+The intended contribution is evidence about character-level operating points
+and their limitations across users and attack families. Whether that evidence
+supports a useful publication claim depends on the complete independent results.
+The detector families, bootstrap methods and adaptive attack principles are
+established. We do not claim a first P300 defense, first adaptive P300 evaluation,
+a new uncertainty method or a certified robust detector.
 
 ## Related work
 
-- Jung etal., GPN, JBHI2023: initial generator motivation; no unlicensed code copied.
-- Zhong etal., AUAP, ESWA2025: structural attack motivation; sparse mask not evaluated.
-- Zhang etal., TinyNoise, NSR2021: targeted P300 attacks already established.
-- Mezzina etal., Sensors2021: synchronized channel-mixing protection under a
-  trusted transmission architecture; not directly comparable to signal-only detection.
-- Chen and Wu, arXiv2212.00727 (2022): reviewed preprint precedent for BU/LID/MD
-  and subject-held-out ERN/MI detection. Chen, Meng, Xu and Wu, JNE2024,
-  DOI10.1088/1741-2552/ad8964, is an expanded journal study with three datasets
-  and eight detectors according to its abstract. Its full methods are now checked separately: ERN, MI and RSVP epochs;
-  supervised logistic attack detectors; LOSO and AUC-based nested tuning.
-  Section4.4 uses AUC to avoid threshold selection. This differs from our
-  clean-only character calibration and all-attempt reliability estimand; it
-  does not establish uniqueness across all literature. See
-  results/jne2024_fulltext_review_20261022.md.
-- Zhang/Gu, JPCS2024, DOI10.1088/1742-6596/2761/1/012037: detector comparison
-  full text reviewed: evaluates confidence, predictive entropy, Bayesian uncertainty
-  and KDE on CompIII P300 and MI, including detector-aware CW against KDE.
-  Adaptive P300 detection and KDE therefore precede this study. The reviewed
-  protocol emphasizes flash-level ranking/balanced accuracy rather than the
-  independently calibrated character-level reliability/cost estimand here.
-  Conventional negative-Gaussian KDE is an explicit adaptation: the printed
-  equation has a positive exponent inconsistent with its low-density rationale.
-  See results/zhang_gu_2024_fulltext_review.md; no exact reproduction claim.
-- Chen/Jia/Wu, NeuralNetworks2025, DOI10.1016/j.neunet.2025.107516: nine defenses,
-  five datasets including eight-participant P300, three networks and within-/
-  cross-session online/offline scenarios. Full methods are now checked in
-  results/nn2025_fulltext_review_20261022.md: epoch-level balanced accuracy and
-  targeted attack success, rather than clean-calibrated character rejection.
-  P300 benchmarking and session-shift robustness are already prior work.
-- Conceicao daCosta etal., ICEIS2026, DOI10.5220/0014819600004018:
-  conventional detector/ANFIS precedent; primary protocol review is now recorded
-  in results/iceis2026_primary_review.md. No first-detector claim.
+Targeted speller attacks and signal protection have different security
+assumptions. Tiny Noise demonstrated targeted P300 manipulation
+[@zhang2021tinynoise]. GPN and attention-guided universal perturbations provide
+learned-generator and structured-perturbation precedents
+[@jung2023gpn; @zhong2025auap]. They motivated development work here, but no
+unlicensed GPN implementation was copied and an AUAP-style sparse mask is not
+evaluated. Mezzina etal. examine synchronized transformation-based protection
+under a trusted transmission architecture [@mezzina2021cybersecure]. That
+architecture is distinct from post hoc signal-only anomaly detection.
 
-A source-by-source protocol matrix is retained in
-results/literature_protocol_matrix_20261022.md. The Covariance Entropy2025
-accepted manuscript adds MI/ERN epoch detection and compute-time precedent;
-its final PDF was not visually verified. Our frozen seven-method set excludes
-CovEn and the journal cosine-distance variants and is explicitly nonexhaustive.
-The distinction is the combined character operating-point/cost estimand, not
-universal priority or a claim that all EEG detectors behave alike.
+Zhang and Gu compare confidence, entropy, Bayesian uncertainty and kernel density
+estimation on CompetitionIII P300 and motor-imagery signals, including
+detector-aware CW against KDE [@zhanggu2024detection]. Their study establishes
+prior P300 detection and adaptive-evasion evidence. Its reviewed protocol
+emphasizes flash-level attack ranking and balanced classification rather than
+independently clean-calibrated character rejection and all-attempt spelling
+reliability. Our conventional negative-Gaussian KDE is an explicit adaptation:
+the printed positive exponent conflicts with the article's low-density rationale.
+It is not an exact reproduction claim.
+
+Chen, Meng, Xu and Wu's expanded journal study evaluates ERN, motor-imagery and
+RSVP epochs using supervised clean/attack logistic detectors, subject-held-out
+evaluation and nested AUC tuning [@chen2024artifacts]. Its methods explicitly use
+AUC to avoid selecting a detection threshold. The journal protocol was reviewed
+separately from the earlier Chen and Wu preprint [@chen2022artifacts].
+Clean-only character calibration and its observed operating point therefore
+represent a different estimand from the reviewed journal experiment; this does
+not establish uniqueness across the full literature.
+
+Chen, Jia and Wu benchmark nine defenses across five datasets, including an
+eight-participant P300 dataset, three networks and within-/cross-session
+online/offline scenarios [@chen2025benchmark]. Their epoch-level balanced accuracy
+and targeted attack success establish broad P300 defense and session-shift
+precedents. Conventional detector/ANFIS comparisons [@costa2026comparison] and
+Covariance Entropy detection with compute reporting [@khilnani2025coven] further
+limit broad detector-comparison or efficiency novelty claims. The latter review
+uses accepted-manuscript HTML; the final PDF has not been visually verified.
+
+Our frozen seven-method set is nonexhaustive: it omits Covariance Entropy and
+journal cosine-distance variants. Conclusions must therefore concern these
+specified adaptations and settings. The source-by-source reading scope and
+protocol comparison are retained in
+results/literature_protocol_matrix_20261022.md. The reviewed protocols do not
+evaluate the same combined clean-only character operating-point, all-attempt
+manipulation and rejection-cost estimand. This bounded distinction is not a
+universal priority proof. Independent results must establish the magnitude and
+practical implications beyond known adaptive failure.
 
 ## Methods: completed development work
 
@@ -121,14 +160,16 @@ final checkpoints, with no independent performance outcome. The source-reference
 clean audit have completed across all3seeds. Full validation19 attack/controller/aggregation verification has completed;
 independent evaluation outcomes remain pending.
 
-## Independent methods specification: prospective, not executed results
+## Independent methods: prespecified protocol
 
 The exact prospective settings are frozen in
 configs/openbmi_independent_protocol_frozen_20261022.json, with cloud-generated
 immutable allocations, targets and code-bound receipts in
 splits/openbmi_independent_20261022. Settings and artifacts were committed before
-independent launch. The first five of51 fixed subject-seed tasks are running
-on five private Kaggle accounts. Existing historical splits and failed gates
+independent launch. Of51 fixed subject-seed tasks, two have completed and their compact provenance
+is preserved; five further task versions are active or queued on the five
+private Kaggle accounts. Task01 has a preserved terminal failure with no exposed
+log or outputs and one identical-payload retry. No scientific setting changed. Existing historical splits and failed gates
 are preserved; BNCI2015-003 remains locked.
 
 ### Participants, identity and missingness
@@ -235,7 +276,7 @@ results limit tested methods/settings, not all possible defenses.
 
 ## Required before submission
 
-Independent benchmark outcomes, expanded closest-paper fulltext matrix,
+Complete independent benchmark outcomes, a refreshed closest-paper scope check,
 explicitly labelled baseline adaptations,
 uncertainty/cluster-aware analysis, clean-error/rejection cost, defense-aware
 stress test, source-audited results tables/figures, complete methods/supplement,
