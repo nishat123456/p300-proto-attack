@@ -17,3 +17,9 @@ Current private GitHub/Kaggle preservation is not a final availability arrangeme
 ## Outstanding selection work
 
 TNSRE official editorial page was found, but full retrieval was robots-blocked; no current detailed submission requirements were inferred from that failure. JNE quartile/category/year, alternate Q2 options, current charges and author funding choices remain unverified. No fee or publishing commitment is approved. Prefer professor review of completed independent findings before final venue selection. Do not retune experiments to fit a journal label.
+
+## Dated quartile evidence, not a current-year guarantee
+
+The [Romanian research-funding agency's June2025 JCR2024 table](https://uefiscdi.gov.ro/resource-865584-JCR_2024.iunie2025.pdf) lists JNE (ISSN1741-2560/eISSN1741-2552) as JIF Q2 and AIS Q2 in both Engineering, Biomedical (printed page225) and Neurosciences (printed page534). It lists TNSRE as JIF Q1/AIS Q1 in Engineering, Biomedical on page225. These are the agency's republished JCR2024 rows, not direct authenticated current Clarivate/SCImago verification. They establish the specified historical category/year only. Search snippets for SJR/CiteScore give different labels and must not be combined into a single unqualified quartile. Latest direct-provider verification remains pending before venue selection.
+
+The [current JNE publisher page](https://publishingsupport.iopscience.iop.org/journals/journal-of-neural-engineering/about-journal-neural-engineering/) states that subscription-access publication is free and optional gold open access has an APC; no publishing option or payment was selected. Recheck terms when choosing a route. Completing our study does not itself establish acceptance at either venue.
