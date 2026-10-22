@@ -88,13 +88,21 @@ PGD200/3 and stronger400/5 plus weights0/.1/1/10 are retained. BU gradient EOT30
 uses independent100draw reporting, calibrated at100draws. Every setting, finite/
 zero-gradient flag, objective trace, actual budget and time is retained. This
 one-character audit does not estimate population TPR or prove global attack
-optimality. Full independent attack/generalization evidence remains required.
+optimality. Full independent attack/generalization evidence remains required. The frozen
+independent scope uses only weight1/200x3 at primary.20 on all36 characters,
+plus400x5 on the fixed first character per user/seed/detector. Ordinary PGD
+is the weight0 comparator; the development grid is not the independent grid.
 
 ## D. Completed evidence and exact execution
 
 |Stage|Source/runner|Compact evidence|Bounded result|
 |---|---|---|---|
-|Current broad portable suite before latest projection change|Runner268144f, result0f69ed8|results/portable_suite_v14|351passed,41warnings45.98s; four historical excluded raw/path files|
+|Historical broad portable suite before later integration|Runner268144f, result0f69ed8|results/portable_suite_v14|351passed,41warnings45.98s; four historical excluded raw/path files|
+|Code-bound release regression|Source33e1f62, launcher6883011|results/portable_suite_v19|368passed,41warnings51.09s; same four exclusions|
+|Population uncertainty regression|Source80ce170, launcher38ddc06|results/portable_suite_v18|367passed,41warnings37.65s; no EEG|
+|Full validation19 controller|Source5a58d02, launcherca21d97|results/subject_integration_v1|All36characters/all3seeds, cloud aggregate and unchanged completed-ledger hashes|
+|Source-query inference timing|Sourcecea450f, launcher01f81ea|results/source_cost_v2|All3seeds/7methods,5warmups/30repeats; fixed-source-query measure only|
+|Final metadata release|Source8f931ae, launcher289781f|splits/openbmi_independent_20261022|53metadata allocations/17evaluation receipts,52unavailable in18flow|
 |Source training|Source381ac26, runner543cebf|results/source_training_v1|3seeds,30epochs,35640flash source-only; not accuracy evidence|
 |Reference/template/calibration|Sourcef689536, runnera0b6cf6|results/reference_calibration_v1|5000x48references/templates/fixed19calibration;28tests16.66s|
 |Fixed clean validation19|Source766ea82, runner01b89d6|results/validation_clean_v1|29tests13.70s,36/36correct eachseed; method/seed rejection0-3/36 at nominal5%|
@@ -105,8 +113,8 @@ Training losses and final checkpoint completion are not accuracy or security
 metrics. Prior failed packaging/test runs remain preserved. Portable exclusions:
 test_comp3.py, test_letter_head.py, test_bank_report.py and
  test_kaggle_kill_test_run.py, due documented historical raw/path limitations.
-The latest applied-projection changes require their new cloud test evidence;
-351 earlier passes are not silently relabeled as post-change verification.
+Later v18/v19 cloud scopes supersede earlier software-verification counts;
+351 earlier passes are not relabeled as post-change verification.
 
 ## E. Reproduction and data handling
 
@@ -130,17 +138,20 @@ explicit user authorization.
 |Requirement|Current evidence|Remaining work|
 |---|---|---|
 |Specific literature gap|Closest primary studies reviewed; broad/adaptive precedents disclosed|Finish remaining protocol comparisons; demonstrate substantive independent contribution|
-|Valid frozen independent protocol|Candidate settings and pre-outcome eligibility amendment|Final integration/source review and new immutable cloud manifests before sealed outcomes|
-|Baselines/generalization|Source fitting and one validation user's clean results|Independent users, all planned methods/budgets/seeds, cross-session claims only if actually tested|
+|Valid frozen independent protocol|Settings0535c5e, PREREG8f931ae, cloud manifests9ce8906 committed before launch|Preserve exact hashes and document any necessary prospective release amendment|
+|Baselines/generalization|Source fitting, full validation19 integration and first5of51 independent tasks running|Complete all51tasks and cloud aggregation; cross-session claims only if actually tested|
 |Adaptive evasion|Fixed-character audit complete, each detector individually evaded|Independent stress tests and population uncertainty; preserve negative finding|
-|Clean spelling cost/uncertainty|Accounting code and one-user IID descriptions|User-cluster uncertainty, genuine-error behavior, measured cost; no fabricated throughput|
+|Clean spelling cost/uncertainty|Source-query timing completed; subject bootstrap implementation verified|Independent-user estimates/intervals and genuine-error/rejection behavior; no fabricated throughput|
 |Manuscript/supplement/reproducibility|Draft methods/provenance and verified development failures|Real independent results/figures, complete sources/limitations and professor review|
 
 No arbitrary detection percentage or passing software-test count establishes
 Q1 readiness. If evidence cannot support the intended claim, preserve the gap
 and required next work instead of declaring success.
 
-## G. Dedicated execution integration update, 18 October
+## G. Historical dedicated execution integration update, 18 October
+
+The status below is historical; the21October release section supersedes its
+pending timing/orchestration/receipt statements.
 
 The validation-only dedicated runner integration completed across all3 seeds:
 manifest-bound calibration,36 clean decisions, first-character approved-recipe
