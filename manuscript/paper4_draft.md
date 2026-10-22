@@ -37,9 +37,12 @@ establish the magnitude and practical consequences of failures beyond prior work
 - Chen and Wu, arXiv2212.00727 (2022): reviewed preprint precedent for BU/LID/MD
   and subject-held-out ERN/MI detection. Chen, Meng, Xu and Wu, JNE2024,
   DOI10.1088/1741-2552/ad8964, is an expanded journal study with three datasets
-  and eight detectors according to its abstract. Its full methods remain
-  unverified; do not attribute the preprint dataset/split scope to the journal
-  version or infer that character-level clean calibration is absent.
+  and eight detectors according to its abstract. Its full methods are now checked separately: ERN, MI and RSVP epochs;
+  supervised logistic attack detectors; LOSO and AUC-based nested tuning.
+  Section4.4 uses AUC to avoid threshold selection. This differs from our
+  clean-only character calibration and all-attempt reliability estimand; it
+  does not establish uniqueness across all literature. See
+  results/jne2024_fulltext_review_20261022.md.
 - Zhang/Gu, JPCS2024, DOI10.1088/1742-6596/2761/1/012037: detector comparison
   full text reviewed: evaluates confidence, predictive entropy, Bayesian uncertainty
   and KDE on CompIII P300 and MI, including detector-aware CW against KDE.

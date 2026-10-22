@@ -27,8 +27,10 @@ identity checks/evaluation only, not for selecting the scored symbol.
 Source/family equations and overlap: results/reference_baseline_specification.md
 (historical checkpoint), results/zhang_gu_2024_fulltext_review.md (later verified
 primary fulltext). The reviewed Chen/Wu2022 preprint motivates BU/LID/MD; the expanded2024
-journal version (Chen/Meng/Xu/Wu) has not been fully verified. Do not use
-preprint details as proof of the journal dataset/calibration scope; Zhang/Gu2024 already
+journal version (Chen/Meng/Xu/Wu) was separately checked on22October: ERN/MI/RSVP
+epochs, supervised logistic detection and AUC without threshold selection. See
+results/jne2024_fulltext_review_20261022.md. Preprint details must not replace
+that journal protocol; Zhang/Gu2024 already
 compares P300 confidence/entropy/BU/KDE and detector-aware attack. Chen/Jia/Wu2025
 is a broad benchmark precedent. Neither first detector, first benchmark nor
 first adaptive P300 evaluation is a contribution here. Remaining novelty review
