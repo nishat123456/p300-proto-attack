@@ -57,7 +57,7 @@ python reporting/build_reliability_report.py \
 
 Do not pass `--development-only` to a final independent report. That mode is restricted to the already-inspected participant19 integration evidence. It cannot provide a population result. Keep all nominal1/5/10% clean tables and all declared attack budgets. Fixed color scales and descriptive intervals do not select a winner or establish significance.
 
-CPU report checks exercised real participant19 aggregate data and five rejection/acceptance guards. The reporter has not yet been exercised on the complete17-person independent aggregate. Development PNG files were generated on Kaggle; browser preview was blank at the latest inspection, so visual verification remains pending. Final independent figure layout and captions require actual visual review, not generation alone.
+CPU report checks exercised real participant19 aggregate data and five rejection/acceptance guards. The reporter has not yet been exercised on the complete17-person independent aggregate. Development PNG files were generated on Kaggle. The first file/script previews were blank, but actual notebook previewv2 subsequently rendered both exact images; browser visual review is recorded in results/report_preview_v2. Final independent figure layout and captions require actual visual review, not generation alone.
 
 ## Cost and publication completion gates
 
