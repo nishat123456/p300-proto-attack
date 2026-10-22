@@ -224,3 +224,14 @@ minima/maxima are descriptive, not confidence intervals. No clinical latency,
 population retry-cost effect or complete independent cost result is inferred.
 The reporter is outside the frozen scientific source inventory and changes no
 threshold, model, reference, attack setting or receipt.
+
+## Development figure visual review, 22 October 2026
+
+Private p3a-report-previewv2 displayed both existing development19 heatmaps in
+actual notebook image output. Browser visual review covered titles, axes,
+seven detector labels, five attack labels, colorbars and complete figure bounds.
+Layout was readable; exact PNG hashes and bounded review scope are preserved in
+results/report_preview_v2. The first script preview's no-image limitation remains
+in report_preview_v1. No image was downloaded or recomputed locally. This clears
+only those two development figures, not independent17-participant figures or
+journal readiness. The original report-generation receipt is preserved unchanged.
