@@ -196,3 +196,19 @@ With one development participant the population interval is unavailable.
 Intervals assume exchangeable participants and are conditional on17 available
 calibrated users. Paired differences use shared nonadaptive perturbations;
 separately attacked detector objectives are not comparative efficacy tests.
+
+## Independent execution and reproducibility checkpoint, 22 October 2026
+
+Tasks00/04 completed and77 compact JSON artifacts per task were preserved in
+private GitHub fc4e444. Their subject ledgers record all36 original clean/attack
+characters. This is partial independent execution, not the complete51-task study
+or a population result. Task01v1 failed with no exposed outputs/log and null
+failure message; its cause is unknown. One identical-payload v2 retry was
+submitted, retaining the original failure record (9f7e0cd). Other fixed tasks
+continue without scientific code, threshold or receipt changes.
+
+The [reproducibility runbook](reproducibility_runbook.md) records cloud-only
+aggregation commands, complete-coverage checks, recovery provenance, artifact
+restrictions and outstanding publication requirements. Development figure
+visual verification remains pending because the cloud browser preview was
+blank. No final independent figure or cost summary has been verified.
