@@ -44,7 +44,7 @@ Development1-18, validation19-36, independent37-54; fixed3model seeds20261013,
 20261014,20261015. Frozen target allocation:13 normalization and20 calibration
 from33 official train characters, all36 official test characters for evaluation,
 allocation seed20261013. Raw channel statistics fit normalization characters
-only. Thresholds use20 independent calibration decisions and higher empirical
+only. Thresholds use20 disjoint calibration decisions and higher empirical
 quantile at nominal1/5/10%, rejection strictly greater with ties retained.
 Nominal1% and5% thresholds coincide at this sample size. MAD score scale has
 fixed1e-6 floor, not a target-attack-dependent scale.

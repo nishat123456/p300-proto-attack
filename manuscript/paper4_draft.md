@@ -158,11 +158,15 @@ covariance/final-layer aggregation are adaptations, not exact paper reproduction
 For each eligible user, split33 official train decisions into13 normalization
 and20 calibration decisions with fixed seed20261013; keep all36 official test
 decisions for evaluation. Refit channel normalization only on the13 decisions.
+The OpenBMI dataset/toolbox source is Lee etal.2019 [@lee2019openbmi].
 Compute clean calibration scores without true-character selection: average flash
 anomaly over groups supporting the decoder-predicted symbol. The higher empirical
 quantile at nominal1/5/10% defines rejection strictly above the threshold, retaining
 ties. At20 decisions, nominal1% and5% both select the maximum; nominal values are
-not per-user guarantees. Dropout calibration and every reported clean/attacked
+not per-user guarantees. Clean-reference calibration has established statistical
+precedents [@bates2023outliers]; our empirical-quantile rule does not establish
+their calibration-conditional or multiple-testing guarantees under phase shift.
+Dropout calibration and every reported clean/attacked
 score use100 draws; only adaptive gradient estimation uses30 draws. Recalibrating
 a different draw-count score at evaluation is forbidden.
 
@@ -182,7 +186,11 @@ source-trial gradients, and primary.20 source raw scale; rescale the same learne
 template across budgets. No raw padding, target-user template fitting, exact NSR
 reproduction or physical causality claim. Source-only template training has completed, with hash-bound provenance.
 
-Detector-aware PGD combines targeted cross-entropy and a softplus detector penalty
+FGSM and projected-gradient attack ideas are established [@goodfellow2014fgsm;
+@madry2017robust]. Adaptive evaluation is required methodological practice
+[@tramer2020adaptive], not a contribution by itself. Stochastic gradient averaging
+uses the expectation-over-transformation idea [@athalye2018eot], without a
+physical-world robustness claim. Detector-aware PGD combines targeted cross-entropy and a softplus detector penalty
 at fixed weight1 and budget.20 with200steps/3restarts on all36 characters.
 A400step/5restart sensitivity runs only on the fixed first test character of
 each eligible user, for all seeds/detectors. Ordinary targeted PGD is the
@@ -202,10 +210,12 @@ and accepted-wrong rates over all original clean characters and conditional
 accepted accuracy with its denominator. No successful-attack-only denominator
 may replace end-to-end attack success.
 
-Describe per-user two-sided95% exact binomial intervals under IID assumptions,
+Describe per-user two-sided95% exact binomial intervals [@clopper1934binomial]
+under IID assumptions,
 not serial-dependence-proof assurance. Average all three seeds within each user,
 then use equal-user2000-resample percentile bootstrap(seed20261013) for
-population mean summaries. Report paired pointwise differences versus confidence
+population mean summaries, using established resampling ideas [@efron1979bootstrap].
+Report paired pointwise differences versus confidence
 for the shared nonadaptive perturbations. Detector-specific adaptive objectives
 do not support a paired comparative-efficacy claim. No selected winners or
 familywise significance claims are made; exchangeable-user sampling is assumed. Cost includes observed rejection and

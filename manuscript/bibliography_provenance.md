@@ -33,3 +33,21 @@ method sources where used, integrate citation keys into the final authoring
 format, check publisher capitalization/diacritics and compile the bibliography.
 Do not infer exact reproduction, source-code license or novelty from a citation.
 No experimental code, protocol, threshold or result changed during this work.
+
+## Dataset/statistical/adaptive-method additions, 22 October2026
+
+Added Crossref-verified OpenBMI dataset paper, Clopper-Pearson binomial limits,
+Efron bootstrap background, and Bates etal. conformal outlier testing. Added
+primary arXiv-verified FGSM/PGD/adaptive-evaluation records and the PMLR EOT
+conference record. There are now22 working entries. FGSM/PGD arXiv year keys
+identify initial2014/2017 submissions, not an invented journal issue year.
+
+These sources document established methods and assumptions, not a new statistical
+procedure or robustness proof. Bates etal. is calibration background; our higher
+empirical quantile is not represented as their full conformal multiple-testing
+or calibration-conditional guarantee. Serial decisions/phase shift can violate
+the needed assumptions. EOT motivates stochastic gradient averaging; our fixed
+30draw gradient/100draw verification recipe is not physical-world robustness.
+Sources checked: https://arxiv.org/abs/1412.6572,
+https://arxiv.org/abs/1706.06083, https://arxiv.org/abs/2002.08347,
+https://proceedings.mlr.press/v80/athalye18b.html and the registered DOI records.
