@@ -3,6 +3,12 @@ import hashlib,json
 from pathlib import Path
 from p3a.data.openbmi_manifest import build_subject_manifest,validate_evaluation_binding
 
+def execution_code_hashes(root=None):
+    root=Path(root) if root is not None else Path(__file__).resolve().parents[3]
+    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest()
+            for folder in ('src','scripts') for p in sorted((root/folder).rglob('*.py'))
+            if '__pycache__' not in p.parts}
+
 def load_execution_release(protocol_path,manifest_path,receipt_path,subject,seed,raw_sha256,validation_integration=False):
     protocol_bytes=Path(protocol_path).read_bytes();manifest_bytes=Path(manifest_path).read_bytes()
     protocol=json.loads(protocol_bytes);manifest=json.loads(manifest_bytes);receipt=json.loads(Path(receipt_path).read_text())
@@ -13,6 +19,8 @@ def load_execution_release(protocol_path,manifest_path,receipt_path,subject,seed
         raise ValueError('candidate protocol or absent final release; independent gate CLOSED')
     if receipt.get('protocol_sha256')!=ph or receipt.get('manifest_sha256')!=mh:
         raise ValueError('release content hash mismatch')
+    if not validation_integration and receipt.get('execution_code_sha256')!=execution_code_hashes():
+        raise ValueError('frozen execution code hash mismatch')
     if seed not in protocol['seeds'] or seed not in (20261013,20261014,20261015):
         raise ValueError('undeclared model seed')
     if validation_integration:

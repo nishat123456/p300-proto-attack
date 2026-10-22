@@ -1,7 +1,7 @@
 import hashlib,json
 import pytest
 from p3a.data.openbmi_manifest import build_subject_manifest
-from p3a.data.openbmi_release import load_execution_release
+from p3a.data.openbmi_release import load_execution_release,execution_code_hashes
 
 def setup(tmp_path,status='frozen_independent_execution'):
     p=tmp_path/'protocol.json';m=tmp_path/'manifest.json';r=tmp_path/'receipt.json'
@@ -10,7 +10,7 @@ def setup(tmp_path,status='frozen_independent_execution'):
     train=[f'openbmi_candidate:s37_session1:train:{i:03d}' for i in range(33)]
     test=[f'openbmi_candidate:s37_session1:test:{i:03d}' for i in range(36)]
     manifest=build_subject_manifest(37,train,test,'a'*64,digest(p))
-    m.write_text(json.dumps(manifest));r.write_text(json.dumps(dict(status=status,protocol_sha256=digest(p),manifest_sha256=digest(m))))
+    m.write_text(json.dumps(manifest));r.write_text(json.dumps(dict(status=status,protocol_sha256=digest(p),manifest_sha256=digest(m),execution_code_sha256=execution_code_hashes())))
     return p,m,r,digest
 
 def test_candidate_is_closed(tmp_path):
@@ -37,3 +37,12 @@ def test_validation_integration_cannot_unlock_sealed(tmp_path):
     assert load_execution_release(p,m,r,19,20261013,'a'*64,validation_integration=True)[0]['role']=='validation'
     with pytest.raises(ValueError):load_execution_release(p,m,r,19,20261013,'a'*64)
     with pytest.raises(ValueError):load_execution_release(p,m,r,37,20261013,'a'*64,validation_integration=True)
+
+
+def test_release_rejects_changed_execution_code(tmp_path):
+    p,m,r,_=setup(tmp_path)
+    receipt=json.loads(r.read_text())
+    receipt['execution_code_sha256']['scripts/run_openbmi_independent_subject.py']='0'*64
+    r.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError,match='code hash'):
+        load_execution_release(p,m,r,37,20261013,'a'*64)
