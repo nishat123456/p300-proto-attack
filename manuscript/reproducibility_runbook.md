@@ -64,3 +64,26 @@ CPU report checks exercised real participant19 aggregate data and five rejection
 Preserve the source-query timing evidence with hardware, synchronization, five warmups,30 repeats and median/p95. Report detector overhead separately from marker-derived trial duration and idealized IID retry cost. None establishes clinical throughput, backspace behavior or live physical trigger causality.
 
 Before professor review, reconcile every manuscript number against cloud aggregate provenance; include participant flow, unavailable52, all methods/budgets, adaptive convergence scope, uncertainty, clean rejection and accepted errors, source timing and spelling-cost limitations. Finish results and captions with negative findings. Check bibliography metadata, authors/order/affiliations and the target venue's current requirements. Public code/artifact access and dataset redistribution terms remain to be arranged; private preservation is not public reproducibility. Obtain professor scientific review. No submission, email or payment is authorized by this runbook.
+
+## Cost presentation command
+
+On Kaggle, use the clean output root (including all51 JSON identities), the
+cloud source-cost output root, and the same frozen protocol:
+
+```bash
+python reporting/build_cost_report.py \
+  --clean-root /kaggle/working/independent_results \
+  --timing-root /kaggle/input/source_cost_outputs \
+  --protocol splits/openbmi_independent_20261022/protocol.json \
+  --out-dir /kaggle/working/out/cost_report \
+  --git-commit EXACT_REPORT_REVISION
+```
+
+The timing-root path is a mount placeholder, to be replaced by the actual
+verified cloud attachment path. Do not use `--development-only` for independent
+reporting. Cloud cost-report checksv1 passed nine checks and generated the real
+participant19 descriptive cost table, sourceb2cb475/launchereea4b24. It validates
+complete seed/nominal/marker coverage, model/reference/protocol binding and stored
+retry consistency. It has not yet been exercised on the complete17-person
+independent outputs. It reports stored per-seed costs without a population retry
+interval; primary reliability intervals remain in the separate frozen aggregate.

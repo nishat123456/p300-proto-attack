@@ -212,3 +212,15 @@ aggregation commands, complete-coverage checks, recovery provenance, artifact
 restrictions and outstanding publication requirements. Development figure
 visual verification remains pending because the cloud browser preview was
 blank. No final independent figure or cost summary has been verified.
+
+## Cost presentation verification, 22 October 2026
+
+Private CPU p3a-cost-report-checksv1 completed nine report-level checks and
+produced the participant19 development cost table. Exact reporter sourceb2cb475,
+launchereea4b24; compact evidence in results/cost_report_checks_v1. All three
+source-model timing records remain separate, including hardware and median/p95,
+and all1/5/10% per-seed clean rejection/retry records are retained. Recorded-marker
+minima/maxima are descriptive, not confidence intervals. No clinical latency,
+population retry-cost effect or complete independent cost result is inferred.
+The reporter is outside the frozen scientific source inventory and changes no
+threshold, model, reference, attack setting or receipt.
