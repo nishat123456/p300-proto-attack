@@ -70,6 +70,11 @@ def main():
     for m in METHODS:
         far=clean[(.05,m,'observed_far')];correct=clean[(.05,m,'accepted_correct_rate')];wrong=clean[(.05,m,'accepted_wrong_rate')]
         lines.append('|'+m+'|'+rate(far['mean'],interval(far,a.development_only))+'|'+rate(correct['mean'],interval(correct,a.development_only))+'|'+rate(wrong['mean'],interval(wrong,a.development_only))+'|')
+    lines+=['','## All declared clean operating points','','|Nominal FAR|Detector|Observed rejection mean [95% CI]|Accepted correct / all clean|Accepted wrong / all clean|','|---|---|---|---|---|']
+    for alpha in (.01,.05,.1):
+        for m in METHODS:
+            far=clean[(alpha,m,'observed_far')];correct=clean[(alpha,m,'accepted_correct_rate')];wrong=clean[(alpha,m,'accepted_wrong_rate')]
+            lines.append(f'|{100*alpha:.0f}%|{m}|'+rate(far['mean'],interval(far,a.development_only))+'|'+rate(correct['mean'],interval(correct,a.development_only))+'|'+rate(wrong['mean'],interval(wrong,a.development_only))+'|')
     lines+=['','## All methods and declared budgets','','|Attack|Budget|Detector|Defended targeted / all attempts, mean [95% CI]|','|---|---|---|---|']
     for key,row in sorted(records.items()):lines.append(f'|{key[0]}|{key[1]:.2f}|{key[2]}|'+rate(row['mean_defended_targeted_success'],interval(row,a.development_only))+'|')
     plt.rcParams.update({'font.size':9,'savefig.dpi':180})
