@@ -62,6 +62,14 @@ establish the magnitude and practical consequences of failures beyond prior work
   conventional detector/ANFIS precedent; primary protocol review is now recorded
   in results/iceis2026_primary_review.md. No first-detector claim.
 
+A source-by-source protocol matrix is retained in
+results/literature_protocol_matrix_20261022.md. The Covariance Entropy2025
+accepted manuscript adds MI/ERN epoch detection and compute-time precedent;
+its final PDF was not visually verified. Our frozen seven-method set excludes
+CovEn and the journal cosine-distance variants and is explicitly nonexhaustive.
+The distinction is the combined character operating-point/cost estimand, not
+universal priority or a claim that all EEG detectors behave alike.
+
 ## Methods: completed development work
 
 See immutable splits and append-only PREREG. CompIII official test outcomes are
