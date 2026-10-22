@@ -1,6 +1,6 @@
-# When P300 attack detection does not transfer: operating-point reliability and clean spelling cost
+# Clean rejection and adaptive manipulation in P300 spellers: character-level reliability of existing detectors
 
-Working manuscript,15 October2026. **Not submission-ready.** Authors/order,
+Working manuscript,21 October2026 Central. **Not submission-ready.** Authors/order,
 affiliations and target journal require confirmation. No acceptance claim.
 
 ## Abstract draft
@@ -15,15 +15,15 @@ under subject transfer, and richer features produce direction-dependent
 trade-offs rather than consistent improvement. A cloud-reproduced software and
 data audit identifies attack-budget identity defects, calibration sample
 limitations and event-order assumptions that affect defensible conclusions.
-An independent recorded-marker OpenBMI evaluation is planned but not completed.
+A prespecified recorded-marker OpenBMI evaluation is running, with independent results pending.
 Consequently this draft establishes development failures and methodological
 limits, not a validated general-purpose defense or population low-FAR guarantee.
 
 ## Candidate contribution, subject to independent validation
 
 A character-level evaluation separating clean-user normalization, threshold
-calibration and evaluation, with observed FAR and uncertainty, unseen attack
-families, defended targeted success and explicit rejection cost. This is not a
+calibration and evaluation, with observed FAR and uncertainty, multiple fixed manipulation families, defended
+targeted success and explicit rejection cost. This is not a
 new detector or first EEG/P300 defense benchmark. The independent study must
 establish the magnitude and practical consequences of failures beyond prior work.
 
@@ -34,7 +34,12 @@ establish the magnitude and practical consequences of failures beyond prior work
 - Zhang etal., TinyNoise, NSR2021: targeted P300 attacks already established.
 - Mezzina etal., Sensors2021: synchronized channel-mixing protection under a
   trusted transmission architecture; not directly comparable to signal-only detection.
-- Chen/Wu, JNE2024: BU/LID/network-feature Mahalanobis and subject-held-out EEG detection.
+- Chen and Wu, arXiv2212.00727 (2022): reviewed preprint precedent for BU/LID/MD
+  and subject-held-out ERN/MI detection. Chen, Meng, Xu and Wu, JNE2024,
+  DOI10.1088/1741-2552/ad8964, is an expanded journal study with three datasets
+  and eight detectors according to its abstract. Its full methods remain
+  unverified; do not attribute the preprint dataset/split scope to the journal
+  version or infer that character-level clean calibration is absent.
 - Zhang/Gu, JPCS2024, DOI10.1088/1742-6596/2761/1/012037: detector comparison
   full text reviewed: evaluates confidence, predictive entropy, Bayesian uncertainty
   and KDE on CompIII P300 and MI, including detector-aware CW against KDE.
@@ -64,13 +69,12 @@ clean audit failed its strict gate. At budget0.2, fixed logistic nearest-causal
 cross-subject TPR is12.4% A-to-B and39.2% B-to-A, observed FAR5%/6%. Adding
 channel/time bins changesTPR to30.6%/3.6%, FAR3%/3%, while TinyNoise detection
 drops68.7% to3.9% A-to-B and100% to50.5% B-to-A. No general feature improvement.
-Earlier cloud portable suite314 passed with explicit raw/path exclusions.
-New focused integration tests progressed to28 passing cases, including raw
-adaptive gradients/budget, reference sampling, calibration leakage and variable-
-length source template guards. A broader current suite initially failed test
-collection because of namespace/payload packaging; the corrected Kagglev14 run passed351
-tests with41 warnings in45.98s, preserving the same four raw/path exclusions.
-These are software verification scopes, not independent statistical validation.
+Cloud verification covers software contracts, not independent scientific
+validation. The complete validation19 controller executed all36 characters across
+three model seeds and cloud aggregation, preserving completed-ledger hashes on
+repeat invocation. The latest code-bound release regression passed368 portable
+tests with four declared historical raw/path exclusions. Exact scopes and
+failures remain in the supplement and private provenance artifacts.
 
 ## OpenBMI development clean-validation result
 
@@ -84,11 +88,13 @@ people. There are no genuine decoder errors here to establish rejection
 behavior on mistaken clean decisions. Zero false alarms has a two-sided95%
 IID upper bound9.74%; serial dependence and user shift remain unresolved.
 No detector is selected as a confirmed winner and no threshold is retuned.
-Attack detection and sealed-user outcomes remain unmeasured.
+These clean-validation observations precede the separately recorded development
+attack audit. Independent-user outcomes remain pending.
 
 ## Independent results: pending
 
-No independent OpenBMI decoder, attack or detector performance has been measured.
+Independent OpenBMI evaluation is running; no completed independent summary
+has been inspected or reported in this draft.
 Do not fill tables or conclusions from expected results. Recorded-marker indexing
 and schedule correspondence were inspected across all54 session1 participants.
 Subject52 official train fails identity, with528 schedule/known-label mismatches
@@ -97,15 +103,18 @@ passes; subjects53/54 pass both phases. Full54-person compatibility is false.
 Physical timing cause remains unresolved. No precise per-user5% assurance from36
 test characters. Fixed three-seed source training completed on Kaggle at the recorded30-epoch
 final checkpoints, with no independent performance outcome. The source-reference/template/calibration pipeline and fixed validation19
-clean audit have completed across all3seeds. Attack-path and independent
-evaluation verification remain pending.
+clean audit have completed across all3seeds. Full validation19 attack/controller/aggregation verification has completed;
+independent evaluation outcomes remain pending.
 
 ## Independent methods specification: prospective, not executed results
 
-The exact candidate settings are in configs/openbmi_independent_protocol_candidate.json.
-They remain gated until source verification, end-to-end integration, final
-protocol review and immutable cloud manifests are complete. Existing historical
-splits and failed gates are preserved; BNCI2015-003 remains locked.
+The exact prospective settings are frozen in
+configs/openbmi_independent_protocol_frozen_20261022.json, with cloud-generated
+immutable allocations, targets and code-bound receipts in
+splits/openbmi_independent_20261022. Settings and artifacts were committed before
+independent launch. The first five of51 fixed subject-seed tasks are running
+on five private Kaggle accounts. Existing historical splits and failed gates
+are preserved; BNCI2015-003 remains locked.
 
 ### Participants, identity and missingness
 
@@ -113,8 +122,8 @@ Development subjects1-18, validation19-36 and evaluation37-54 are assigned by ID
 with model seeds20261013/14/15 and no best-seed selection. Of18 intended evaluation
 participants,52 lacks a usable official training identity under the fixed loader.
 Keep this person in feasibility/participant flow, with calibrated performance
-unavailable. If final cloud verification agrees, performance is estimable for17
-eligible people only. This is pre-outcome metadata eligibility, not exclusion by
+unavailable. Cloud metadata verification establishes allocation eligibility for17
+people only; their performance remains to be estimated. This is pre-outcome metadata eligibility, not exclusion by
 accuracy or detection rate. Available-case results do not imply missing-at-random
 or reliability for all18 people. No substitution, inferred relabeling or reuse
 of test characters for calibration is permitted.
@@ -156,11 +165,14 @@ trained source-only template idea adaptation. The latter uses800 samples at
 1000Hz(0.8s),200Adam updates/.01, eight individually accumulated variable-length
 source-trial gradients, and primary.20 source raw scale; rescale the same learned
 template across budgets. No raw padding, target-user template fitting, exact NSR
-reproduction or physical causality claim. Actual training remains pending.
+reproduction or physical causality claim. Source-only template training has completed, with hash-bound provenance.
 
 Detector-aware PGD combines targeted cross-entropy and a softplus detector penalty
-at weights0/.1/1/10, with200steps/3restarts and400steps/5restarts convergence checks
-at budget.20. Thresholds/MAD scales come only from clean calibration. Report every
+at fixed weight1 and budget.20 with200steps/3restarts on all36 characters.
+A400step/5restart sensitivity runs only on the fixed first test character of
+each eligible user, for all seeds/detectors. Ordinary targeted PGD is the
+weight0 comparator. The larger weights0/.1/1/10 development grid remains
+development evidence and is not represented as the independent scope. Thresholds/MAD scales come only from clean calibration. Report every
 setting and the adversary's strongest successful nonrejected attempt; this selects
 an attack, not a winning defense. Preserve all failures and inspect gradient/
 convergence evidence before interpreting failed evasion as robustness.
@@ -177,9 +189,11 @@ may replace end-to-end attack success.
 
 Describe per-user two-sided95% exact binomial intervals under IID assumptions,
 not serial-dependence-proof assurance. Average all three seeds within each user,
-then use equal-user paired2000-resample bootstrap(seed20261013). Report all
-methods/budgets and pointwise differences versus confidence, without selected
-winners or familywise significance claims. Cost includes observed rejection and
+then use equal-user2000-resample percentile bootstrap(seed20261013) for
+population mean summaries. Report paired pointwise differences versus confidence
+for the shared nonadaptive perturbations. Detector-specific adaptive objectives
+do not support a paired comparative-efficacy claim. No selected winners or
+familywise significance claims are made; exchangeable-user sampling is assumed. Cost includes observed rejection and
 accepted-wrong counts, recorded-marker duration proxies and synchronized GPU
 inference timing. The retry expression1/(1-FAR)-1 is ideal IID sensitivity only,
 not measured clinical latency or backspace-corrected throughput.
@@ -196,7 +210,8 @@ results limit tested methods/settings, not all possible defenses.
 
 ## Required before submission
 
-Independent benchmark, closest-paper fulltext matrix, reproduced baselines,
+Independent benchmark outcomes, expanded closest-paper fulltext matrix,
+explicitly labelled baseline adaptations,
 uncertainty/cluster-aware analysis, clean-error/rejection cost, defense-aware
 stress test, source-audited results tables/figures, complete methods/supplement,
 author/professor review, journal scope/current category-quartile verification.

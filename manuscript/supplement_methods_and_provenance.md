@@ -1,8 +1,8 @@
 # Supplement draft: methods, provenance and claim limits
 
-October15,2026. Professor-review draft, not submission-ready. Independent
-performance, full uncertainty/cost results, protocol/manifest freeze and final
-figures remain pending. Software completion is not scientific efficacy.
+October21,2026 Central. Professor-review draft, not submission-ready. Independent
+performance summaries, full uncertainty/cost results and final figures remain
+pending. Protocol/manifest freeze is complete and independent tasks are running. Software completion is not scientific efficacy.
 
 ## A. Current detector implementation
 
@@ -26,7 +26,9 @@ identity checks/evaluation only, not for selecting the scored symbol.
 
 Source/family equations and overlap: results/reference_baseline_specification.md
 (historical checkpoint), results/zhang_gu_2024_fulltext_review.md (later verified
-primary fulltext). Chen/Wu2024 already motivates BU/LID/MD; Zhang/Gu2024 already
+primary fulltext). The reviewed Chen/Wu2022 preprint motivates BU/LID/MD; the expanded2024
+journal version (Chen/Meng/Xu/Wu) has not been fully verified. Do not use
+preprint details as proof of the journal dataset/calibration scope; Zhang/Gu2024 already
 compares P300 confidence/entropy/BU/KDE and detector-aware attack. Chen/Jia/Wu2025
 is a broad benchmark precedent. Neither first detector, first benchmark nor
 first adaptive P300 evaluation is a contribution here. Remaining novelty review
@@ -34,8 +36,8 @@ must establish a substantive independently calibrated reliability/cost gap.
 
 ## B. Partition and calibration contracts
 
-Development1-18, validation19-36, planned sealed37-54; fixed3model seeds20261013,
-20261014,20261015. Candidate target allocation:13 normalization and20 calibration
+Development1-18, validation19-36, independent37-54; fixed3model seeds20261013,
+20261014,20261015. Frozen target allocation:13 normalization and20 calibration
 from33 official train characters, all36 official test characters for evaluation,
 allocation seed20261013. Raw channel statistics fit normalization characters
 only. Thresholds use20 independent calibration decisions and higher empirical
@@ -56,7 +58,8 @@ people in feasibility/flow and mark52 calibrated outcome unavailable. Available-
 case17-person performance cannot establish all18-person reliability or missing-
 at-random. No inferred phrase repair, replacement participant or reuse of test
 characters for calibration. Old frozen splits/gates remain unchanged and
-BNCI2015-003 stays locked. New independent manifests are not frozen yet.
+BNCI2015-003 stays locked. New independent manifests/targets and code-bound receipts are frozen under
+splits/openbmi_independent_20261022; original historical files are unchanged.
 
 ## C. Recorded-marker threat and attack units
 
@@ -148,3 +151,33 @@ This replaces pending software integration status for those exercised paths,
 not independent evaluation or a forced mid-setting crash test. No final sealed
 release receipt exists. Source-query timing and complete aggregate/orchestration
 remain pending; journal readiness is not established.
+
+
+## Execution release, 21 October 2026 Central
+
+Protocol settings0535c5e, PREREG append8f931ae, metadata release9ce8906, first
+five-task launcher dc8a039. Protocol SHA256:
+a5699d95b0d35343da207dec8d657f380d1fd49a7664424682cd6e7c910b9916.
+All54 original metadata records were rechecked on Kaggle.53 metadata allocations
+and17 evaluation receipts were generated;52 retained unavailable in participant
+flow. Receipts bind exact protocol/manifest bytes and every source/script Python
+file hash. Independent runners reject changed code; launcher wrappers remain
+outside that scientific code inventory. All raw/model/reference/CSV artifacts
+stay in private Kaggle outputs. Compact metadata and reports are retained in
+private GitHub. Public reproducibility release/access arrangements remain pending.
+
+Full fixed validation19 controller completed all36 characters/all3 seeds and
+cloud aggregation; repeat completed-ledger SHA remained unchanged. This is not
+proof of forced mid-setting crash recovery. Source/query timing completed on
+Kaggle, with exact-query identity removed only from timing LID/KDE references
+to avoid self-distance; deployment references are unchanged. Timing is not
+clinical latency. Cloud regressions v18/v19 passed367/368 tests; same four
+historical raw/path exclusions. These scopes establish implementation behavior,
+not independent statistical efficacy or journal readiness.
+
+Population means use equal participant weights after seed averaging and
+pointwise percentile95% subject bootstrap (2000 resamples, seed20261013).
+With one development participant the population interval is unavailable.
+Intervals assume exchangeable participants and are conditional on17 available
+calibrated users. Paired differences use shared nonadaptive perturbations;
+separately attacked detector objectives are not comparative efficacy tests.
