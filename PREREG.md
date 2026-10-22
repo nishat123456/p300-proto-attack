@@ -307,3 +307,34 @@ cloud workload outputs. No threshold, user or defense selected from sealed
 outcomes. New workload accounting, executable guards/tests and immutable final
 protocol/manifests remain required before performance unlock. Historical frozen
 splits/gates and BNCI2015-003 lock are unchanged.
+
+## Independent reliability settings freeze, 21 October 2026 Central (22 October UTC)
+
+Prospective settings are frozen in
+`configs/openbmi_independent_protocol_frozen_20261022.json` (commit0535c5e),
+with the completed gate review in `results/independent_release_review_20261022.md`.
+This appends to, and does not modify, earlier frozen allocations or gates.
+No sealed37-54 performance has been inspected. Subject52 remains unavailable,
+not replaced; all18 remain in participant flow and17 are the conditional
+calibrated estimand. BNCI2015-003 remains locked.
+
+The existing optionB methods/budgets/targets/seed/allocation/adaptive recipe
+are unchanged. This records explicit decoder/preprocessing/training settings,
+equal-subject pointwise percentile bootstrap intervals after averaging model
+seeds, and exact code-bound release requirements. Single-user development
+results have no population uncertainty interval. Cloud v18 verified the
+reporting implementation; new code-hash release-guard regression remains
+required before cloud receipt generation. Each final manifest is generated
+from original cloud metadata evidence against this protocol's exact bytes.
+Execution is prohibited until newly generated manifests and code-bound receipts
+are inspected and committed. A settings file alone cannot unlock performance.
+Changing execution code requires a new prospective provenance release; preserve
+previous receipts and completed outcomes, never silently rebind a changed run.
+
+Novelty claims remain conditional: expanded JNE2024 methods have not been
+verified and preprint content must not be attributed to the journal version.
+The study measures character-level clean rejection, accepted errors and
+all-attempt manipulation with cost under a recorded-marker offline threat;
+it does not claim a novel detector, first adaptive P300 evaluation or certified
+robustness. Independent findings, including negatives, determine manuscript
+claims rather than an outcome-selected headline or method winner.
