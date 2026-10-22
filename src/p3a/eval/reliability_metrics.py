@@ -37,3 +37,20 @@ def paired_subject_bootstrap(left,right,seed,n_resamples=2000):
     delta=left-right;rng=np.random.default_rng(seed)
     means=delta[rng.integers(0,len(delta),size=(n_resamples,len(delta)))].mean(axis=1)
     return dict(mean_difference=float(delta.mean()),ci95=np.quantile(means,[.025,.975]).tolist(),n_subjects=len(delta),seed=seed,n_resamples=n_resamples)
+
+
+def subject_mean_bootstrap(values,seed,n_resamples=2000):
+    """Percentile interval for equal-weight, seed-averaged subject summaries.
+
+    A single development subject cannot estimate population uncertainty.
+    Exchangeable subjects are an assumption, not an EEG guarantee.
+    """
+    values=np.asarray(values,dtype=float)
+    if values.ndim!=1 or len(values)==0 or not np.isfinite(values).all():
+        raise ValueError('finite subject summaries required')
+    if not isinstance(n_resamples,int) or n_resamples<100:
+        raise ValueError('at least100 resamples required')
+    interval=None
+    if len(values)>1:
+        interval=paired_subject_bootstrap(values,np.zeros_like(values),seed,n_resamples)['ci95']
+    return dict(mean=float(values.mean()),ci95=interval,n_subjects=len(values),seed=seed,n_resamples=n_resamples,unit='subject after model-seed averaging')

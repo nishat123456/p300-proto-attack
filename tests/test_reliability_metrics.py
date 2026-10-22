@@ -19,3 +19,16 @@ def test_pairing_preserves_constant_effect():
     r=paired_subject_bootstrap([.2,.4,.6],[.1,.3,.5],7)
     assert np.allclose(r['ci95'],[.1,.1]) and np.isclose(r['mean_difference'],.1)
     assert r==paired_subject_bootstrap([.2,.4,.6],[.1,.3,.5],7)
+
+
+def test_subject_mean_interval_and_single_user_limitation():
+    from p3a.eval.reliability_metrics import subject_mean_bootstrap
+    single=subject_mean_bootstrap([.25],7)
+    assert single['ci95'] is None and single['n_subjects']==1
+    constant=subject_mean_bootstrap([.25,.25,.25],7)
+    assert constant['ci95']==[.25,.25] and constant['mean']==.25
+    varied=subject_mean_bootstrap([0.,.5,1.],7)
+    assert varied==subject_mean_bootstrap([0.,.5,1.],7)
+    assert varied['ci95'][0]<=.5<=varied['ci95'][1]
+    with pytest.raises(ValueError):subject_mean_bootstrap([],7)
+    with pytest.raises(ValueError):subject_mean_bootstrap([float('nan')],7)

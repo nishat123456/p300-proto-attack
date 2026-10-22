@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.metrics import roc_auc_score
 from scripts.fit_openbmi_references import digest
 from p3a.defenses.clean_calibration import METHODS
-from p3a.eval.reliability_metrics import paired_subject_bootstrap,exact_binomial_interval
+from p3a.eval.reliability_metrics import paired_subject_bootstrap,exact_binomial_interval,subject_mean_bootstrap
 
 
 def main():
@@ -80,7 +80,7 @@ def main():
     for key,users in sorted(user_values.items()):
         if set(users)!=set(subjects) or any(len(v)!=len(seeds) for v in users.values()):raise ValueError('incomplete subject/seed coverage')
         means={s:float(np.mean(users[s])) for s in subjects}
-        population.append(dict(attack=key[0],budget=key[1],method=key[2],mean_defended_targeted_success=float(np.mean(list(means.values()))),subject_seed_averages=means))
+        population.append(dict(attack=key[0],budget=key[1],method=key[2],mean_defended_targeted_success=float(np.mean(list(means.values()))),subject_seed_averages=means,subject_mean_uncertainty=subject_mean_bootstrap([means[s] for s in subjects],a.seed,2000)))
         comparator=user_values.get((key[0],key[1],'confidence'))
         # Each adaptive attack targets a different defense; no paired comparative efficacy claim.
         if key[2]!='confidence' and key[0]!='detector_aware' and len(subjects)>1:
@@ -92,7 +92,7 @@ def main():
             if len(rows)!=len(subjects)*len(seeds):raise ValueError('incomplete clean nominal/seed coverage')
             for metric in ('observed_far','clean_accuracy','accepted_correct_rate','accepted_wrong_rate'):
                 values={s:float(np.mean([r[metric] for r in rows if r['subject']==s])) for s in subjects}
-                clean_population.append(dict(nominal_far=alpha,method=method,metric=metric,mean=float(np.mean(list(values.values()))),subject_seed_averages=values))
+                clean_population.append(dict(nominal_far=alpha,method=method,metric=metric,mean=float(np.mean(list(values.values()))),subject_seed_averages=values,subject_mean_uncertainty=subject_mean_bootstrap([values[s] for s in subjects],a.seed,2000)))
     result=dict(seed=a.seed,git_commit=a.git_commit,runner_sha256=digest(__file__),protocol_sha256=ph,subjects=subjects,seeds=seeds,per_seed=per_seed,clean_per_seed=clean_rows,clean_population=clean_population,population=population,paired_descriptive_comparisons=comparisons,input_sha256=files,scope='validation-only aggregation integration' if a.validation_integration else '17 eligible subjects conditional available-case;18 in evaluation flow with52 unavailable',limitations='serial decisions; IID intervals descriptive only;pointwise bootstrap not familywise significance;fixed recipe not worst-case;adaptive union only same-character declared candidates')
     out=Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
     (out/'reliability_aggregate.json').write_text(json.dumps(result,indent=2,allow_nan=False))
