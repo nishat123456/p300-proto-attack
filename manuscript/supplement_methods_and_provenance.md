@@ -32,7 +32,9 @@ epochs, supervised logistic detection and AUC without threshold selection. See
 results/jne2024_fulltext_review_20261022.md. Preprint details must not replace
 that journal protocol; Zhang/Gu2024 already
 compares P300 confidence/entropy/BU/KDE and detector-aware attack. Chen/Jia/Wu2025
-is a broad benchmark precedent. Neither first detector, first benchmark nor
+is a full-text-verified P300/MI/ERP/SSVEP benchmark with within-/cross-session
+robustness (results/nn2025_fulltext_review_20261022.md), not an MI-only comparator.
+Neither first detector, first benchmark nor
 first adaptive P300 evaluation is a contribution here. Remaining novelty review
 must establish a substantive independently calibrated reliability/cost gap.
 

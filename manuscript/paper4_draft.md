@@ -53,7 +53,11 @@ establish the magnitude and practical consequences of failures beyond prior work
   equation has a positive exponent inconsistent with its low-density rationale.
   See results/zhang_gu_2024_fulltext_review.md; no exact reproduction claim.
 - Chen/Jia/Wu, NeuralNetworks2025, DOI10.1016/j.neunet.2025.107516: nine defenses,
-  five datasets, three networks and four scenarios; generic benchmarking not novel.
+  five datasets including eight-participant P300, three networks and within-/
+  cross-session online/offline scenarios. Full methods are now checked in
+  results/nn2025_fulltext_review_20261022.md: epoch-level balanced accuracy and
+  targeted attack success, rather than clean-calibrated character rejection.
+  P300 benchmarking and session-shift robustness are already prior work.
 - Conceicao daCosta etal., ICEIS2026, DOI10.5220/0014819600004018:
   conventional detector/ANFIS precedent; primary protocol review is now recorded
   in results/iceis2026_primary_review.md. No first-detector claim.
