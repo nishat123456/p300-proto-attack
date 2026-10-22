@@ -255,3 +255,20 @@ trace consistency passed cloud checks. The finding rules out a robust-defense
 claim from this example; independent participant outcomes are still pending.
 Full settings, timings, gradients and limitations are preserved in
 results/development_attack_audit_interpretation.md and development_attack_summary_v2.
+
+### Full development subject19 reporting check, 22 October
+
+The completed36-character validation19 run was processed by the cloud-only
+reporter across all three seeds. At budget0.20, seed-averaged accepted targeted
+manipulation under ordinary PGD was100% for confidence/entropy/BU,52.78% for LID,
+and0% for MD/adjustedMD/KDE. Under each detector's separate fixed aware recipe,
+the reported rate was100% for every attacked detector. This is not one shared
+perturbation evading all seven. No threshold, method or source seed was selected
+from these observations. All nominal settings and method/budget rows are retained
+in results/report_checks_v2/development_reliability_report.md.
+
+These are one already-inspected user's development observations, not17-user
+independent findings or108 independent clean characters. No population confidence
+interval is reported from one user. This extends the earlier fixed-character
+audit's coverage but does not establish a new adaptive-failure phenomenon or
+journal readiness. The independent cohort remains to be completed and summarized.
