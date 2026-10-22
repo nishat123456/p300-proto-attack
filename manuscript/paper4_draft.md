@@ -1,7 +1,11 @@
 # Clean rejection and adaptive manipulation in P300 spellers: character-level reliability of existing detectors
 
-Working manuscript,22 October2026 Central. **Not submission-ready.** Authors/order,
-affiliations and target journal require confirmation. No acceptance claim.
+Working manuscript,22 October2026 Central. **Not submission-ready.**
+
+**Author and corresponding author:** M M Nishat (sole author, confirmed by the
+author on22 October2026). Affiliation and correspondence contact remain to be
+confirmed. No professor or other coauthor is listed. Target journal remains
+unselected; no acceptance claim.
 
 ## Abstract draft
 
