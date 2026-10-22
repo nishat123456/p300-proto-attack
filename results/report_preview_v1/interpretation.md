@@ -1,0 +1,1 @@
+Preview script completed and bound two existing PNG hashes, but rendered notebook browser shows source without figure display. This does not prove visual quality. Revised presentation wrapper uses an actual notebook cell so IPython image outputs can render. No figure recomputation, raw data, scientific code or threshold change.
