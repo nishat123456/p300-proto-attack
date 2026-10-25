@@ -170,10 +170,11 @@ The exact prospective settings are frozen in
 configs/openbmi_independent_protocol_frozen_20261022.json, with cloud-generated
 immutable allocations, targets and code-bound receipts in
 splits/openbmi_independent_20261022. Settings and artifacts were committed before
-independent launch. Of51 fixed subject-seed tasks, forty-nine have completed and their compact provenance
-is preserved; two further task versions are active or queued across the
-private Kaggle accounts. Task01 has a preserved terminal failure with no exposed
-log or outputs and one identical-payload retry. No scientific setting changed. Existing historical splits and failed gates
+independent launch. All51 fixed subject-seed tasks have completed and their compact
+provenance is preserved. Complete-cohort cloud aggregation and reporting are
+running; independent summary results remain pending. Task01 has a preserved
+terminal failure with no exposed log or outputs and one identical-payload retry.
+No scientific setting changed. Existing historical splits and failed gates
 are preserved; BNCI2015-003 remains locked.
 
 ### Participants, identity and missingness
