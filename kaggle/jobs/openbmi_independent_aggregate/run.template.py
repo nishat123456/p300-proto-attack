@@ -2,8 +2,8 @@ import os,sys,json,base64,zlib,hashlib,subprocess,time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import requests
-CODE_BLOB='__CODE_BLOB__'
-TRANSFER_BLOB='__TRANSFER_BLOB__'
+CODE_BLOB=base64.b64encode(next(Path('/kaggle/input').rglob('code_payload.zlib')).read_bytes()).decode()
+TRANSFER_BLOB=base64.b64encode(next(Path('/kaggle/input').rglob('transfer_manifest.zlib')).read_bytes()).decode()
 revision='0959347d074e2a7ab5720c39946d8f28bfd875d9'
 code=Path('/kaggle/working/code');code.mkdir(exist_ok=True)
 for name,value in json.loads(zlib.decompress(base64.b64decode(CODE_BLOB))).items():
