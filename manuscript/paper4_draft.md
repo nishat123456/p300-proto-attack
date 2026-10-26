@@ -1,6 +1,6 @@
 # Clean rejection and adaptive manipulation in P300 spellers: character-level reliability of existing detectors
 
-Working manuscript,22 October2026 Central. **Not submission-ready.**
+Working manuscript,updated26 October2026 Central. **Not submission-ready.**
 
 **Author and corresponding author:** M M Nishat (sole author, confirmed by the
 author on22 October2026). Affiliation and correspondence contact remain to be
@@ -151,8 +151,9 @@ attack audit. Independent-user outcomes remain pending.
 
 ## Independent results: pending
 
-Independent OpenBMI evaluation is running; no completed independent summary
-has been inspected or reported in this draft.
+Original OpenBMI execution is complete, but no accepted full-cohort summary
+is reported in this draft. A separately disclosed numerical-envelope analysis
+is being reviewed after the original strict-budget aggregation failed.
 Do not fill tables or conclusions from expected results. Recorded-marker indexing
 and schedule correspondence were inspected across all54 session1 participants.
 Subject52 official train fails identity, with528 schedule/known-label mismatches
@@ -176,10 +177,23 @@ pending after the unchanged aggregator stopped on a strict actual-budget check.
 Independent summary results are withheld. Cloud auditing traced the violations
 to upward float32 rounding of the declared epsilon; a stricter implementation
 passed373 portable tests and a separate source-only raw projection/release review.
-Whole-task corrective reruns are required for33 numerically affected subject-seed
-tasks;18 valid original tasks are retained under explicit lineage. The first
-five corrective tasks are running, with corrected combined results pending.
-No bound has been relaxed. Task01 has a preserved
+The initial corrective plan specified33 affected whole-task reruns and18 valid
+original tasks. The author subsequently declined further strict corrective
+launches and chose a separately disclosed post-execution numerical-envelope
+analysis of all51 original tasks. The original strict failure and completed
+corrective evidence remain preserved. This revised analysis permits norms up to
+max(original epsilon, its nearest float32 representation); it must not be
+described as satisfying the original strict bound. Before combined analysis, a
+separate CPU release review must verify original source and task hashes, full
+coverage, exact envelope validity and clean-score CSV consistency.
+
+Paired sensitivity of the two completed corrective tasks retained1958 settings,
+all147 groups and72 paired characters per group. Decoded predictions, targeted
+success, own-detector recipe rejections and the declared accepted-targeted
+character unions were unchanged. Cross-detector diagnostic rejection changes
+remain recorded. This limited comparison does not isolate rounding causally or
+prove equivalence for the full cohort. No further strict reruns are planned;
+no accepted combined results are available yet. Task01 has a preserved
 terminal failure with no exposed log or outputs and one identical-payload retry.
 No scientific setting changed. Existing historical splits and failed gates
 are preserved; BNCI2015-003 remains locked.

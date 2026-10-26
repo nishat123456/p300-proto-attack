@@ -278,3 +278,10 @@ splits/openbmi_numerical_correction_20261026, preserving original protocol bytes
 and all old receipts. The cloud plan selects33 whole tasks and reuses18 strictly
 valid original tasks. All33 corrective payloads are staged; first five are
 running. Corrected results, complete strict aggregation and readiness are pending.
+
+
+## Revised numerical analysis route 26 October2026
+
+The author declined further strict corrective launches after the initial correction plan. Original51task outputs and all failures remain immutable. The separately code-bound post-execution numerical contract uses max(epsilon,nearest_float32(epsilon)); it is not strict original-budget compliance. All13419strictviolations remain disclosed. Fixed pairedtasks10+15 yielded1958matchedsettings with unchanged decoded predictions, targeted-success flags, own-detector recipe rejections and declared character unions across147groups72pairs; cross-detector diagnostic changes remain preserved. This is limited descriptive sensitivity, not causal rounding attribution or cohort equivalence.
+
+CPU release review c304a2c uses originalsource0959347, verifies its inventory against old receipts, original portable regression with the same four historical exclusions, six new numerical guards, all51originaltask hashes/stage ledgers,51cleanCSV consistency and exact numerical-envelope bounds. The review must issue a NEW analysis receipt, inspected and privately preserved before combined performance aggregation. Original strict aggregator and receipts are not edited. The primary archive lists3978compactJSON/cleanCSV artifacts, including all51cleanCSV, so legitimate cloud-to-cloud recovery may avoid needing secondary-account access; actual transfer/hash review remains pending. No CSV/raw/models are retrieved locally.
