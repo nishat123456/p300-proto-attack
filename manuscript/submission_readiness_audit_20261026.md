@@ -1,0 +1,28 @@
+# Paper4 requirement audit 26 October2026
+
+This is a completion audit against the research objective, not an acceptance prediction. Previous goal turn: progress, because it created a separately versioned analysis contract/review and updated the manuscript. Current reviewv1 failed before cohort processing; its packaging defect is preserved. V2 restores original portable-package dependencies without adding exclusions. No strict corrective or GPU launches are authorized.
+
+| Requirement | Authoritative evidence now | Assessment and remaining proof |
+|---|---|---|
+| Specific literature gap | results/literature_protocol_matrix_20261022.md and source-specific full-text reviews | Combined clean-only character operating points/all-attempt manipulation/rejection cost differs from reviewed protocols. Not universal priority. Scientific significance still depends on independent findings; prior adaptive P300/KDE already known. |
+| Valid independent protocol | Original frozen protocol0535c5e, append-only PREREG, original cloud manifests/receipts9ce8906 | Original execution completed but strict budget contract failed. Revised envelope contract is explicitly post-execution and separately versionedc304a2c; it must not be presented as untouched strict confirmation. New cloud receipt pending. |
+| All intended users accounted for | Original18-person evaluation flow;52training identity failure |17conditional available users, one unavailable; no relabel/substitution/MAR claim. Requires full aggregate coverage51subject-seed tasks. |
+| Original execution coverage | results/independent_execution_v1/task00..50, task01_v2 with failedv1 preserved | All51task execution outputs preserved. Completion is not accepted scientific validity. Archive metadata lists all3978compactJSON/cleanCSV; complete transfer/hash validation pending. |
+| Baselines and generalization | Frozen4nonadaptiveattackfamilies5budgets/7methods/3seeds on17available held-out users | Source fitting and execution completed. Full valid user-level outcomes/intervals pending. No cross-session, cross-dataset or physical-attack result claimed. |
+| Adaptive evasion | Fixed development19audit; original full-cohort detector-aware executions | Development fixedcharacter individually evaded all detectors. Full own-detector accepted-targeted character unions and participant uncertainty pending valid aggregate. Do not substitute pooled cross-detector diagnostics. |
+| Numerical sensitivity | results/numerical_sensitivity_v1 andv2 |1958pairedsettings/tasks10+15,147groups72pairs,ownrecipe and declaredcharacterunion stable;crossdetector changes retained. Limited availability-selected pairs,not cohort equivalence or causal rounding attribution. |
+| Tests and release guards | Original368portable suite and corrected373suite retained with4historical exclusions;newreview6guards passedv1 | Newreviewv1 portable collectionfailedmissingtraininglauncher. Restore exact original package and rerun suite; no assertion/test-scope weakening. Full newreceipt review pending. |
+| Statistical uncertainty | Frozen participant seed-average/2000bootstrap implementation and prior integration | Full17userpointwise intervals/paired descriptive comparisons pending. No familywise winner/per-user5percent guarantee. |
+| Clean spelling cost | results/source_cost_v2, developmentreportguards,reporting/build_cost_report.py | Source-query timing verified3seeds/7methods;full17userstoredrejectioncost/markerproxy report pending. IID retry sensitivity is not measured serial or clinical throughput;no populationretryCI claim. |
+| Figures | Development19exactimages reviewedresults/report_preview_v2 | Final actualindependentfigures not generated/visually verified. Must view cloud images;noPNGdownload/localrecomputation. |
+| Manuscript and supplement | manuscript/paper4_draft.md, supplement_methods_and_provenance.md updated06f67a9 | Methods/negativeevidence/revisedcontract/limits documented;finalvalidresults/discussion/conclusion pending. No fabricated tables or acceptance claims. |
+| Reproducibility | PrivateGitHub/Kagglehash-boundoutputs/code;manuscript/reproducibility_runbook.md | Need separate revisedanalysisreceipt/exactsource and inputmanifest, reviewer-usable artifact access, datasetterms/citations andavailability statement. Private preservation alone is not a final sharing arrangement. |
+| Authorship and professor review | SoleauthorM M Nishat confirmed;sevenpageprofessorreportworkspacepaper4-review | Affiliation/contact pending;professor scientific review not completed. Toolassistance disclosed. No professorcoauthor inferred. |
+| Venue suitability | manuscript/venue_requirements_20261022.md,officialJNE/IOPpolicies rechecked26Oct | Current direct-provider quartile/category/year verification and final venuechoice pending. JNE demands strongvalidation;workflow completion alone does not establishQ1significance. |
+| Submission authorization | Explicit no submission/email/fees | No submission,email,payment,publicrelease or acceptanceclaim made. |
+
+## Immediate next actions
+
+Inspect CPU p3a-envelope-release-reviewv2 output. On success preserve the NEW analysis receipt privately before running the separately bound envelope aggregate. On failure retain compact evidence and fix the actual defect without loosening assertions. After all original51task/CSV checks pass, report all prespecified groups and uncertainty, produce cost/figures and complete manuscript. No new GPU run and no access-restriction bypass.
+
+The goal remains active and incomplete. If final evidence is scientifically weak, report that gap and the work needed; do not redefine a completed software pipeline as a Q1-ready study.
