@@ -408,3 +408,16 @@ the original declared per-character short/long accepted-targeted union. Retain
 all147 groups and72 paired characters per group for tasks10+15. This additive
 reporting clarification does not select favorable outcomes, change attacks or
 bounds, or establish population equivalence or a causal rounding effect.
+
+### Author decision to discontinue further strict reruns 26 October 2026
+
+The author explicitly declines further strict corrective reruns and chooses the
+disclosed numerical-envelope analysis route. Do not launch additional strict
+corrective tasks. Preserve all original and completed corrective outputs and any
+already-running task provenance. The previous33task plan remains historical,
+not an instruction to continue launching. This decision does not establish that
+original outputs satisfy the old strict contract. Any tolerance-based full-cohort
+analysis must be a separate code-bound post-execution amendment, retain the
+original strict violations, use the exact epsilon float32 conversion envelope,
+and disclose the limited two-task paired sensitivity evidence and its limits.
+No performance-selected seeds, tasks or detector outcomes may be omitted.

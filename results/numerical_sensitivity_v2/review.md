@@ -1,0 +1,5 @@
+# Paired sensitivity report interpretation
+
+Fixed tasks10 and15:1958matched setting rows,587originalstrictviolations,5cloudguards. All147groups retain72pairedcharacters. No own-detector recipe rejection/accepted-targeted decision changes and no declared character-union accepted-targeted changes were reported. Decoded predictions and targeted-success flags also remained unchanged. Cross-detector diagnostics fromv1 remain preserved and include changed decisions. This does not prove population equivalence or isolate rounding causally.
+
+The author has explicitly declined further strict corrective reruns. Preserve completed corrective evidence and existing execution history. Do not launch another strict corrective GPU task. A proposed original-cohort analysis using the exact float32 numerical envelope must be separately code-bound and disclosed as a post-execution revised contract, not silently accepted as the old strict primary. Full cohort integrity, uncertainty and reproducibility remain required before submission.
