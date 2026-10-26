@@ -256,7 +256,10 @@ float64, with record-time comparison in Python precision. Epsilon, thresholds,
 attack weights/iterations/restarts/targets, models and statistical estimands are
 unchanged. The cloud candidate passed29 offending epsilon cases and50 fixed
 synthetic scale/offset cases before application. Full current portable regression
-version20 is pending. No corrected EEG outcome has yet been generated.
+version20 passed373 tests with41 warnings in51.24 seconds. A separate cloud
+corrective-release review checks the exact two changed source files, task
+lineage and strict projection on a fixed source-only raw character. Corrected
+evaluation outcomes have not yet been generated.
 
 The appended preregistration amendment selects corrective reruns exclusively by
 strict numerical invalidity: every setting/character of affected subject-seed
