@@ -374,3 +374,26 @@ performance run is authorized merely by this amendment or a synthetic pass.
 Complete cloud provenance review and strict all-row budget checks remain required
 before combined reporting. Disclose this post-execution numerical correction and
 both original failure and corrective execution in the manuscript/supplement.
+
+### Amendment numerical sensitivity analysis option B 26 October 2026
+
+The author now requests disclosure of floating-point tolerance and validation of
+its effect. Before inspecting paired comparison outcomes, a separate descriptive
+analysis fixes tasks10 and15, the two complete corrective tasks preserved at this
+checkpoint. Selection uses availability, not performance. Compare every character,
+setting and detector against its original version, with exact identity, target,
+protocol, manifest and model/input hashes checked. Report prediction, targeted
+success, nominal5 rejection and accepted-targeted decision changes, as well as
+score differences. No task, setting or detector may be dropped because of changes.
+
+The numerical diagnostic envelope is exactly max(epsilon, float32(epsilon)), not
+a fitted absolute or relative slack. Report original strict violations separately;
+corrective results must still satisfy the original strict epsilon. This comparison
+is a post-execution sensitivity analysis and does not edit the primary aggregator,
+old receipts, original bounds or the existing whole-task correction plan. No
+harmlessness or cohort equivalence claim follows from the small excess or a
+limited paired sample. Full-run differences also include possible stochastic or
+hardware variation; this design does not isolate rounding causally. Any proposal
+to reuse all original tasks under a revised numerical contract requires a separate
+explicitly disclosed analysis release and appropriate validation, not silent
+acceptance as originally preregistered strict results. Preserve all versions.
