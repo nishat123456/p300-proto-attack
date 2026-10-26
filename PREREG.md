@@ -421,3 +421,29 @@ analysis must be a separate code-bound post-execution amendment, retain the
 original strict violations, use the exact epsilon float32 conversion envelope,
 and disclose the limited two-task paired sensitivity evidence and its limits.
 No performance-selected seeds, tasks or detector outcomes may be omitted.
+
+### Revised numerical envelope analysis contract 26 October 2026
+
+Following the author's decision against further strict reruns, the proposed full
+cohort analysis retains all51original whole subject-seed tasks under a separately
+labeled post-execution numerical contract. It accepts an applied raw norm only
+when finite, nonnegative and no greater than max(original Python epsilon,
+nearest float32 representation of that epsilon). This is not compliance with the
+original strict bound and does not retroactively change original receipts.
+Report all13419original strict violations and preserve original failure evidence.
+No absolute/relative slack is fitted to results. Attack settings, nominal
+thresholds, allocations, targets, seeds, denominators, participant averaging and
+uncertainty procedures stay unchanged. The two-task paired sensitivity is limited
+support, not proof of cohort equivalence or causal rounding-only invariance.
+
+A separate Kaggle CPU review must verify original source inventory against the
+old receipts, original portable regressions and new envelope guards, all51task
+compact JSON/stage hashes and clean CSV threshold/decision/summary consistency.
+It must create a new analysis receipt binding this contract, complete input
+hashes and the separate reporter implementation. Inspect and privately preserve
+that receipt before executing combined performance aggregation. Original strict
+aggregator bytes remain unchanged. Scientific evaluation outputs and corrected
+runs stay separate, with no mixture of favorable rows or best-seed selection.
+If any hash, coverage or envelope check fails, preserve the failure and resolve
+it without silently weakening that check. All scientific computation stays on
+Kaggle; raw data/models and CSV must not be downloaded locally.
