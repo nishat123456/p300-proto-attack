@@ -1,0 +1,7 @@
+# Corrective release review, 26 October 2026
+
+Cloud review completed source260771b with the exact two changed scientific files,373-test proof, original protocol bytes and allocations, complete strict numerical audit and canonical task lineage. It selected33 subject-seed tasks only because they contain original strict numerical violations, not performance. All36 characters/all settings are rerun for those tasks;18 strictly valid original whole tasks remain reusable. No rows are selected by outcomes or mixed within a task.
+
+Fixed source1 first official training raw character passed all29 offending epsilon values with both signs under the stricter projection, without models or performance. Old raw file hash matched the immutable original manifest. New receipts were generated and validated on Kaggle, then preserved separately in splits/openbmi_numerical_correction_20261026. Original receipts, protocol, failed aggregate and original outputs remain unchanged. This is a disclosed post-execution numerical correction, not an untouched original confirmatory execution.
+
+Inspection confirms original epsilon, thresholds, targets, model seeds, attack iterations/restarts/weights and statistical estimands unchanged. Corrective evaluation may now use these separate code-bound receipts and unchanged fixed account assignments. Combined outcomes remain withheld until every corrected task is preserved and complete canonical strict budget aggregation passes. No readiness claim.
