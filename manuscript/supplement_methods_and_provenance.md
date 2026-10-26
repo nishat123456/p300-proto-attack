@@ -269,3 +269,12 @@ receipts and complete cloud review are required before corrective execution.
 There is no tolerance increase, silent old-receipt rebinding or selection using
 performance. Corrective outcomes, their complete strict budget checks and final
 aggregation remain pending.
+
+
+Corrective release review completed on fixed source1 official training raw data:
+all29 offending epsilon values passed strict actual-change checks in both signs,
+with original raw hash verified. New receipts are preserved separately in
+splits/openbmi_numerical_correction_20261026, preserving original protocol bytes
+and all old receipts. The cloud plan selects33 whole tasks and reuses18 strictly
+valid original tasks. All33 corrective payloads are staged; first five are
+running. Corrected results, complete strict aggregation and readiness are pending.

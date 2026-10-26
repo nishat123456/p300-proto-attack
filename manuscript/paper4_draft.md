@@ -175,7 +175,10 @@ provenance is preserved. Complete-cohort cloud aggregation and reporting are
 pending after the unchanged aggregator stopped on a strict actual-budget check.
 Independent summary results are withheld. Cloud auditing traced the violations
 to upward float32 rounding of the declared epsilon; a stricter implementation
-passed373 portable tests and is undergoing prospective corrective-release review.
+passed373 portable tests and a separate source-only raw projection/release review.
+Whole-task corrective reruns are required for33 numerically affected subject-seed
+tasks;18 valid original tasks are retained under explicit lineage. The first
+five corrective tasks are running, with corrected combined results pending.
 No bound has been relaxed. Task01 has a preserved
 terminal failure with no exposed log or outputs and one identical-payload retry.
 No scientific setting changed. Existing historical splits and failed gates
