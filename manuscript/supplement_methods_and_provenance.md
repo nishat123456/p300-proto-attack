@@ -235,3 +235,34 @@ results/report_preview_v2. The first script preview's no-image limitation remain
 in report_preview_v1. No image was downloaded or recomputed locally. This clears
 only those two development figures, not independent17-participant figures or
 journal readiness. The original report-generation receipt is preserved unchanged.
+
+
+## Post-execution strict numerical budget correction, 26 October 2026
+
+The unchanged independent aggregator rejected13419 of49929 setting rows because
+actual raw L-infinity perturbations exceeded their recorded Python epsilon.
+Cloud audit covered all1836 character shards and found no nonfinite rows. The
+complete cloud summary established all violations equal an upward-rounded
+float32 representation of epsilon. Maximum relative excess was
+4.065375469261503e-08 and maximum absolute excess7.629394538355427e-07 in raw
+signal units. Small magnitude does not validate the original strict bound.
+Original outputs and all failure history are preserved; combined results remain
+withheld.
+
+Static review identified implicit conversion of the Python bound in float32
+Tensor comparisons. Candidate source03f0b89 rounds an upward-rounded bound
+inward before projection and verifies actual representable differences in
+float64, with record-time comparison in Python precision. Epsilon, thresholds,
+attack weights/iterations/restarts/targets, models and statistical estimands are
+unchanged. The cloud candidate passed29 offending epsilon cases and50 fixed
+synthetic scale/offset cases before application. Full current portable regression
+version20 is pending. No corrected EEG outcome has yet been generated.
+
+The appended preregistration amendment selects corrective reruns exclusively by
+strict numerical invalidity: every setting/character of affected subject-seed
+tasks, with whole-task replacement under an explicit canonical lineage map.
+Numerically valid original tasks may be reused with provenance. New code-bound
+receipts and complete cloud review are required before corrective execution.
+There is no tolerance increase, silent old-receipt rebinding or selection using
+performance. Corrective outcomes, their complete strict budget checks and final
+aggregation remain pending.
