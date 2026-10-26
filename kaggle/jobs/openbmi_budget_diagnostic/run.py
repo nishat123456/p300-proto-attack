@@ -29,8 +29,10 @@ def fetch(item):
  for attempt in range(4):
   try:
    r=requests.get(url,timeout=(30,180));r.raise_for_status();target.write_bytes(r.content);return
-  except Exception:
-   if attempt==3:raise RuntimeError(f'cloud transfer failed task{task:02d} file{name}') from None
+  except Exception as error:
+   if attempt==3:
+    (out/f'transfer_failure_task{task:02d}.json').write_text(json.dumps(dict(task=task,file=name,error_type=type(error).__name__,http_status=getattr(getattr(error,'response',None),'status_code',None)),indent=2))
+    raise RuntimeError(f'cloud transfer failed task{task:02d} file{name}') from None
    time.sleep(2**attempt)
 items=[(r['task'],f['name'],f['url']) for r in records for f in r['files']]
 with ThreadPoolExecutor(max_workers=8) as pool:list(pool.map(fetch,items))
