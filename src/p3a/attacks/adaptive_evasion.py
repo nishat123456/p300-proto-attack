@@ -51,10 +51,14 @@ def project_applied_delta(eeg,delta,eps_raw):
     if eeg.shape!=delta.shape or not math.isfinite(eps_raw) or eps_raw<0:
         raise ValueError('aligned raw delta and finite nonnegative budget required')
     with torch.no_grad():
-        applied=eeg+delta.clamp(-eps_raw,eps_raw)
-        # One rounding ULP inward repairs addition/subtraction cancellation.
-        excess=(applied-eeg).abs()>eps_raw
-        applied=torch.where(excess,torch.nextafter(applied,eeg),applied)
+        limit=torch.as_tensor(eps_raw,dtype=eeg.dtype,device=eeg.device)
+        # A Python scalar comparison in float32 can round epsilon upward.
+        if float(limit)>eps_raw:limit=torch.nextafter(limit,torch.zeros_like(limit))
+        applied=eeg+delta.clamp(-limit,limit)
+        for _ in range(4):
+            excess=(applied-eeg).abs().double()>eps_raw
+            if not excess.any():break
+            applied=torch.where(excess,torch.nextafter(applied,eeg),applied)
         result=applied-eeg
-        if not torch.isfinite(result).all() or (result.abs()>eps_raw).any():raise ValueError('raw projection failed')
+        if not torch.isfinite(result).all() or (result.abs().double()>eps_raw).any():raise ValueError('strict raw projection failed')
         return result

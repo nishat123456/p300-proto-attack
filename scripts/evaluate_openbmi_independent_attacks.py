@@ -83,7 +83,7 @@ def main():
         if device.type=='cuda':torch.cuda.synchronize()
     def record(name,budget,delta,settings,elapsed):
         actual=(raw+delta)-raw;epsilon=budget*calibration['normalization_raw_scale']
-        if not torch.isfinite(delta).all() or actual.abs().max()>epsilon:raise ValueError('applied raw budget or finite failure')
+        if not torch.isfinite(delta).all() or float(actual.abs().max())>epsilon:raise ValueError('applied raw budget or finite failure')
         with torch.no_grad():predicted=int(verify.logits(raw+delta).argmax(1).item())
         scores={m:float(verify.score(raw+delta,m).detach().cpu().item()) for m in METHODS}
         rejected={m:bool(scores[m]>calibration['methods'][m]['thresholds']['0.05']) for m in METHODS}

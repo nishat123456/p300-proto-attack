@@ -338,3 +338,39 @@ all-attempt manipulation with cost under a recorded-marker offline threat;
 it does not claim a novel detector, first adaptive P300 evaluation or certified
 robustness. Independent findings, including negatives, determine manuscript
 claims rather than an outcome-selected headline or method winner.
+
+
+### Amendment: strict numerical budget correction, 26 October 2026
+
+After all51 original independent jobs completed, the unchanged aggregate rejected
+actual perturbation norms exceeding their declared Python epsilon. Cloud audit
+of1836 shards/49929 settings found13419 violations and no nonfinite rows. The
+complete cloud summary established every violation equals upward float32
+rounding of its declared epsilon, with maximum relative excess
+4.065375469261503e-08. This is a numerical contract defect, not permission to
+increase epsilon or add a tolerance. Original outputs and failure history remain
+immutable evidence and are not silently accepted as satisfying the strict bound.
+
+The prospective correction rounds an upward-rounded representable float32 bound
+inward and compares actual representable raw differences in float64/Python
+precision against the original epsilon. The record-time guard also avoids
+implicit float32 conversion of a Python scalar. No attack steps, restarts,
+weights, targets, detector thresholds, model seed, normalization or statistical
+estimand changes. Fixed synthetic/cloud contract tests precede corrected EEG
+execution and new code-bound receipts are required. Old receipts are never
+rewritten or rebound.
+
+The corrective rerun scope is every declared setting and character for each
+subject-seed task containing any strict numerical violation in the complete
+audit. It is selected exclusively by numerical validity, before combined
+performance summaries are accepted, and never by success, detector outcome or
+favorable seed. Numerically valid original tasks are preserved and may be reused
+under an explicit canonical lineage map. Corrected tasks replace whole tasks in
+that canonical analysis, without mixing rows within a task. Preserve all original
+and corrected versions separately. A new prospective release must bind corrected
+source inventory, exact affected-task list and original audit/report hashes;
+remaining original settings and protocol semantics stay fixed. No corrected
+performance run is authorized merely by this amendment or a synthetic pass.
+Complete cloud provenance review and strict all-row budget checks remain required
+before combined reporting. Disclose this post-execution numerical correction and
+both original failure and corrective execution in the manuscript/supplement.
