@@ -397,3 +397,14 @@ hardware variation; this design does not isolate rounding causally. Any proposal
 to reuse all original tasks under a revised numerical contract requires a separate
 explicitly disclosed analysis release and appropriate validation, not silent
 acceptance as originally preregistered strict results. Preserve all versions.
+
+### Sensitivity reporting clarification 26 October 2026
+
+The v1 paired report preserves all detector-score diagnostics for every attack
+recipe. Its pooled detector-aware groups include recipes aimed at other detectors
+and therefore are not the own-detector primary endpoint. Preserve that report.
+Before claiming decision-level stability, add own-detector recipe summaries and
+the original declared per-character short/long accepted-targeted union. Retain
+all147 groups and72 paired characters per group for tasks10+15. This additive
+reporting clarification does not select favorable outcomes, change attacks or
+bounds, or establish population equivalence or a causal rounding effect.
