@@ -172,7 +172,9 @@ immutable allocations, targets and code-bound receipts in
 splits/openbmi_independent_20261022. Settings and artifacts were committed before
 independent launch. All51 fixed subject-seed tasks have completed and their compact
 provenance is preserved. Complete-cohort cloud aggregation and reporting are
-running; independent summary results remain pending. Task01 has a preserved
+pending after the unchanged aggregator stopped on a strict actual-budget check.
+Independent summary results are withheld while a cloud numerical diagnostic
+identifies the offending settings; no bound has been relaxed. Task01 has a preserved
 terminal failure with no exposed log or outputs and one identical-payload retry.
 No scientific setting changed. Existing historical splits and failed gates
 are preserved; BNCI2015-003 remains locked.
