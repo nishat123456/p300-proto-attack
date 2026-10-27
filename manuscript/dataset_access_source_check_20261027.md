@@ -45,3 +45,20 @@ No public release, new sharing permission, ethics exemption or IRB approval for
 the present author is asserted by this check. The author must confirm applicable
 institutional requirements. The source-retrieval limitation is recorded rather
 than replaced by a third-party license assumption.
+
+
+## Archival article evidence, same-day follow-up
+
+The original article was located at the primary archival full-text record
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6501944/ (PMID30698704). The indexed
+article text explicitly identifies GPL3.0 under Availability of source code and
+requirements, and identifies GigaDB as the location of supporting data/code
+snapshots. These are separate statements: the software-license heading does not
+by itself establish the raw dataset's license. Subsequent direct page extraction
+returned a browser-check page, so the original ethics/consent text was not
+independently verified in this follow-up. No CAPTCHA was solved or bypassed.
+
+This resolves the original supporting-repository and software-license source
+attribution at the article level, not dataset redistribution terms, current
+provider access conditions, present-author institutional requirements or our
+private reviewer-access arrangement. Retain the earlier retrieval history.
