@@ -23,3 +23,21 @@ Previous goal turn: progress, because it reconciled authoritative reproducibilit
 A separate CPU reporting job can consume the completed aggregate, without EEG/model access, attack reruns, changed thresholds or new GPU use. It should preserve input SHA and revised-contract labels, retain all17users/3seeds/settings, and report conditional accepted accuracy with explicit accepted-decision denominators, clean decoder accuracy, nonadaptive AUC and conditional successful-attack TPR with their denominators and undefined-case accounting. Participant averaging and pointwise uncertainty must follow the declared unit. Undefined values must not silently shrink coverage or be replaced by zero. AUC must remain nonadaptive and all-attempt; no best-method/seed selection. This is a reporting completion requirement, not a new evaluation or proof of causal rounding equivalence. Scope and checks must be fixed before executing the summary.
 
 Other gates remain actual cloud figure review, captions, reviewer artifact access and dataset terms, author contact/affiliation, professor scientific review and venue assessment. Do not declare Q1 readiness from a completed pipeline.
+
+
+## Secondary gap closure checkpoint 27 October2026
+
+The reporting gap above was resolved by sourcea7ee4cd and completed CPU summary
+preserved549c668 in results/secondary_summary_v1. Five cloud guards passed;
+input aggregate hash is unchanged. Manuscript/supplement now report decoder
+accuracy, conditional accepted accuracy, nonadaptive AUC and conditional TPR.
+Full per-seed denominators and undefined identities are retained. The all17
+adaptive LID conditional TPR is withheld because participant51 has an undefined
+seed denominator; this does not exclude that person from primary all-attempt
+summaries. No adaptive AUC or zero imputation. Complete secondary tables and
+pointwise intervals remain in the compact cloud-generated Markdown/JSON.
+
+Actual figure QA, reviewer access/data terms, author affiliation/contact,
+professor scientific review and venue selection remain outstanding. These
+reporting corrections do not establish Q1 suitability or untouched strict
+confirmation.

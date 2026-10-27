@@ -72,3 +72,21 @@ cover four other metrics only. A separate hash-bound CPU descriptive report is
 needed with accepted/successful denominators and explicit undefined-case
 accounting; do not calculate these locally or silently omit them. No GPU or
 strict corrective evaluation is needed for this reporting gap.
+
+
+## Secondary gap closure checkpoint 27 October2026
+
+The reporting gap above was resolved by sourcea7ee4cd and completed CPU summary
+preserved549c668 in results/secondary_summary_v1. Five cloud guards passed;
+input aggregate hash is unchanged. Manuscript/supplement now report decoder
+accuracy, conditional accepted accuracy, nonadaptive AUC and conditional TPR.
+Full per-seed denominators and undefined identities are retained. The all17
+adaptive LID conditional TPR is withheld because participant51 has an undefined
+seed denominator; this does not exclude that person from primary all-attempt
+summaries. No adaptive AUC or zero imputation. Complete secondary tables and
+pointwise intervals remain in the compact cloud-generated Markdown/JSON.
+
+Actual figure QA, reviewer access/data terms, author affiliation/contact,
+professor scientific review and venue selection remain outstanding. These
+reporting corrections do not establish Q1 suitability or untouched strict
+confirmation.
