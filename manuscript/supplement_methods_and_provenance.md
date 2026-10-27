@@ -1,8 +1,19 @@
 # Supplement draft: methods, provenance and claim limits
 
-October21,2026 Central. Professor-review draft, not submission-ready. Independent
-performance summaries, full uncertainty/cost results and final figures remain
-pending. Protocol/manifest freeze is complete and independent tasks are running. Software completion is not scientific efficacy.
+Updated27 October2026 UTC. Professor-review draft, not submission-ready.
+All51 original subject-seed tasks and the separately labeled numerical-envelope
+aggregate are complete. Primary and secondary reporting, uncertainty and cost
+outputs are privately preserved. Original strict compliance is false; all13,419
+strict violations remain disclosed. The author declined further strict reruns.
+
+Current evidence is in results/envelope_aggregate_v1 and
+results/secondary_summary_v1. The latest manuscript contains full-cohort results,
+discussion and conclusion. Actual final cloud figure visual review remains
+pending primary-account passkey verification. Reviewer artifact access, author
+affiliation/contact, professor scientific review and venue selection remain open.
+Dated execution/correction checkpoints below preserve history; their pending or
+running statements are not current launch instructions. See the superseding
+full-cohort and secondary completion sections at the end of this supplement.
 
 ## A. Current detector implementation
 
@@ -137,7 +148,7 @@ must preserve full output provenance, all methods/seeds/negative findings, and
 unchanged historical frozen artifacts. Do not submit, email or pay fees without
 explicit user authorization.
 
-## F. Completion audit: required evidence still missing
+## F. Historical completion audit, before full-cohort aggregation
 
 |Requirement|Current evidence|Remaining work|
 |---|---|---|
