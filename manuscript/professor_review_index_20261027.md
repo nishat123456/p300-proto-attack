@@ -2,7 +2,8 @@
 
 Status: internal scientific-review draft, not submission-ready. No email,
 submission, public release or fees have been authorized. Sole author M M Nishat;
-affiliation and correspondence contact await confirmation. A professor's review
+affiliation is University of Southern Mississippi and correspondence is
+mm.nishat@usm.edu, both supplied by the author. No department is inferred. A professor's review
 does not imply coauthorship or endorsement.
 
 ## Reading order
@@ -53,7 +54,17 @@ step or promise it will deliver a Q1 result.
 ## Remaining package gates
 
 Actual cloud figure visual QA and captions; final document/source consistency;
-authorized reviewer access with dataset terms and availability statement; author
-affiliation/contact; professor review and revisions; final venue/category/year
+authorized reviewer access with dataset terms and availability statement; remaining author declarations; professor review and revisions; final venue/category/year
 verification and formatting. No acceptance probability or publication date is
 claimed. No sending or submission is performed by preparing this index.
+
+## Current Word review copy
+
+The shared workspace contains paper4-review/paper4-manuscript-review-2026-10-27.docx,
+a12-page presentation of the current manuscript, references and figure captions.
+Every latest rendered page was visually inspected after correcting conversion of
+the correspondence email. This is document-layout QA only; no scientific plot
+was regenerated or visually verified. The two cloud figures remain absent and
+explicitly marked pending. The earlier seven-page progress report is historical.
+A private repository copy and SHA256 proof accompany this current review package.
+No email was sent.
