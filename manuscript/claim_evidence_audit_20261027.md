@@ -41,3 +41,14 @@ Actual figure QA, reviewer access/data terms, author affiliation/contact,
 professor scientific review and venue selection remain outstanding. These
 reporting corrections do not establish Q1 suitability or untouched strict
 confirmation.
+
+
+## Document integrity check
+
+Local text-only bibliography check found no unresolved manuscript citation keys
+against22BibTeX records; all five core review documents were present. This is
+reference-key integrity, not a fresh full-text/metadata literature review.
+Author/availability review wording is prepared separately in
+author_and_availability_review.md, with unknown affiliation/contact, ethics
+requirements, funding/conflicts and final reviewer access explicitly unverified.
+No declaration, consent/exemption, DOI or public access is fabricated.

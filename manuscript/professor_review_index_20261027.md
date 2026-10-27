@@ -12,8 +12,9 @@ does not imply coauthorship or endorsement.
 3. claim_evidence_audit_20261027.md and submission_readiness_audit_20261026.md: evidence coverage and unresolved gates, including superseding secondary gap closure.
 4. reproducibility_runbook.md: exact release/aggregate provenance, historical strict failure and current revised runner, reviewer-access checklist.
 5. references.bib and bibliography_provenance.md, with results/literature_protocol_matrix_20261022.md for source-specific reading scope.
-6. results/envelope_aggregate_v1/out/report/reliability_report.md and out/cost_report/cost_report.md: complete cloud-generated primary/cost tables. The aggregate JSON retains participant/seed records and pointwise intervals.
-7. results/secondary_summary_v1/out/secondary_summary.md and JSON: conditional accepted accuracy, decoder accuracy, nonadaptive AUC, conditional TPR and explicit undefined cases/denominators.
+6. author_and_availability_review.md: provisional declarations, author-confirmation gaps and current private-access limits.
+7. results/envelope_aggregate_v1/out/report/reliability_report.md and out/cost_report/cost_report.md: complete cloud-generated primary/cost tables. The aggregate JSON retains participant/seed records and pointwise intervals.
+8. results/secondary_summary_v1/out/secondary_summary.md and JSON: conditional accepted accuracy, decoder accuracy, nonadaptive AUC, conditional TPR and explicit undefined cases/denominators.
 
 All result paths are repository-relative. Evidence is private; this index does
 not grant access or create a sharing link. Original EEG/models and score CSV
