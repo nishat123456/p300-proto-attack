@@ -222,6 +222,36 @@ nonadaptive descriptive comparisons are retained without selecting a winner.
 The full cloud report also retains FGSM, Gaussian controls and source-template
 results across all five declared budgets.
 
+### Secondary decoder, conditional detection and ranking summaries
+
+A separate hash-bound CPU summary of the existing aggregate passed five reporting
+guards. Mean clean decoder accuracy before rejection was0.601852, with pointwise
+95% participant-bootstrap interval[0.430814,0.767443]. Conditional accuracy among
+accepted clean characters at nominal5% was0.597051 for confidence,0.597046 for
+entropy,0.596029 for BU,0.598654 for LID,0.597628 for MD,0.596906 for adjusted MD,
+and0.605231 for KDE. Full intervals and accepted-decision denominators are
+retained in results/secondary_summary_v1. These are averages of within-participant
+seed summaries, not ratios of population mean rates. Rejection did not provide
+high accepted-character accuracy in this decoder configuration.
+
+For ordinary PGD at budget0.20, all-attempt nonadaptive AUC was0.995930
+[0.991799,0.999047] for MD/adjusted MD and0.999425[0.998517,1.000000] for KDE.
+These ranking results coexist with high own-detector adaptive accepted-targeted
+rates reported above. They do not quantify adaptive AUC, which was not computed.
+The conditional TPR among successful ordinary PGD attacks was0.999455
+[0.998366,1.000000] for MD/adjusted MD and1.000000[1.000000,1.000000] for KDE;
+the full report retains every attack group and its successful-attempt denominator.
+
+The all17participant conditional adaptive LID TPR summary is unavailable because
+participant51 has an undefined seed-level conditional denominator. That identity
+is retained, and any defined-only descriptive summary is explicitly conditional,
+not silently presented as complete-cohort performance. This does not remove that
+participant from the primary all-original-attempt accepted-targeted endpoint.
+Undefined conditional outcomes are not imputed as zero. All nominal settings,
+attack groups, participant/seed records and undefined-case identities remain in
+the secondary JSON and Markdown report. Secondary pointwise intervals are not
+familywise or serial-dependence guarantees.
+
 ### Computation and rejection cost
 
 The cost report retains every participant/seed/nominal operating point and its
