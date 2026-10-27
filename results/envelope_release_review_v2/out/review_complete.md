@@ -1,0 +1,3 @@
+# Numerical envelope release review
+
+All51originaltasks and51cleanCSV verifiedcloud-to-cloud against savedcompactJSON andstagehashes; cleanCSVthreshold/decision/summaryconsistency checked. Exact envelope passes49929rows while13419strictviolations remain disclosed. No combinedperformancecomputed. Reviewreceiptmustbeinspectedandpreservedbeforeanalysis.

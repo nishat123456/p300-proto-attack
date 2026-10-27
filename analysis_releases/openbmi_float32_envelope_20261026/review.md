@@ -1,0 +1,3 @@
+# Inspected revised analysis release
+
+CPU reviewv2 passed368originalportabletests41warnings43.38s plus6envelopeguards, same4historicalexclusions. All51originaltasks,3927compactJSONfiles and51cleanCSV were verifiedcloud-to-cloud with task/stage/source hashes and cleanCSVthreshold/decision/summary consistency. All49929rows satisfy exactfloat32conversionenvelope while13419strictviolations remain explicitly disclosed. No combinedperformance was computed in this review. Originalstrict receipts/source/splits unchanged. This is a NEW post-execution analysis receipt, not strictoriginalcompliance or populationequivalence.
