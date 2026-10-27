@@ -6,8 +6,9 @@ been performed. No professor is listed as a coauthor merely for reviewing work.
 
 ## Confirmed authorship and requested details
 
-Sole author: M M Nishat, explicitly confirmed by the author. Exact affiliation
-and corresponding-author email were requested and remain unconfirmed. Do not
+Sole author: M M Nishat, explicitly confirmed by the author. Correspondence email: mm.nishat@usm.edu, explicitly supplied by the author.
+Exact institutional/department affiliation remains unconfirmed; the author was
+asked for the precise wording. Do not
 infer an institutional appointment or address from account names, applications
 or contact records. No ORCID is asserted.
 
