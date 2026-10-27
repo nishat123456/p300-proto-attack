@@ -1,6 +1,6 @@
 # Reproducibility and completion runbook
 
-Working document, 22 October 2026. The independent study is incomplete. This is an execution record and prospective completion checklist, not a successful reproduction or journal-readiness claim.
+Working document, updated27 October2026. Execution and revised aggregation are complete; the reviewable package is incomplete. This is an execution record and prospective completion checklist, not a successful reproduction or journal-readiness claim.
 
 ## Fixed study identity
 
@@ -28,9 +28,9 @@ Retrieve only compact JSON/TXT/MD/log. Use official output pagination, since the
 
 Before aggregation, retain one authoritative completed version per fixed task plus any failure history. Remove no original evidence. Avoid mounting both an original result and its copied duplicate under the aggregation root, because the aggregator deliberately rejects duplicate identities. Any needed new private output-sharing permissions must be explicitly authorized at the applicable access boundary. Existing source/refcal access does not prove new independent outputs are mounted.
 
-## Final aggregation, on Kaggle only
+## Original strict aggregation, preserved historical failure
 
-Mount or stage all51 completed subject-seed output trees inside a dedicated cloud root. Clean score CSV must accompany the matching clean JSON on cloud for AUC. Do not substitute local JSON-only copies. Use the frozen scientific source inventory and matching protocol:
+The following original command failed its strict actual-budget assertion and is retained for provenance, not as the accepted revised-analysis command. Do not rerun completed jobs. Mount or stage all51 completed subject-seed output trees inside a dedicated cloud root. Clean score CSV must accompany the matching clean JSON on cloud for AUC. Do not substitute local JSON-only copies. Use the frozen scientific source inventory and matching protocol:
 
 ```bash
 python scripts/aggregate_openbmi_reliability.py \
@@ -57,7 +57,7 @@ python reporting/build_reliability_report.py \
 
 Do not pass `--development-only` to a final independent report. That mode is restricted to the already-inspected participant19 integration evidence. It cannot provide a population result. Keep all nominal1/5/10% clean tables and all declared attack budgets. Fixed color scales and descriptive intervals do not select a winner or establish significance.
 
-CPU report checks exercised real participant19 aggregate data and five rejection/acceptance guards. The reporter has not yet been exercised on the complete17-person independent aggregate. Development PNG files were generated on Kaggle. The first file/script previews were blank, but actual notebook previewv2 subsequently rendered both exact images; browser visual review is recorded in results/report_preview_v2. Final independent figure layout and captions require actual visual review, not generation alone.
+CPU report checks exercised real participant19 aggregate data and five rejection/acceptance guards. The reporter has now processed the complete17-person revised numerical-envelope aggregate; exact compact evidence is in results/envelope_aggregate_v1. Development PNG files were generated on Kaggle. The first file/script previews were blank, but actual notebook previewv2 subsequently rendered both exact images; browser visual review is recorded in results/report_preview_v2. Final independent figure layout and captions require actual visual review, not generation alone.
 
 ## Cost and publication completion gates
 
@@ -84,8 +84,7 @@ verified cloud attachment path. Do not use `--development-only` for independent
 reporting. Cloud cost-report checksv1 passed nine checks and generated the real
 participant19 descriptive cost table, sourceb2cb475/launchereea4b24. It validates
 complete seed/nominal/marker coverage, model/reference/protocol binding and stored
-retry consistency. It has not yet been exercised on the complete17-person
-independent outputs. It reports stored per-seed costs without a population retry
+retry consistency. It has now processed all17participant/3seed independent outputs under the revised numerical-envelope release. It reports stored per-seed costs without a population retry
 interval; primary reliability intervals remain in the separate frozen aggregate.
 
 ## Revised numerical envelope analysis release 26 October2026
@@ -120,7 +119,31 @@ bypassed. The already-preserved primary archive supplies the complete cohort.
 Download only compactoutJSON/TXT/MD/log using paginated officialAPI; keep figures
 on Kaggle for actual browser visual review. Do not download source trees orPNG.
 
-The aggregate is currently running. Completion must be checked from its actual
-terminal status and compactanalysis_complete.json, not this launch record.
-Scientific interpretation, actual independent figure visualQA and final
-manuscript conclusions remain pending. No additional GPU run is authorized.
+The aggregate completed and compact evidence is privately preserved b2f20ec in
+results/envelope_aggregate_v1. Completion and report provenance bind aggregate
+SHA256 e11fb26676c22c548074ecbf8113f4aa427a815df2723c383effb277cf31e9ce.
+The51tasks/17users,147population groups,84clean metric summaries and120paired
+descriptive comparisons are present. Manuscript results/discussion/conclusion
+were drafted8d98142 from cloud reports. Actual independent figure visualQA,
+final source consistency review, reviewer access and professor review remain
+pending. No additional GPU run is authorized. Do not poll or restart this
+completed aggregate.
+
+## Reviewer artifact access, not yet activated
+
+The exact revised runner is kaggle/jobs/openbmi_envelope_aggregate/run.py, bound
+by launch-binding.json to source26e8163 and the preserved review receipt. It
+invokes reporting/aggregate_openbmi_numerical_envelope.py in the reviewed cloud
+package, not the strict historical aggregator command above. All scientific
+reproduction remains cloud-only. Review receipt and compact result hashes allow
+identity checks but do not alone provide a reader access to private artifacts.
+
+Before a journal submission, arrange authorized reviewer access to the exact
+source package, protocol and original receipts, new analysis receipt, complete
+original derived outputs and clean scores, original strict failure, both paired
+sensitivity reports, source timing and final cloud figures. Dataset acquisition
+must follow original provider terms; no raw data or model redistribution is
+assumed. Do not publish private artifacts, signed links or credentials under this
+checklist. Public release and submission remain unauthorized. The browser-only
+figure check currently awaits primary-account passkey verification already
+requested from the author. No access-restriction bypass is permitted.

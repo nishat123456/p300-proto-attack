@@ -37,3 +37,27 @@ No original strictreceipt/source/split changes. SeparatelyboundCPUaggregatev1
 launchera7357a1 isRUNNING, not complete. This resolves release/inputavailability
 rows above but does not prove aggregateoutcomes/uncertainty/cost/figures or
 scientificsignificance. Remaining requirements remain incomplete.
+
+## Superseding completion audit 27 October2026
+
+The rows and RUNNING checkpoint above are historical. Full revised CPU aggregation
+completed and is privately preserved b2f20ec. All51original tasks/17available
+participants are represented in147attack groups,84clean metric summaries and120
+paired descriptive comparisons. Cloud reliability/cost reports include all
+nominal settings and budgets. Source/CSV availability and release tests were
+resolved before aggregation, with original strict compliance explicitly false.
+
+Manuscript and supplement8d98142 now contain full-cohort tables, intervals,
+ordinary/adaptive comparisons, clean accepted-error limitations, cost assumptions,
+discussion and conclusion. This resolves the earlier missing-results-draft row,
+not scientific significance or submission readiness. Actual two-figure browser
+visual review remains blocked on previously notified primary Google passkey
+verification. No new sign-in retry or experiment is required by this checkpoint.
+
+Remaining: final table/claim/source consistency audit; actual figure visual QA and
+captions; complete dataset/code availability and authorized reviewer access;
+author affiliation/contact; professor scientific review; current ranking/category
+and venue selection/formatting. The findings concern high adaptive vulnerability
+and substantial accepted clean errors in this specified offline decoder-detector
+system. They do not establish an effective new defense, untouched strict
+confirmation, population rounding equivalence or Q1/Q2 readiness.
