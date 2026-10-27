@@ -16,8 +16,10 @@ or contact records. No ORCID is asserted.
 This study reanalyses previously collected EEG from OpenBMI and reports
 historical development work on BCI CompetitionIII. The original datasets must
 be obtained from their providers under their applicable terms; this work does
-not assert ownership of or permission to redistribute raw EEG. Dataset citations
-are retained in references.bib. No new participant recordings were collected as
+not assert ownership of or permission to redistribute raw EEG. The original OpenBMI dataset identifier is DOI10.5524/100542; the article is
+DOI10.1093/gigascience/giz002. Dataset citations are retained in references.bib.
+See dataset_access_source_check_20261027.md for primary-source retrieval scope
+and unverified terms; software, article and dataset licenses must be distinguished. No new participant recordings were collected as
 part of the computational work described in this package.
 
 Exact analysis source, immutable protocol/allocations, original execution
