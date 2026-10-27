@@ -62,3 +62,10 @@ This resolves the original supporting-repository and software-license source
 attribution at the article level, not dataset redistribution terms, current
 provider access conditions, present-author institutional requirements or our
 private reviewer-access arrangement. Retain the earlier retrieval history.
+
+
+A targeted EuropePMC full-text attempt returned403Forbidden. No original ethics
+text was verified through that attempt, and no exemption or consent statement
+was added. Do not repeatedly retry the inaccessible source or infer its content
+from the error. The present author's applicable institutional requirements
+remain a separate author-confirmation item.

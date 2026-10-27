@@ -268,7 +268,9 @@ All numerical values in this section are transcribed from the Kaggle-generated
 reports in results/envelope_aggregate_v1/out. Aggregate SHA256 is
 e11fb26676c22c548074ecbf8113f4aa427a815df2723c383effb277cf31e9ce.
 Actual browser visual review of the two cloud-generated figures remains pending;
-their generation and hashes alone do not establish layout quality.
+their generation and hashes alone do not establish layout quality. Draft captions
+and exact file bindings are in figure_captions_and_review_20261027.md; that record
+explicitly remains visually unverified.
 
 ## Independent methods: prespecified protocol
 
