@@ -26,3 +26,14 @@ This is a completion audit against the research objective, not an acceptance pre
 Inspect CPU p3a-envelope-release-reviewv2 output. On success preserve the NEW analysis receipt privately before running the separately bound envelope aggregate. On failure retain compact evidence and fix the actual defect without loosening assertions. After all original51task/CSV checks pass, report all prespecified groups and uncertainty, produce cost/figures and complete manuscript. No new GPU run and no access-restriction bypass.
 
 The goal remains active and incomplete. If final evidence is scientifically weak, report that gap and the work needed; do not redefine a completed software pipeline as a Q1-ready study.
+
+## Superseding release evidence checkpoint
+
+Reviewv2 completed successfully:368portablepasses41warnings43.38s plus6guards;
+all51task/3927JSON/51CSV provenance and clean consistency checked;49929rows under
+exactenvelope,13419strictfailuresretained. NEWreceipt privatelypreserved26e8163,
+SHA46674a236cdf444e946defd2c323e49dc0688273315a5bcd4001418edbfe40ed.
+No original strictreceipt/source/split changes. SeparatelyboundCPUaggregatev1
+launchera7357a1 isRUNNING, not complete. This resolves release/inputavailability
+rows above but does not prove aggregateoutcomes/uncertainty/cost/figures or
+scientificsignificance. Remaining requirements remain incomplete.

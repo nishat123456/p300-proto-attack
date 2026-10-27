@@ -87,3 +87,40 @@ complete seed/nominal/marker coverage, model/reference/protocol binding and stor
 retry consistency. It has not yet been exercised on the complete17-person
 independent outputs. It reports stored per-seed costs without a population retry
 interval; primary reliability intervals remain in the separate frozen aggregate.
+
+## Revised numerical envelope analysis release 26 October2026
+
+The original strict aggregate failure and immutable execution receipts remain
+historical evidence. The author declined further strict corrective launches.
+The separate post-execution contract accepts only finite nonnegative norms up to
+max(original epsilon,nearest float32 epsilon). It is not original strict-budget
+compliance and must be labeled in results, supplement and output provenance.
+
+CPU release reviewv2 completed368original portable tests with41warnings in43.38s
+and6new envelope guards, with the same four historical excluded tests. It verified
+all51original task ledgers,3927compactJSON and51cleanCSV cloud-to-cloud, including
+cleanCSVthreshold/decision/summary consistency. All49929settingrows passed the
+exact envelope;13419originalstrictviolations remain disclosed. Fullperformance
+was not computed during review. Preserve the failedv1 packaging evidence.
+
+Inspected new receipt:
+analysis_releases/openbmi_float32_envelope_20261026/analysis_release_receipt.json
+SHA25646674a236cdf444e946defd2c323e49dc0688273315a5bcd4001418edbfe40ed.
+The private preservation commit is26e8163. Original src/scripts revision0959347
+is restored in the reviewed cloud package; new analysis reporters have separate
+hashes. No old receipt was rebound. Exact launchbinding is
+kaggle/jobs/openbmi_envelope_aggregate/launch-binding.json, launchera7357a1.
+
+Private CPU job mustaqimnishat/p3a-envelope-aggregate v1 mounts the completed
+primary review's code/archive. It verifies the exact inspected receipt and every
+recorded source/JSON/CSV hash before running the separately labeled envelope
+aggregate, existing reliability reporter and existing cost reporter. No raw EEG,
+model or CSV is downloaded locally, and no secondary-account restriction is
+bypassed. The already-preserved primary archive supplies the complete cohort.
+Download only compactoutJSON/TXT/MD/log using paginated officialAPI; keep figures
+on Kaggle for actual browser visual review. Do not download source trees orPNG.
+
+The aggregate is currently running. Completion must be checked from its actual
+terminal status and compactanalysis_complete.json, not this launch record.
+Scientific interpretation, actual independent figure visualQA and final
+manuscript conclusions remain pending. No additional GPU run is authorized.
