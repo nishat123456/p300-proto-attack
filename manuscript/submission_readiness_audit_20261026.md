@@ -61,3 +61,14 @@ and venue selection/formatting. The findings concern high adaptive vulnerability
 and substantial accepted clean errors in this specified offline decoder-detector
 system. They do not establish an effective new defense, untouched strict
 confirmation, population rounding equivalence or Q1/Q2 readiness.
+
+
+### Secondary reporting gap identified by source audit
+
+See claim_evidence_audit_20261027.md. Conditional accepted accuracy, nonadaptive
+AUC and conditional successful-attack TPR are stored per participant/seed but
+are not fully presented in population reporting. The existing84clean summaries
+cover four other metrics only. A separate hash-bound CPU descriptive report is
+needed with accepted/successful denominators and explicit undefined-case
+accounting; do not calculate these locally or silently omit them. No GPU or
+strict corrective evaluation is needed for this reporting gap.

@@ -134,7 +134,8 @@ completed aggregate.
 The exact revised runner is kaggle/jobs/openbmi_envelope_aggregate/run.py, bound
 by launch-binding.json to source26e8163 and the preserved review receipt. It
 invokes reporting/aggregate_openbmi_numerical_envelope.py in the reviewed cloud
-package, not the strict historical aggregator command above. All scientific
+package (the archived repo copy is
+kaggle/jobs/openbmi_envelope_release_review_v2/aggregate_openbmi_numerical_envelope.py), not the strict historical aggregator command above. All scientific
 reproduction remains cloud-only. Review receipt and compact result hashes allow
 identity checks but do not alone provide a reader access to private artifacts.
 
