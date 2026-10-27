@@ -50,10 +50,14 @@ recordings are redistributed in this package.
 
 ## Funding and competing interests
 
-Funding sources, grant identifiers and competing-interest declarations await
-author confirmation. Do not substitute a blanket no-funding/no-conflict claim
-without that confirmation. Compute account availability does not establish a
-sponsor or institutional support arrangement.
+The author explicitly confirmed the following on27 October2026:
+
+Funding: No specific funding.
+
+Competing interests: The author declares no competing interests.
+
+These statements reflect the author's confirmation, not an inference from
+compute accounts. No sponsor or grant number is asserted.
 
 ## Contributions and assistance
 
