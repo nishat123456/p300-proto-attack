@@ -447,3 +447,20 @@ runs stay separate, with no mixture of favorable rows or best-seed selection.
 If any hash, coverage or envelope check fails, preserve the failure and resolve
 it without silently weakening that check. All scientific computation stays on
 Kaggle; raw data/models and CSV must not be downloaded locally.
+
+### Secondary descriptive reporting completion 27 October2026
+
+Before new supplementary summaries, fix the reporting scope: consume only the
+completed numerical-envelope aggregate SHA256
+e11fb26676c22c548074ecbf8113f4aa427a815df2723c383effb277cf31e9ce.
+Retain all17users/3seeds, all nominal clean settings and all attack groups.
+Report conditional accepted accuracy with accepted-character denominators,
+clean decoder accuracy, conditional TPR with successful-attack denominators,
+and nonadaptive all-attempt AUC. Average three defined seed values within each
+participant before equal-participant2000bootstrap(seed20261013) pointwise
+intervals. If any seed is undefined, retain that participant's identity, withhold
+the all17 summary and label any defined-only summary as conditional descriptive
+coverage. No zero imputation, denominator filtering, adaptive AUC, model or
+threshold change. This supplementary post-execution reporting does not change
+primary estimands or original strict-failure disclosure. All tests and summary
+computation run only on Kaggle; no new GPU/strict corrective launch.
