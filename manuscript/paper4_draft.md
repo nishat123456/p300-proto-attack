@@ -1,6 +1,6 @@
 # Clean rejection and adaptive manipulation in P300 spellers: character-level reliability of existing detectors
 
-Working manuscript,updated26 October2026 Central. **Not submission-ready.**
+Working manuscript, updated27 October2026 UTC. **Not submission-ready.**
 
 **Author and corresponding author:** M M Nishat (sole author, confirmed by the
 author on22 October2026). Affiliation and correspondence contact remain to be
@@ -22,10 +22,18 @@ model seeds, five nonadaptive perturbation budgets and detector-aware stress
 tests. One further intended participant remains in the flow with an unavailable
 calibrated estimand because training labels fail identity validation. All-original-
 attempt rates, participant uncertainty and explicit rejection-cost assumptions
-separate reliability from successful-attack-only detection. Independent execution
-is incomplete, so population results and the final results/conclusion sentences
-of this abstract remain pending. Development failures motivate the protocol but
-do not establish a new detector, robustness or a per-user false-alarm guarantee.
+separate reliability from successful-attack-only detection. All51 subject-seed tasks completed. A separately disclosed post-execution
+numerical-envelope analysis retains13,419 original strict-budget violations;
+it does not establish original strict compliance. At nominal5%, mean genuine
+character rejection ranged from3.92% to8.82% across the seven detectors, while
+accepted wrong characters comprised36.00% to38.24% of all clean attempts.
+At budget0.20, separate detector-aware attacks achieved94.01% to100% accepted
+targeted manipulation. Participant-bootstrap intervals and all declared settings
+are retained. These findings indicate limitations of these detector operating
+points under the tested offline conditions, rather than a new robust defense.
+The high clean-error burden limits practical interpretation. Two-task paired
+sensitivity does not establish population equivalence or causal rounding-only
+invariance.
 
 ## Introduction
 
@@ -147,23 +155,90 @@ behavior on mistaken clean decisions. Zero false alarms has a two-sided95%
 IID upper bound9.74%; serial dependence and user shift remain unresolved.
 No detector is selected as a confirmed winner and no threshold is retuned.
 These clean-validation observations precede the separately recorded development
-attack audit. Independent-user outcomes remain pending.
+attack audit. Independent-user outcomes are reported below under the revised numerical contract.
 
-## Independent results: pending
+## Independent results under the revised numerical envelope
 
-Original OpenBMI execution is complete, but no accepted full-cohort summary
-is reported in this draft. A separately disclosed numerical-envelope analysis
-is being reviewed after the original strict-budget aggregation failed.
-Do not fill tables or conclusions from expected results. Recorded-marker indexing
-and schedule correspondence were inspected across all54 session1 participants.
-Subject52 official train fails identity, with528 schedule/known-label mismatches
-and no compatible symbol in any33 blocks under the fixed schedule. Its test
-passes; subjects53/54 pass both phases. Full54-person compatibility is false.
-Physical timing cause remains unresolved. No precise per-user5% assurance from36
-test characters. Fixed three-seed source training completed on Kaggle at the recorded30-epoch
-final checkpoints, with no independent performance outcome. The source-reference/template/calibration pipeline and fixed validation19
-clean audit have completed across all3seeds. Full validation19 attack/controller/aggregation verification has completed;
-independent evaluation outcomes remain pending.
+The complete cloud analysis retains all51 original subject-seed tasks for17
+available users. Participant52 remains in the18-person flow with unavailable
+calibrated performance: official training data had528 schedule/known-label
+mismatches and no compatible symbol in any33 blocks under the fixed schedule.
+No substitution or performance-based exclusion was made. The source-only release
+review verified task identities, stage hashes, clean CSV decision consistency
+and the exact numerical envelope before aggregation. It passed368 portable
+tests and six envelope guards. The original strict failure remains disclosed;
+these results use the separate post-execution contract, not the original strict
+budget claim.
+
+### Clean operating points
+
+At nominal5%, the cloud report gives the following equal-user means after
+within-user model-seed averaging. Intervals are pointwise95% participant-bootstrap
+intervals, not simultaneous intervals or individual-user guarantees.
+
+|Detector|Rejected clean characters, mean [95% CI]|Accepted correct / all clean|Accepted wrong / all clean|
+|---|---|---|---|
+|Confidence|6.32% [4.52,8.17]|56.05%|37.64%|
+|Entropy|5.83% [3.98,7.63]|56.15%|38.02%|
+|BU|4.85% [2.34,7.90]|56.92%|38.24%|
+|LID|3.92% [2.23,5.94]|58.17%|37.91%|
+|MD|8.82% [3.92,15.09]|55.17%|36.00%|
+|Adjusted MD|8.77% [3.92,14.92]|55.17%|36.06%|
+|KDE|6.32% [2.94,10.13]|56.86%|36.82%|
+
+Nominal1% and5% yield identical observed outcomes because both select the
+maximum of20 calibration decisions. At nominal10%, the observed rejection means
+range from8.39% for LID to13.13% for MD. The full report retains all operating
+points, accepted-correct and accepted-wrong intervals. Genuine accepted errors
+remain substantial for every tested detector. This limits the usefulness of the
+underlying decoder-detector system regardless of attack rejection.
+
+### Detector-unaware and detector-aware manipulation
+
+At the primary0.20 budget, ordinary targeted PGD was accepted and successful on
+100% of original attempts for confidence and entropy,99.89% for BU,85.62% for
+LID,0.05% for MD and adjusted MD, and0% for KDE. The fixed own-detector adaptive
+recipes produced the following rates over all original characters, including
+unsuccessful attempts. The declared longer run contributes only its fixed first
+character candidate to the corresponding character union.
+
+|Attacked detector|Accepted targeted manipulation, mean [95% CI]|
+|---|---|
+|Confidence|100.00% [100.00,100.00]|
+|Entropy|100.00% [100.00,100.00]|
+|BU|100.00% [100.00,100.00]|
+|LID|94.23% [82.68,100.00]|
+|MD|94.12% [82.35,100.00]|
+|Adjusted MD|94.12% [82.35,100.00]|
+|KDE|94.01% [82.14,100.00]|
+
+These are different attacks optimized separately against each detector. They do
+not establish simultaneous evasion or a comparative defense ranking. Bootstrap
+intervals collapsed at100% reflect observed resampling outcomes, not certainty
+for future users. The contrast between MD/KDE rejection of ordinary PGD and high
+own-detector adaptive acceptance limits any robustness conclusion from
+nonadaptive attacks alone. All147 attack/budget/detector groups and120 paired
+nonadaptive descriptive comparisons are retained without selecting a winner.
+The full cloud report also retains FGSM, Gaussian controls and source-template
+results across all five declared budgets.
+
+### Computation and rejection cost
+
+The cost report retains every participant/seed/nominal operating point and its
+stored ideal IID retry expression. It is not a measured repeated-spelling or
+backspace-correction cost. Fixed source-query timing on Tesla T4 had BU medians
+0.062255to0.064205seconds across seeds, compared with confidence medians
+0.006543to0.007710seconds. These are synchronized batch1 source-query timings,
+not independent-user latency or clinical throughput. Recorded first-to-last
+marker plus0.8second extrema remain descriptive duration proxies. No product of
+mean retry and mean timing is claimed as observed throughput, and no population
+retry confidence interval is inferred from the per-seed table.
+
+All numerical values in this section are transcribed from the Kaggle-generated
+reports in results/envelope_aggregate_v1/out. Aggregate SHA256 is
+e11fb26676c22c548074ecbf8113f4aa427a815df2723c383effb277cf31e9ce.
+Actual browser visual review of the two cloud-generated figures remains pending;
+their generation and hashes alone do not establish layout quality.
 
 ## Independent methods: prespecified protocol
 
@@ -172,9 +247,9 @@ configs/openbmi_independent_protocol_frozen_20261022.json, with cloud-generated
 immutable allocations, targets and code-bound receipts in
 splits/openbmi_independent_20261022. Settings and artifacts were committed before
 independent launch. All51 fixed subject-seed tasks have completed and their compact
-provenance is preserved. Complete-cohort cloud aggregation and reporting are
-pending after the unchanged aggregator stopped on a strict actual-budget check.
-Independent summary results are withheld. Cloud auditing traced the violations
+provenance is preserved. The unchanged strict aggregator stopped on an actual-budget check. Separate
+post-execution numerical-envelope cloud aggregation and reporting are complete;
+the original strict failure is retained. Cloud auditing traced the violations
 to upward float32 rounding of the declared epsilon; a stricter implementation
 passed373 portable tests and a separate source-only raw projection/release review.
 The initial corrective plan specified33 affected whole-task reruns and18 valid
@@ -183,9 +258,9 @@ launches and chose a separately disclosed post-execution numerical-envelope
 analysis of all51 original tasks. The original strict failure and completed
 corrective evidence remain preserved. This revised analysis permits norms up to
 max(original epsilon, its nearest float32 representation); it must not be
-described as satisfying the original strict bound. Before combined analysis, a
-separate CPU release review must verify original source and task hashes, full
-coverage, exact envelope validity and clean-score CSV consistency.
+described as satisfying the original strict bound. Before combined analysis, a separate CPU release review verified original
+source and task hashes, full coverage, exact envelope validity and clean-score
+CSV consistency. Its new receipt was privately preserved before aggregate launch.
 
 Paired sensitivity of the two completed corrective tasks retained1958 settings,
 all147 groups and72 paired characters per group. Decoded predictions, targeted
@@ -193,7 +268,7 @@ success, own-detector recipe rejections and the declared accepted-targeted
 character unions were unchanged. Cross-detector diagnostic rejection changes
 remain recorded. This limited comparison does not isolate rounding causally or
 prove equivalence for the full cohort. No further strict reruns are planned;
-no accepted combined results are available yet. Task01 has a preserved
+the separately labeled full-cohort results are reported above. Task01 has a preserved
 terminal failure with no exposed log or outputs and one identical-payload retry.
 No scientific setting changed. Existing historical splits and failed gates
 are preserved; BNCI2015-003 remains locked.
@@ -205,7 +280,7 @@ with model seeds20261013/14/15 and no best-seed selection. Of18 intended evaluat
 participants,52 lacks a usable official training identity under the fixed loader.
 Keep this person in feasibility/participant flow, with calibrated performance
 unavailable. Cloud metadata verification establishes allocation eligibility for17
-people only; their performance remains to be estimated. This is pre-outcome metadata eligibility, not exclusion by
+people only; their available-case performance is reported above. This is pre-outcome metadata eligibility, not exclusion by
 accuracy or detection rate. Available-case results do not imply missing-at-random
 or reliability for all18 people. No substitution, inferred relabeling or reuse
 of test characters for calibration is permitted.
@@ -300,9 +375,40 @@ an explicit retry model and are not live-user latency measurements. IID bounds
 require independent decisions and do not erase session dependence. Negative
 results limit tested methods/settings, not all possible defenses.
 
+### Interpretation of the independent findings
+
+The result supports a bounded reliability audit of these seven adaptations, not
+an effective new defense. A detector may reject ordinary optimization while
+accepting most separately optimized detector-aware attacks. This adaptive
+vulnerability is established prior methodology; the contribution here is its
+joint characterization with genuine character rejection, accepted decoding
+mistakes and explicit cost assumptions under clean-only user calibration.
+
+The large accepted-clean-error burden is a major limitation, not a result to
+remove by conditioning on correctly decoded characters. Together with17
+conditional available cases, one unavailable participant, one recorded dataset,
+coarse calibration, marker-timing uncertainty and fixed attack recipes, it
+limits deployment implications and generalization. No result establishes
+cross-dataset, cross-session or physical attack effectiveness. The post-execution
+numerical contract further limits confirmatory interpretation. Small bound
+excesses and stable paired outcomes in two tasks do not establish all-cohort
+counterfactual equivalence under strict projection.
+
+## Conclusion draft
+
+Across the17 available held-out OpenBMI participants, the tested clean-calibrated
+operating points left substantial genuine decoding errors accepted and allowed
+high detector-specific adaptive targeted manipulation. These findings caution
+against inferring character-level reliability from nominal calibration or
+nonadaptive detection alone. They concern the specified detector adaptations,
+decoder, offline signal-access assumptions and separately disclosed numerical
+envelope. They neither establish a new robust detector nor guarantee reliability
+for future users. Final figure review, reproducibility access and professor
+scientific review remain required before submission.
+
 ## Required before submission
 
-Complete independent benchmark outcomes, a refreshed closest-paper scope check,
+Actual independent figure visual review, a refreshed closest-paper scope check,
 explicitly labelled baseline adaptations,
 uncertainty/cluster-aware analysis, clean-error/rejection cost, defense-aware
 stress test, source-audited results tables/figures, complete methods/supplement,
@@ -319,7 +425,7 @@ that attacked detector for every seed at both200steps/3restarts and400steps/
 population success rate. Longer optimization improved some objective endpoints
 without changing these binary outcomes. Finite values, actual raw budgets and
 trace consistency passed cloud checks. The finding rules out a robust-defense
-claim from this example; independent participant outcomes are still pending.
+claim from this example; the independently held-out cohort findings are reported above.
 Full settings, timings, gradients and limitations are preserved in
 results/development_attack_audit_interpretation.md and development_attack_summary_v2.
 
@@ -338,4 +444,4 @@ These are one already-inspected user's development observations, not17-user
 independent findings or108 independent clean characters. No population confidence
 interval is reported from one user. This extends the earlier fixed-character
 audit's coverage but does not establish a new adaptive-failure phenomenon or
-journal readiness. The independent cohort remains to be completed and summarized.
+journal readiness. The complete independent cohort is summarized above under the revised numerical contract.
