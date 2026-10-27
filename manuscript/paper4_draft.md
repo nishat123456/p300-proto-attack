@@ -3,8 +3,7 @@
 Working manuscript, updated27 October2026 UTC. **Not submission-ready.**
 
 **Author and corresponding author:** M M Nishat (sole author, confirmed by the
-author on22 October2026). Correspondence: mm.nishat@usm.edu (confirmed by the author). Affiliation remains
-to be confirmed. No professor or other coauthor is listed. Target journal remains
+author on22 October2026). Correspondence: mm.nishat@usm.edu (confirmed by the author). Affiliation: University of Southern Mississippi (author-supplied wording). No professor or other coauthor is listed. Target journal remains
 unselected; no acceptance claim.
 
 ## Abstract draft
