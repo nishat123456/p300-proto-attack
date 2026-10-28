@@ -90,3 +90,8 @@ Actual figure QA, reviewer access/data terms, author affiliation/contact,
 professor scientific review and venue selection remain outstanding. These
 reporting corrections do not establish Q1 suitability or untouched strict
 confirmation.
+
+
+## 27 October 2026 cloud figure review closure
+
+Both final cloud PNGs were visually inspected in the authenticated primary Kaggle output viewer. No clipping observed; participant and detector/attack coverage, scales and captions checked. See figure_captions_and_review_20261027.md for exact identities and observations. Earlier pending-passkey/visual-QA notes are historical. Figures remain cloud-only and are not inserted in the Word review copy. Reviewer access, data terms/institutional ethics wording, professor review and venue formatting remain incomplete.
